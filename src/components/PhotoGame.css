@@ -1,0 +1,138 @@
+.photo-container {
+  padding: 20px;
+  text-align: center;
+  font-family: "Comic Sans MS", sans-serif;
+  min-height: 100vh;
+}
+
+.animated-bg {
+  background: linear-gradient(135deg, #d0f0fd, #ffe3f5);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.photo-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.target-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  min-height: 120px;
+}
+
+.photo-box {
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.photo-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.photo-img.small {
+  width: 120px;
+  height: 120px;
+}
+
+.check-btn,
+.reset-btn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  font-size: 16px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.reset-btn {
+  background-color: #f44336;
+}
+
+.drop-slot {
+  width: 120px;
+  height: 120px;
+  border: 2px dashed #aaa;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.placeholder {
+  color: #888;
+  font-size: 14px;
+}
+
+.level-select {
+  margin-top: 10px;
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+  .photo-img,
+  .photo-img.small,
+  .drop-slot {
+    width: 100px;
+    height: 100px;
+  }
+
+  .check-btn,
+  .reset-btn {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.fail-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 12px;
+  animation: shake 0.4s ease;
+}
+.img-label {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #444;
+}
