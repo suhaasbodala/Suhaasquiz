@@ -6,18 +6,24 @@ const StartScreen = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="start-screen animated-bg">
-      <h1 className="start-title">🎮 Welcome Suhaas!</h1>
-      <p className="start-subtitle">Choose your game type</p>
+    <div className="start-container">
+      <div className="floating-clouds" />
+      
+      <h1 className="start-title bounce">🌟 Welcome Suhaas! 🌟</h1>
+      <p className="start-subtitle">Pick a fun game to begin your journey 🚀</p>
+
       <div className="button-group">
-        <button onClick={() => navigate("/photo")} className="start-btn">
-          🖼️ Photo Sequence
+        <button className="start-btn photo" onClick={() => navigate("/photo")}>
+          🖼️ Photo Story Mode
         </button>
-        <button onClick={() => navigate("/video")} className="start-btn">
-          🎬 Video Sequence
+        <button className="start-btn video" onClick={() => navigate("/video")}>
+          🎬 Video Story Mode
         </button>
       </div>
-    </div>
+
+      <img src="/images/boy-waving.png" alt="Suhaas cartoon" className="start-boy" />
+
+      </div>
   );
 };
 

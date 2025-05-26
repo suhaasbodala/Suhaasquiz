@@ -150,24 +150,26 @@ const VideoGame = () => {
                 .filter((c) => !targets.includes(c.id))
                 .map((c, index) => (
                   <Draggable key={c.id} draggableId={c.id} index={index}>
-                    {(provided) => (
-                      <div
-                        className="photo-box"
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <video
-                          src={c.src}
-                          className="video-player small"
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                        />
-                      </div>
-                    )}
-                  </Draggable>
+  {(provided) => (
+    <div
+      className="photo-box"
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+    >
+      <div className="video-wrapper">
+        <video
+          src={c.src}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+      </div>
+    </div>
+  )}
+</Draggable>
+
                 ))}
               {provided.placeholder}
             </div>
