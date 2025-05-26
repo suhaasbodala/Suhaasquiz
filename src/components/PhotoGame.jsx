@@ -5,17 +5,24 @@ import "./PhotoGame.css";
 
 const levels = [
   ["IMG-20250520-WA0002.jpg", "IMG-20250520-WA0003.jpg", "IMG-20250520-WA0001.jpg", "IMG-20250520-WA0005.jpg"],
-  ["photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg"]
+  ["photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg"],
+  [
+    "scene1.jpg", "scene2.jpg", "scene3.jpg",
+    "scene4.jpg", "scene5.jpg", "scene6.jpg",
+    "scene7.jpg", "scene8.jpg", "scene9.jpg"
+  ]
 ];
+
 
 const successSound = new Audio("/sounds/success-1-6297.mp3");
 const failSound = new Audio("/sounds/fail-2-277575.mp3");
 const voiceSuccess = new Audio("/sounds/very-good.mp3");
-const voiceFail = new Audio("/sounds/try-again.mp3");
+const voiceFail = new Audio("/sounds/try-again~.mp3");
 
 const levelDescriptions = [
   "✂️ Cutting Story!",
-  "🏖️ Beach Story!"
+  "🏖️ Beach Story!",
+  "Potty Story!"
 ];
 
 
