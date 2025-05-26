@@ -32,6 +32,7 @@ const PhotoGame = () => {
     return saved ? parseInt(saved) : 1;
   });
 
+  
   const [images, setImages] = useState([]);
   const [correctOrder, setCorrectOrder] = useState([]);
   const [targets, setTargets] = useState([]);
