@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import confetti from "canvas-confetti";
 import "./VideoGame.css";
 
@@ -24,6 +23,7 @@ const VideoGame = () => {
     return saved ? parseInt(saved) : 1;
   });
 
+  const [selectedId, setSelectedId] = useState(null);
   const [clips, setClips] = useState([]);
   const [correctOrder, setCorrectOrder] = useState([]);
   const [targets, setTargets] = useState([]);
@@ -45,32 +45,20 @@ const VideoGame = () => {
     setClips(shuffleArray(items));
     setCorrectOrder(items.map((c) => c.id));
     setTargets(new Array(items.length).fill(null));
+    setSelectedId(null);
     setMessage("");
   }, [level]);
 
   const shuffleArray = (arr) => [...arr].sort(() => 0.5 - Math.random());
-
   const getVideoById = (id) => clips.find((c) => c.id === id)?.src;
 
-  const onDragEnd = (result) => {
-    if (!result.destination || !result.source) return;
-
-    const destId = result.destination.droppableId;
-    if (!destId.startsWith("slot-")) return;
-
-    const destIndex = parseInt(destId.split("-")[1], 10);
-    const draggedId = result.draggableId;
-    const firstEmptyIndex = targets.findIndex((t) => t === null);
-
-    if (destIndex !== firstEmptyIndex) {
-      setMessage("⚠️ Place in the correct order!");
-      return;
+  const handleSlotClick = (index) => {
+    if (!targets[index] && selectedId) {
+      const newTargets = [...targets];
+      newTargets[index] = selectedId;
+      setTargets(newTargets);
+      setSelectedId(null);
     }
-
-    const newTargets = [...targets];
-    newTargets[destIndex] = draggedId;
-    setTargets(newTargets);
-    setMessage("");
   };
 
   const checkAnswer = () => {
@@ -142,72 +130,60 @@ const VideoGame = () => {
         ))}
       </select>
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="source" direction="horizontal">
-          {(provided) => (
-            <div className="photo-row" {...provided.droppableProps} ref={provided.innerRef}>
-              {clips
-                .filter((c) => !targets.includes(c.id))
-                .map((c, index) => (
-                  <Draggable key={c.id} draggableId={c.id} index={index}>
-  {(provided) => (
-    <div
-      className="photo-box"
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-    >
-      <div className="video-wrapper">
-        <video
-          src={c.src}
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
-      </div>
-    </div>
-  )}
-</Draggable>
-
-                ))}
-              {provided.placeholder}
+      <div className="photo-row">
+        {clips
+          .filter((c) => !targets.includes(c.id))
+          .map((c) => (
+            <div
+              key={c.id}
+              className={`photo-box ${selectedId === c.id ? "selected" : ""}`}
+              onClick={() => setSelectedId(c.id)}
+            >
+              <video
+                src={c.src}
+                className="video-player small"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
             </div>
-          )}
-        </Droppable>
-
-        <div className="target-row">
-          {targets.map((id, index) => (
-            <Droppable key={index} droppableId={`slot-${index}`}>
-              {(provided) => (
-                <div className="drop-slot" ref={provided.innerRef} {...provided.droppableProps}>
-                  {id ? (
-                    <div className="slot-with-remove">
-                      <video
-                        src={getVideoById(id)}
-                        className="photo-img small"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                      />
-                      <button
-                        className="remove-btn"
-                        onClick={() => removeFromSlot(index)}
-                      >
-                        ❌
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="placeholder">{index + 1}</div>
-                  )}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
           ))}
-        </div>
-      </DragDropContext>
+      </div>
+
+      <div className="target-row">
+        {targets.map((id, index) => (
+          <div
+            key={index}
+            className="drop-slot"
+            onClick={() => handleSlotClick(index)}
+          >
+            {id ? (
+              <div className="slot-with-remove">
+                <video
+                  src={getVideoById(id)}
+                  className="photo-img small"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+                <button
+                  className="remove-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeFromSlot(index);
+                  }}
+                >
+                  ❌
+                </button>
+              </div>
+            ) : (
+              <div className="placeholder">{index + 1}</div>
+            )}
+          </div>
+        ))}
+      </div>
 
       <button onClick={checkAnswer} className="check-btn">✅ Check Answer</button>
       <button onClick={resetProgress} className="reset-btn">🔁 Reset Progress</button>

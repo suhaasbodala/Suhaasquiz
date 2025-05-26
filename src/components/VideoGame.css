@@ -1,4 +1,4 @@
-.video-container {
+.photo-container {
   padding: 20px;
   text-align: center;
   font-family: "Comic Sans MS", sans-serif;
@@ -7,7 +7,7 @@
 
 /* 🎨 Animated Background */
 .animated-bg {
-  background: linear-gradient(135deg, #fef3e7, #e3f2fd);
+  background: linear-gradient(135deg, #ffe4ec, #d0f0fd);
   background-size: 400% 400%;
   animation: gradientMove 15s ease infinite;
   position: relative;
@@ -20,27 +20,28 @@
   100% { background-position: 0% 50%; }
 }
 
-/* ☁️ Floating Animation */
 .animated-bg::before,
 .animated-bg::after {
   content: "";
   position: absolute;
-  width: 90px;
-  height: 90px;
-  background: rgba(255, 255, 255, 0.3);
   border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  animation: floatCloud 30s linear infinite;
 }
 
 .animated-bg::before {
   top: 10%;
   left: -100px;
-  animation: floatCloud 25s linear infinite;
+  width: 80px;
+  height: 80px;
 }
 
 .animated-bg::after {
-  bottom: 20%;
+  bottom: 15%;
   right: -100px;
-  animation: floatCloud 35s linear infinite reverse;
+  width: 100px;
+  height: 100px;
+  animation-direction: reverse;
 }
 
 @keyframes floatCloud {
@@ -48,13 +49,57 @@
   100% { transform: translateX(160vw); }
 }
 
-.video-row {
+.story-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.photo-row {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 20px;
   padding-bottom: 20px;
+}
+
+.photo-box {
+  padding: 8px;
+  background: #fff5f5;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.photo-box:hover {
+  transform: scale(1.05);
+}
+
+.photo-box.selected {
+  border: 3px solid #007bff;
+  transform: scale(1.1);
+}
+
+.video-player {
+  width: 150px;
+  height: 100px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #000;
+}
+
+.video-player.small {
+  width: 120px;
+  height: 80px;
 }
 
 .target-row {
@@ -63,31 +108,25 @@
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 30px;
-  min-height: 150px;
+  min-height: 120px;
 }
 
-.video-box {
-  padding: 10px;
-  background: #fff7e6;
+.drop-slot {
+  width: 120px;
+  height: 80px;
+  border: 3px dashed #7ec8e3;
+  background: #f0faff;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.video-box:hover {
-  transform: scale(1.05);
-}
-
-.video-player {
-  width: 160px;
-  height: 100px;
-  border-radius: 12px;
-  background: #000;
-}
-
-.video-player.small {
-  width: 140px;
-  height: 90px;
+.placeholder {
+  font-size: 32px;
+  font-weight: bold;
+  color: #aaa;
 }
 
 .check-btn,
@@ -108,30 +147,15 @@
   background-color: #f44336;
 }
 
-.drop-slot {
-  width: 140px;
-  height: 90px;
-  border: 4px dashed #7ec8e3;
-  background: #f0faff;
-  border-radius: 20px;
-  box-shadow: 0 2px 6px rgba(0, 150, 255, 0.15);
-  position: relative;
-  transition: background 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.placeholder {
-  color: #888;
-  font-size: 24px;
+.message {
   font-weight: bold;
+  font-size: 16px;
+  color: #d32f2f;
+  margin-top: 15px;
 }
 
-/* ❌ Remove Button */
 .slot-with-remove {
   position: relative;
-  display: inline-block;
 }
 
 .remove-btn {
@@ -149,7 +173,7 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-/* 📱 Responsive */
+/* 📱 Mobile Responsive */
 @media (max-width: 600px) {
   .video-player,
   .video-player.small,
@@ -163,23 +187,4 @@
     width: 100%;
     margin: 10px 0;
   }
-}
-
-.story-title {
-  animation: fadeIn 1s ease;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.video-wrapper video {
-  width: 150px;
-  height: 120px;
-  border-radius: 12px;
-  pointer-events: none; /* 🚫 Prevent video from blocking drag */
 }
