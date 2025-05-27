@@ -5,15 +5,16 @@ import "./VideoGame.css";
 /* -------------  GAME DATA ------------- */
 const levels = [
   /* Level 1  */ ["vid1.mp4","vid2.mp4","vid3.mp4","vid4.mp4","vid5.mp4","vid6.mp4","vid7.mp4","vid8.mp4","vid9.mp4"],
-  /* Level 2  */ ["scene1.mp4","scene2.mp4","scene3.mp4","scene4.mp4","scene5.mp4","scene6.mp4","scene7.mp4"]
+  /* Level 2  */ ["scene1.mp4","scene2.mp4","scene3.mp4","scene4.mp4","scene5.mp4","scene6.mp4","scene7.mp4"],
+  /* Level 3  */ ["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video6.mp4","video5.mp4","video7.mp4"],
 ];
 
-const levelDescriptions = ["💧 Potty Story","🍎 Field Story"];
+const levelDescriptions = ["💧 Potty Story","🍎 Field Story", "Phone Story"];
 
 /* Quiz questions grouped by level number */
 const quizByLevel = {
   1: [
-    { question:"Rohit ekkadiki veltunnadu?", options:["Mam","intiki","school","bath room ki"], answer:"Mam",   video:"/videos/level1/vid1.mp4" },
+    { question:"Rohit ekkadiki veltunnadu?", options:["Mam intiki","school ki","bath room ki", "ammamma valla intki"], answer:"Mam intiki",   video:"/videos/level1/vid1.mp4" },
     { question:"Rohit em ekkutunnadu?",      options:["Car", "Auto", "Bus","Aeroplane"],       answer:"Auto",  video:"/videos/level1/vid1.mp4" },
     { question:"Rohit and shalom m chestunaru?",  options:["Carroms aadutunaru","Cricket aadutunaru","Padukunaru","TV chustunaru"],          answer:"Carroms aadutunaru", video:"/videos/level1/vid2.mp4" },
     { question:"Rohit and shalom m chestunaru?",  options:["Carroms aadutunaru","Cricket aadutunaru","Padukunaru","TV chustunaru"],          answer:"Padukunaru",  video:"/videos/level1/vid3.mp4" },
@@ -27,6 +28,15 @@ const quizByLevel = {
   2: [
     { question:"Field-story first scene?", options:["Run","Eat fruit","Dance","Sleep"], answer:"Eat fruit", video:"/videos/level2/scene1.mp4" },
     { question:"Ramu eats ___ ?",          options:["Chocolate","Fruit","Ice-cream","Chips"], answer:"Fruit", video:"/videos/level2/scene2.mp4" }
+  ],
+  3: [
+    { question:"Phone story first scene nti?", options:["Balu aadutunadu","Balu bed paina nundi lechadu","Balu song padutunadu","Balu dance chestunadu"], answer:"Balu bed paina nundi lechadu", video:"/videos/level3/video1.mp4" },
+    { question:"Balu phone lo em chestunadu?", options:["Subway aadutunadu","Call chestunadu","Songs vintunadu","Drawing videos chustunadu"], answer:"Subway aadutunadu", video:"/videos/level3/video2.mp4" },
+    { question:"Balu eyes ala ayayi?", options:["red ayayi","emi avaledhu"], answer:"red ayayi", video:"/videos/level3/video3.mp4" },
+    { question:"Balu eyes enduku red ayayi?", options:["Adukunadu kabatti","Amma thittindi kabatii","Phone chusadu kabatti","Thammu tho adukunadu kabatti"], answer:"Phone chusadu kabatti", video:"/videos/level3/video3.mp4" },
+    { question:"Doctor em chestunaru ee scene lo?", options:["injection vestuanru", "ointment rastunaru", "matladutunaru", "silent ga unaru"], answer:"injection vestuanru", video:"/videos/level3/video4.mp4" },
+    { question:"Balu em chptunadu?", options:["Phone battery charge chesukovali kabatti chudanu", "sorry, Phone akuva chudanu","Phone chustanu"], answer:"sorry, Phone akuva chudanu", video:"/videos/level3/video5.mp4" },
+    { question:"ee story moral enti?", options:["Phone chudali","Doctor dagariki vellakudadhu","Phone akuva sepu chudakudadhu","Akuva games adukovali phone lo"], answer:"Phone akuva sepu chudakudadhu", video:"/videos/level3/video7.mp4" }
   ]
 };
 
@@ -103,38 +113,50 @@ const [selectedOpt,      setSelectedOpt]= useState(null);   // (already present)
       setTargets(new Array(clips.length).fill(null));
     }
   };
+  /** play & rewind so the same clip can be re-used immediately */
+const playSound = (audio) => {
+  audio.currentTime = 0;
+  audio.play().catch(() => {/* ignore autoplay blocking */});
+};
+
+/** play two clips in parallel */
+const playPair = (a, b) => {
+  playSound(a);
+  playSound(b);
+};
+
 
   /* ---------- quiz actions ---------- */
   /* ---------- quiz actions ---------- */
   const answerQuiz = (opt) => {
-  setSelectedOpt(opt);                 // 💡 highlight the tapped button
+  setSelectedOpt(opt);                                // mark chosen button
 
-  if (opt === quizItem.answer) {       /* ✅ CORRECT */
-    quizCorrectSound.play();
+  if (opt === quizItem.answer) {                      /* ✅ RIGHT */
+    playPair(successSound, quizCorrectSound);         // success “tada” + “Very good Suhaas!”
     setQMsg("🎉 Very good Suhaas!");
 
     setTimeout(() => {
-      setSelectedOpt(null);            // clear green border
+      setSelectedOpt(null);
       setQMsg("");
 
-      // ➡️ next question or finish
       if (quizIndex + 1 === quizList.length) {
         setQuizDone(true);
         confetti({ particleCount: 120, spread: 70 });
       } else {
-        setQuizIdx((i) => i + 1);
+        setQuizIdx(i => i + 1);
       }
-    }, 3000);                          // right-answer feedback = 1 s
-  } else {                             /* ❌ WRONG */
-    quizWrongSound.play();
+    }, 2000);                                         // green feedback 1 s
+  } else {                                            /* ❌ WRONG */
+    playPair(failSound, quizWrongSound);              // fail “buzz” + “Malli try…”
     setQMsg("❌ Malli try cheyu Suhaas!");
 
     setTimeout(() => {
-      setSelectedOpt(null);            // let him try again
+      setSelectedOpt(null);
       setQMsg("");
-    }, 4000);                          // wrong-answer feedback = 4 s
+    }, 4000);                                         // red feedback 4 s
   }
 };
+
 
 
   /* ---------- render ---------- */
