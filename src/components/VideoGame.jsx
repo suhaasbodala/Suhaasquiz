@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./VideoGame.css";
-import { QueryStatus } from "@reduxjs/toolkit/query";
+//import { QueryStatus } from "@reduxjs/toolkit/query";
 
 /* -------------  GAME DATA ------------- */
 const levels = [
