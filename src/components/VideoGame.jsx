@@ -2,194 +2,255 @@ import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./VideoGame.css";
 
+/* -------------  GAME DATA ------------- */
 const levels = [
-  ["vid1.mp4", "vid2.mp4", "vid3.mp4", "vid4.mp4", "vid5.mp4", "vid6.mp4", "vid7.mp4", "vid8.mp4", "vid9.mp4"],
-  ["scene1.mp4", "scene2.mp4", "scene3.mp4", "scene4.mp4", "scene5.mp4", "scene6.mp4", "scene7.mp4"]
+  /* Level 1  */ ["vid1.mp4","vid2.mp4","vid3.mp4","vid4.mp4","vid5.mp4","vid6.mp4","vid7.mp4","vid8.mp4","vid9.mp4"],
+  /* Level 2  */ ["scene1.mp4","scene2.mp4","scene3.mp4","scene4.mp4","scene5.mp4","scene6.mp4","scene7.mp4"]
 ];
 
-const successSound = new Audio("/sounds/success-1-6297.mp3");
-const failSound = new Audio("/sounds/fail-2-277575.mp3");
-const voiceSuccess = new Audio("/sounds/very-good.mp3");
-const voiceFail = new Audio("/sounds/try-again.mp3");
+const levelDescriptions = ["💧 Potty Story","🍎 Field Story"];
 
-const levelDescriptions = [
-  "💧 Potty Story",
-  "🍎 Field Story"
-];
+/* Quiz questions grouped by level number */
+const quizByLevel = {
+  1: [
+    { question:"Rohit ekkadiki veltunnadu?", options:["Mam","intiki","school","bath room ki"], answer:"Mam",   video:"/videos/level1/vid1.mp4" },
+    { question:"Rohit em ekkutunnadu?",      options:["Car", "Auto", "Bus","Aeroplane"],       answer:"Auto",  video:"/videos/level1/vid1.mp4" },
+    { question:"Rohit and shalom m chestunaru?",  options:["Carroms aadutunaru","Cricket aadutunaru","Padukunaru","TV chustunaru"],          answer:"Carroms aadutunaru", video:"/videos/level1/vid2.mp4" },
+    { question:"Rohit and shalom m chestunaru?",  options:["Carroms aadutunaru","Cricket aadutunaru","Padukunaru","TV chustunaru"],          answer:"Padukunaru",  video:"/videos/level1/vid3.mp4" },
+    { question:"Rohit and shalom eppudu padukunaru?",  options:["night ayaka", "Sun vachaka"],          answer:"night ayaka", video:"/videos/level1/vid3.mp4" },
+    { question:"ee scene eppudu ayindhi?",  options:["night", "morning"],          answer:"morning", video:"/videos/level1/vid4.mp4" },
+    { question:"Rohit em chestunadu?",  options:["edustunadu", "navvutunadu", "aadutunadu", "padukunadu"],          answer:"edustunadu", video:"/videos/level1/vid6.mp4" },
+    { question:"Rohit enduku edustunadu?",  options:["akali vestundi", "mam kottaru", "potty vastundi", "amma thittindi"],          answer:"potty vastundi", video:"/videos/level1/vid6.mp4" },
+    { question:"Doctor em chestunaru?",  options:["aadtunaru",  "injection istunaru","thidutunaru", "ointment rastunaru"],          answer:"injection istunaru", video:"/videos/level1/vid7.mp4" },
+    { question:"Moral of the story enti?",  options:["potty vachinapdu vellali", "potty vellakudadhu"],          answer:"potty vachinapdu vellali", video:"/videos/level1/vid9.mp4" }
+    ],
+  2: [
+    { question:"Field-story first scene?", options:["Run","Eat fruit","Dance","Sleep"], answer:"Eat fruit", video:"/videos/level2/scene1.mp4" },
+    { question:"Ramu eats ___ ?",          options:["Chocolate","Fruit","Ice-cream","Chips"], answer:"Fruit", video:"/videos/level2/scene2.mp4" }
+  ]
+};
 
-const VideoGame = () => {
-  const [level, setLevel] = useState(() => {
-    const saved = localStorage.getItem("video-level");
-    return saved ? parseInt(saved) : 1;
-  });
+/* -------------  SOUND EFFECTS ------------- */
+const successSound      = new Audio("/sounds/success-1-6297.mp3");
+const failSound         = new Audio("/sounds/fail-2-277575.mp3");
+const voiceSuccess      = new Audio("/sounds/very-good.mp3");
+const voiceFail         = new Audio("/sounds/try-again.mp3");
+const quizCorrectSound  = new Audio("/sounds/very-good.mp3");
+const quizWrongSound    = new Audio("/sounds/try-again.mp3");
 
-  const [selectedId, setSelectedId] = useState(null);
-  const [clips, setClips] = useState([]);
-  const [correctOrder, setCorrectOrder] = useState([]);
-  const [targets, setTargets] = useState([]);
-  const [message, setMessage] = useState("");
-  const [showLevelComplete, setShowLevelComplete] = useState(false);
+/* -------------  COMPONENT ------------- */
+export default function VideoGame() {
+  /* ---------- main-game state ---------- */
+  /* ---------- main-game state ---------- */
+const [level,            setLevel]     = useState(() => parseInt(localStorage.getItem("video-level")) || 1);
+const [clips,            setClips]     = useState([]);
+const [correctOrder,     setCorrect]   = useState([]);
+const [targets,          setTargets]   = useState([]);
+const [selectedId,       setSelectedId]= useState(null);
+const [message,          setMessage]   = useState("");
+const [showLevelComplete,setDone]      = useState(false);
 
+/* NEW ► flag that shows “Very good…” popup */
+//const [correctPop,       setCorrectPop]= useState(false);   //  ← add this line
+const [selectedOpt,      setSelectedOpt]= useState(null);   // (already present)
+;
+
+  /* ---------- quiz state ---------- */
+  const [showQuiz, setShowQuiz]     = useState(false);
+  const [quizIndex, setQuizIdx]     = useState(0);
+  const [quizComplete, setQuizDone] = useState(false);
+  const [quizFeedback, setQMsg]     = useState("");
+
+  const quizList   = quizByLevel[level] || [];
+  const quizItem   = quizList[quizIndex];
+
+  /* ---------- load level ---------- */
   useEffect(() => {
-    const levelData = levels[level - 1];
-    if (!levelData) {
-      alert("🎉 All video levels completed!");
-      return;
-    }
+    const files = levels[level-1];
+    if (!files) { alert("🎉 All levels finished!"); return; }
 
-    const items = levelData.map((file, i) => ({
-      id: `clip-${i}`,
-      src: `/videos/level${level}/${file}`
-    }));
-
-    setClips(shuffleArray(items));
-    setCorrectOrder(items.map((c) => c.id));
+    const items = files.map((f,i)=>({ id:`clip-${i}`, src:`/videos/level${level}/${f}` }));
+    setClips(shuffle(items));
+    setCorrect(items.map(v=>v.id));
     setTargets(new Array(items.length).fill(null));
     setSelectedId(null);
-    setMessage("");
+    setMessage(""); setDone(false);
+
+    /* reset quiz state when level changes */
+    setShowQuiz(false); setQuizIdx(0); setQuizDone(false); setQMsg("");
   }, [level]);
 
-  const shuffleArray = (arr) => [...arr].sort(() => 0.5 - Math.random());
-  const getVideoById = (id) => clips.find((c) => c.id === id)?.src;
+  /* ---------- helpers ---------- */
+  const shuffle = a => [...a].sort(()=>0.5-Math.random());
+  const srcById = id => clips.find(c=>c.id===id)?.src;
 
-  const handleSlotClick = (index) => {
-    if (!targets[index] && selectedId) {
-      const newTargets = [...targets];
-      newTargets[index] = selectedId;
-      setTargets(newTargets);
-      setSelectedId(null);
-    }
+  /* ---------- gameplay actions ---------- */
+  const clickSlot = i => {
+    if (!selectedId || targets[i]) return;
+    const next = [...targets]; next[i]=selectedId;
+    setTargets(next); setSelectedId(null); setMessage("");
   };
 
-  const checkAnswer = () => {
-    if (targets.includes(null)) {
-      setMessage("🚫 Please complete all slots.");
-      return;
-    }
-
-    const isCorrect = targets.join() === correctOrder.join();
-    if (isCorrect) {
-      successSound.play();
-      voiceSuccess.play();
-      confetti({ particleCount: 150, spread: 60, origin: { y: 0.6 } });
-      setShowLevelComplete(true);
+  const checkOrder = () => {
+    if (targets.includes(null)) { setMessage("🚫 Please complete all slots."); return; }
+    if (targets.join() === correctOrder.join()) {
+      successSound.play(); voiceSuccess.play();
+      confetti({particleCount:150, spread:60, origin:{y:0.6}});
+      setDone(true);
     } else {
-      failSound.play();
-      voiceFail.play();
+      failSound.play(); voiceFail.play();
       setMessage("❌ Malli try cheyu Suhaas!");
       setTargets(new Array(clips.length).fill(null));
     }
   };
 
-  const resetProgress = () => {
-    setLevel(1);
-    localStorage.setItem("video-level", 1);
-    setMessage("🔁 Level reset to 1.");
-  };
+  /* ---------- quiz actions ---------- */
+  /* ---------- quiz actions ---------- */
+  const answerQuiz = (opt) => {
+  setSelectedOpt(opt);                 // 💡 highlight the tapped button
 
-  const removeFromSlot = (index) => {
-    const updated = [...targets];
-    updated[index] = null;
-    setTargets(updated);
-  };
+  if (opt === quizItem.answer) {       /* ✅ CORRECT */
+    quizCorrectSound.play();
+    setQMsg("🎉 Very good Suhaas!");
 
+    setTimeout(() => {
+      setSelectedOpt(null);            // clear green border
+      setQMsg("");
+
+      // ➡️ next question or finish
+      if (quizIndex + 1 === quizList.length) {
+        setQuizDone(true);
+        confetti({ particleCount: 120, spread: 70 });
+      } else {
+        setQuizIdx((i) => i + 1);
+      }
+    }, 3000);                          // right-answer feedback = 1 s
+  } else {                             /* ❌ WRONG */
+    quizWrongSound.play();
+    setQMsg("❌ Malli try cheyu Suhaas!");
+
+    setTimeout(() => {
+      setSelectedOpt(null);            // let him try again
+      setQMsg("");
+    }, 4000);                          // wrong-answer feedback = 4 s
+  }
+};
+
+
+  /* ---------- render ---------- */
   if (showLevelComplete) {
     return (
       <div className="photo-container">
-        <h2>Level {level} Complete! 🎉 Veru good suhaas! 🎉</h2>
-        <button
-          className="check-btn"
-          onClick={() => {
-            setShowLevelComplete(false);
-            const next = level + 1;
-            setLevel(next);
-            localStorage.setItem("video-level", next);
-          }}
-        >
-          ➡️ Go to Level {level + 1}
-        </button>
+        <h2>Level {level} Complete! 🎉 Very good Suhaas!</h2>
+        <button className="check-btn" onClick={()=>{
+          const next=level+1; setLevel(next); localStorage.setItem("video-level",next);}}>➡️ Next Level</button>
       </div>
     );
   }
 
   return (
     <div className="photo-container animated-bg">
-      <h2 className="story-title">{levelDescriptions[level - 1]}</h2>
-
-      <select
-        className="level-select"
-        value={level}
-        onChange={(e) => {
-          const selected = parseInt(e.target.value);
-          setLevel(selected);
-          localStorage.setItem("video-level", selected);
-        }}
-      >
-        {levels.map((_, i) => (
-          <option key={i} value={i + 1}>Level {i + 1}</option>
-        ))}
-      </select>
-
-      <div className="photo-row">
-        {clips
-          .filter((c) => !targets.includes(c.id))
-          .map((c) => (
-            <div
-              key={c.id}
-              className={`photo-box ${selectedId === c.id ? "selected" : ""}`}
-              onClick={() => setSelectedId(c.id)}
-            >
-              <video
-                src={c.src}
-                className="video-player small"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-            </div>
-          ))}
+      {/* top bar */}
+      <div className="top-bar">
+        <h2 className="story-title">{levelDescriptions[level-1]}</h2>
+        {quizList.length>0 && <button className="quiz-btn" onClick={()=>setShowQuiz(true)}>🧠 Quiz</button>}
       </div>
 
-      <div className="target-row">
-        {targets.map((id, index) => (
-          <div
-            key={index}
-            className="drop-slot"
-            onClick={() => handleSlotClick(index)}
-          >
-            {id ? (
-              <div className="slot-with-remove">
-                <video
-                  src={getVideoById(id)}
-                  className="photo-img small"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
-                <button
-                  className="remove-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    removeFromSlot(index);
-                  }}
-                >
-                  ❌
-                </button>
-              </div>
-            ) : (
-              <div className="placeholder">{index + 1}</div>
-            )}
+      {/* level selector */}
+      <select className="level-select" value={level} onChange={e=>{
+        const nxt=+e.target.value; setLevel(nxt); localStorage.setItem("video-level",nxt);
+      }}>
+        {levels.map((_,i)=><option key={i} value={i+1}>Level {i+1}</option>)}
+      </select>
+
+      {/* source videos */}
+      <div className="photo-row">
+        {clips.filter(c=>!targets.includes(c.id)).map(c=>(
+          <div key={c.id} className={`video-box ${selectedId===c.id?"selected":""}`} onClick={()=>setSelectedId(c.id)}>
+            <video src={c.src} autoPlay muted loop playsInline className="video-player"/>
           </div>
         ))}
       </div>
 
-      <button onClick={checkAnswer} className="check-btn">✅ Check Answer</button>
-      <button onClick={resetProgress} className="reset-btn">🔁 Reset Progress</button>
+      {/* target slots */}
+      <div className="target-row">
+        {targets.map((id,i)=>(
+          <div key={i} className="drop-slot" onClick={()=>clickSlot(i)}>
+            {id
+              ? <div className="slot-with-remove">
+                  <video src={srcById(id)} autoPlay muted loop playsInline className="photo-img small"/>
+                  <button className="remove-btn" onClick={e=>{e.stopPropagation(); const t=[...targets];t[i]=null;setTargets(t);}}>❌</button>
+                </div>
+              : <div className="placeholder">{i+1}</div>}
+          </div>
+        ))}
+      </div>
+
+      <button onClick={checkOrder} className="check-btn">✅ Check Answer</button>
+      <button onClick={()=>{setLevel(1);localStorage.setItem("video-level",1);setMessage("🔁 Level reset.");}} className="reset-btn">🔁 Reset</button>
       <p className="message">{message}</p>
+
+      {/* quiz modal */}
+      {/* ───────── FULL-SCREEN QUIZ ───────── */}
+      {/* ─── QUIZ FULL-SCREEN OVERLAY ─── */}
+{showQuiz && (
+  <div className="quiz-modal">               {/* 100 % viewport, dark backdrop */}
+    <div className="quiz-card">              {/* white card, centred */}
+      {quizComplete ? (
+        <>
+          <h2>🎉 Quiz Completed!</h2>
+          <button
+            onClick={() => {
+              setShowQuiz(false);
+              setQuizIdx(0);
+              setQuizDone(false);
+              setQMsg("");
+            }}
+          >
+            Close
+          </button>
+        </>
+      ) : (
+        <>
+          <video
+            src={quizItem.video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="quiz-video"
+          />
+
+          <h3 className="quiz-question">{quizItem.question}</h3>
+
+          {/* options with green / red borders */}
+          <div className="quiz-options">
+            {quizItem.options.map((opt, i) => {
+              const chosen  = selectedOpt === opt;
+              const correct = chosen && opt === quizItem.answer;
+              const wrong   = chosen && opt !== quizItem.answer;
+
+              return (
+                <button
+                  key={i}
+                  className={`quiz-option ${correct ? "correct" : ""} ${wrong ? "wrong" : ""}`}
+                  disabled={!!selectedOpt && correct}   /* freeze for 1 s on right */
+                  onClick={() => answerQuiz(opt)}
+                >
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
+
+          {quizFeedback && <p className="quiz-msg">{quizFeedback}</p>}
+        </>
+      )}
+    </div>
+  </div>
+)}
+
+
     </div>
   );
-};
-
-export default VideoGame;
+}

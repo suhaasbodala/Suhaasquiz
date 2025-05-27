@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import StartScreen from "./components/StartScreen";
 import PhotoGame from "./components/PhotoGame";
-import VideoGame from "./components/VideoGame"; // (create this if not already)
+import VideoGame from "./components/VideoGame";
 
 function App() {
   return (
@@ -15,4 +15,4 @@ function App() {
   );
 }
 
-export default App; // ✅ this line is correct
+export default App;
