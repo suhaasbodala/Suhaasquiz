@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./VideoGame.css";
+import { QueryStatus } from "@reduxjs/toolkit/query";
 
 /* -------------  GAME DATA ------------- */
 const levels = [
@@ -26,8 +27,13 @@ const quizByLevel = {
     { question:"Moral of the story enti?",  options:["potty vachinapdu vellali", "potty vellakudadhu"],          answer:"potty vachinapdu vellali", video:"/videos/level1/vid9.mp4" }
     ],
   2: [
-    { question:"Field-story first scene?", options:["Run","Eat fruit","Dance","Sleep"], answer:"Eat fruit", video:"/videos/level2/scene1.mp4" },
-    { question:"Ramu eats ___ ?",          options:["Chocolate","Fruit","Ice-cream","Chips"], answer:"Fruit", video:"/videos/level2/scene2.mp4" }
+    { question:"ee scene avaru unaru?", options:["charan and amma", "only amma", "avaru leru", "charan, amma and nanna"], answer:"charan and amma", video:"/videos/level2/scene1.mp4" },
+    { question:"Amma and charan akada unaru?", options:["play ground lo unaru","flowers dagara unaru","field lo unaru","shop lo unaru"], answer:"field lo unaru", video:"/videos/level2/scene2.mp4" },
+    { question:"charan em cheptunadu?", options:["amma vellipodam ani cheptunadu","amma nen water postanu ani cheptunadu","silent ga unadu","aadukunatanu ani cheptunadu"], answer:"amma nen water postanu ani cheptunadu", video:"/videos/level2/scene3.mp4" },
+    { question:"charan em chestunadu?", options:["chocolate vestunadu","fruit vestunadu","ice-cream vestunadu","water tho aadukuntunadu"], answer:"water tho aadukuntunadu", video:"/videos/level2/scene4.mp4" },
+    { question:"charan ki amma em cheptundi?", options:["nka kasepu aaduko charan ani chptundi","water veyakudadhu charan ani chptundhi","ice-cream tinu chranu ani cheptundhi","time ayindhi chran nka intiki veldamu ani cheptundhi"], answer:"time ayindhi chran nka intiki veldamu ani cheptundhi", video:"/videos/level2/scene5.mp4" },
+    { question:"ee scene eppudu ayindhi?",          options:["morning", "night"], answer:"night", video:"/videos/level2/scene7.mp4" },
+    { question:"ee story moral enti?", options:["field lo aadukovali","mokkalaki water poyali","field lo ice-cream thinali","field lo fruits thinali"], answer:"mokkalaki water poyali", video:"/videos/level2/scene4.mp4" }
   ],
   3: [
     { question:"Phone story first scene nti?", options:["Balu aadutunadu","Balu bed paina nundi lechadu","Balu song padutunadu","Balu dance chestunadu"], answer:"Balu bed paina nundi lechadu", video:"/videos/level3/video1.mp4" },
