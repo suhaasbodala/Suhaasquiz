@@ -1,0 +1,257 @@
+/* ---------- page ---------- */
+.cmp-container {
+  padding: 20px;
+  min-height: 100vh;
+  font-family: "Comic Sans MS", sans-serif;
+  text-align: center;
+}
+
+.animated-bg {
+  background: linear-gradient(135deg, #ffe4ec, #d0f0fd);
+  background-size: 400% 400%;
+  animation: bgMove 12s ease infinite;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ---------- title & numbers ---------- */
+.cmp-title {
+  font-size: 28px;
+  margin-bottom: 14px;
+}
+
+.num-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.big-num {
+  font-size: 64px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ---------- symbol slot ---------- */
+.sym-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border: 3px dashed #bbb;
+  border-radius: 12px;
+  margin: 0 14px;
+  font-size: 44px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  color: #555;
+}
+
+.sym-slot:hover {
+  border-color: #888;
+}
+
+.sym-slot.filled {
+  border-style: solid;
+  background: #fffbe6;
+  color: #111;
+}
+
+/* ---------- buckets ---------- */
+.bucket-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin: 24px 0;
+}
+
+.bucket {
+  min-width: 150px;
+  min-height: 110px;
+  padding: 6px 10px;
+  border: 4px dashed #7ec8e3;
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+}
+
+.bucket .count {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* ---------- apple image ---------- */
+.apple {
+  width: 48px;
+  height: 48px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.apple.picked-apple {
+  border: 3px solid #2196f3;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+/* ---------- supply tray ---------- */
+.supply {
+  margin-top: 30px;
+  padding: 6px 12px;
+  min-height: 100px;
+  border: 3px solid #999;
+  border-radius: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  max-width: 450px;
+  margin-inline: auto;
+}
+
+/* ---------- symbol tray ---------- */
+.sym-row {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.sym-btn {
+  width: 60px;
+  height: 60px;
+  font-size: 32px;
+  font-weight: bold;
+  border: 3px solid #888;
+  border-radius: 50%;
+  cursor: pointer;
+  background: #e0f0ff;
+  transition: 0.2s;
+}
+
+.sym-btn:hover {
+  background: #c7e1ff;
+}
+
+.sym-btn.picked {
+  border-color: #2196f3;
+  background: #bbd9ff;
+}
+
+.sym-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ---------- feedback message ---------- */
+.cmp-msg {
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 12px;
+  color: #2e7d32;
+}
+
+.cmp-msg.error {
+  color: #e53935;
+}
+
+.sym-img {
+  width: 60px;
+  height: 60px;
+  border: 3px solid #888;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #e0f0ff;
+  transition: 0.2s;
+  object-fit: contain;
+  padding: 4px;
+}
+
+.sym-img:hover {
+  background: #c7e1ff;
+}
+
+.sym-img.picked {
+  border-color: #2196f3;
+  background: #bbd9ff;
+}
+.sym-slot {
+  width: 120px;
+  height: 120px;
+  border: 3px dashed #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  margin: 0 20px;
+  border-radius: 12px;
+}
+
+.sym-slot.filled {
+  border-style: solid;
+}
+
+.sym-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.sym-box {
+  width: 120px;
+  height: 120px;
+  background-color: #f8f8f8;
+  border: 3px solid #aaa;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.sym-box:hover {
+  transform: scale(1.05);
+}
+
+.sym-box.picked {
+  border-color: rgb(23, 95, 230);
+  background-color: #d1ffd1;
+}
+
+.apple-counter {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.2); /* Very light black */
+  pointer-events: none;
+}
+
+.bucket {
+  position: relative; /* Required for absolute positioning inside */
+  width: 150px;
+  min-height: 150px;
+  border: 3px solid #555;
+  border-radius: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}

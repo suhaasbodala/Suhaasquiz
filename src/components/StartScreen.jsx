@@ -27,6 +27,15 @@ const StartScreen = () => {
         >
           🎬 Video Story Mode
         </button>
+        <button
+          className="start-btn compare"
+          onClick={() => {
+            console.log("Comapre Mode Clicked");
+            navigate("/compare");  // ✅ Navigates to ComapreGame
+          }}
+        >
+          🍎 Compare Numbers
+        </button>
       </div>
 
       <img

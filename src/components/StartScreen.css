@@ -95,7 +95,9 @@
 .start-btn.video {
   background: #42a5f5;
 }
-
+.start-btn.compare {
+  background: #66bb6a;
+}
 .start-boy {
   position: absolute;
   bottom: 15px;

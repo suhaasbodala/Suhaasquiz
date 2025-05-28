@@ -1,0 +1,191 @@
+import React, { useEffect, useState } from "react";
+import confetti from "canvas-confetti";
+import "./CompareGame.css";
+
+/* helpers */
+const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const play = (a) => { a.currentTime = 0; a.play().catch(() => {}); };
+const twin = (a, b) => { play(a); play(b); };
+
+/* sounds */
+const sfxRight   = new Audio("/sounds/success-1-6297.mp3");
+const sfxWrong   = new Audio("/sounds/fail-2-277575.mp3");
+const voiceRight = new Audio("/sounds/very-good.mp3");
+const voiceWrong = new Audio("/sounds/try-again.mp3");
+
+export default function CompareGame() {
+  const [leftNum, setLeftNum] = useState(1);
+  const [rightNum, setRightNum] = useState(1);
+
+  const [supply, setSupply] = useState([]);
+  const [left, setLeft] = useState([]);
+  const [right, setRight] = useState([]);
+
+  const [pickedApple, setPickedApple] = useState("");
+  const [trayOn, setTrayOn] = useState(false);
+  const [pickedSym, setPickedSym] = useState("");
+  const [symSlot, setSymSlot] = useState("");
+
+  const [msg, setMsg] = useState("");
+
+  const freshRound = () => {
+    const n1 = rand(1, 9);
+    const n2 = rand(1, 9);
+    setLeftNum(n1);
+    setRightNum(n2);
+
+    const apples = Array.from({ length: 20 }, (_, k) => ({
+      id: `a-${Date.now()}-${k}`,
+      src: "/images/apple.jpg",
+    }));
+    setSupply(apples);
+    setLeft([]);
+    setRight([]);
+    setPickedApple("");
+    setPickedSym("");
+    setSymSlot("");
+    setTrayOn(false);
+    setMsg("");
+  };
+
+  useEffect(freshRound, []);
+
+  const togglePick = (id) => {
+    setPickedApple((prev) => (prev === id ? "" : id));
+  };
+
+  const dropInto = (side) => {
+    if (!pickedApple) return;
+    const apple = supply.find((a) => a.id === pickedApple);
+    if (!apple) return;
+
+    if (side === "L" && left.length < leftNum) {
+      setSupply((s) => s.filter((a) => a.id !== pickedApple));
+      setLeft((arr) => [...arr, apple]);
+    } else if (side === "R" && right.length < rightNum) {
+      setSupply((s) => s.filter((a) => a.id !== pickedApple));
+      setRight((arr) => [...arr, apple]);
+    } else {
+      return;
+    }
+
+    setPickedApple("");
+
+    setTimeout(() => {
+      setTrayOn(
+        (side === "L" ? left.length + 1 : left.length) === leftNum &&
+        (side === "R" ? right.length + 1 : right.length) === rightNum
+      );
+    }, 0);
+  };
+
+  const placeSymbol = () => {
+    if (!pickedSym || symSlot) return;
+
+    const ok =
+      (pickedSym === ">" && leftNum > rightNum) ||
+      (pickedSym === "<" && leftNum < rightNum) ||
+      (pickedSym === "=" && leftNum === rightNum);
+
+    if (ok) {
+      twin(sfxRight, voiceRight);
+      confetti({ particleCount: 120, spread: 70 });
+      setSymSlot(pickedSym);
+      setPickedSym("");
+      setMsg("🎉 Very good Suhaas!");
+      setTimeout(freshRound, 2000);
+    } else {
+      twin(sfxWrong, voiceWrong);
+      setMsg("❌ Malli try cheyu Suhaas!");
+      setPickedSym("");
+      setTimeout(() => setMsg(""), 3000);
+    }
+  };
+
+  return (
+    <div className="cmp-container animated-bg">
+      <h2 className="cmp-title">🍎 Count&nbsp;&amp;&nbsp;Compare</h2>
+      <div className="num-row">
+        <span className="big-num">{leftNum}</span>
+        <div className={`sym-slot ${symSlot && "filled"}`} onClick={placeSymbol}>
+  {symSlot ? (
+    <img
+      src={`/images/${
+        symSlot === "<" ? "less" : symSlot === ">" ? "greater" : "equal"
+      }.png`}
+      alt={symSlot}
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "contain"
+      }}
+    />
+  ) : pickedSym ? "?" : ""}
+</div>
+
+
+        <span className="big-num">{rightNum}</span>
+      </div>
+
+      <div className="bucket-row">
+        <div className="bucket" onClick={() => dropInto("L")}>
+  <span className="apple-counter">{left.length} / {leftNum}</span>
+  {left.map((a) => (
+    <img key={a.id} src={a.src} alt="" className="apple" />
+  ))}
+</div>
+
+<div className="bucket" onClick={() => dropInto("R")}>
+  <span className="apple-counter">{right.length} / {rightNum}</span>
+  {right.map((a) => (
+    <img key={a.id} src={a.src} alt="" className="apple" />
+  ))}
+</div>
+
+      </div>
+
+      <div className="supply">
+        {supply.map((a) => (
+          <img
+            key={a.id}
+            src={a.src}
+            alt=""
+            className={`apple ${pickedApple === a.id ? "picked-apple" : ""}`}
+            onClick={() => togglePick(a.id)}
+          />
+        ))}
+      </div>
+
+      {/* symbol tray */}
+      {trayOn && !symSlot && (
+  <div className="sym-row">
+    {[
+      { src: "/images/less.png", value: "<" },
+      { src: "/images/equal.png", value: "=" },
+      { src: "/images/greater.png", value: ">" },
+    ].map((sym) => (
+      <div
+        key={sym.value}
+        className={`sym-box ${pickedSym === sym.value ? "picked" : ""}`}
+        onClick={() => setPickedSym(sym.value)}
+      >
+        <img
+          src={sym.src}
+          alt={sym.value}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain"
+          }}
+        />
+      </div>
+    ))}
+  </div>
+)}
+
+
+
+      {msg && <p className="cmp-msg">{msg}</p>}
+    </div>
+  );
+}
