@@ -9,7 +9,8 @@ const levels = [
     "scene1.jpg", "scene2.jpg", "scene3.jpg",
     "scene4.jpg", "scene5.jpg", "scene6.jpg",
     "scene7.jpg", "scene8.jpg", "scene9.jpg"
-  ]
+  ],
+  ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg"]
 ];
 
 const successSound = new Audio("/sounds/success-1-6297.mp3");
@@ -20,7 +21,8 @@ const voiceFail = new Audio("/sounds/try-again.mp3");
 const levelDescriptions = [
   "✂️ Cutting Story!",
   "🏖️ Beach Story!",
-  "🚽 Potty Story!"
+  "🚽 Potty Story!",
+  "🧩 Items Story!"
 ];
 
 const PhotoGame = () => {

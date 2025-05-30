@@ -8,9 +8,10 @@ const levels = [
   /* Level 1  */ ["vid1.mp4","vid2.mp4","vid3.mp4","vid4.mp4","vid5.mp4","vid6.mp4","vid7.mp4","vid8.mp4","vid9.mp4"],
   /* Level 2  */ ["scene1.mp4","scene2.mp4","scene3.mp4","scene4.mp4","scene5.mp4","scene6.mp4","scene7.mp4"],
   /* Level 3  */ ["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video6.mp4","video5.mp4","video7.mp4"],
+  /* Level 4  */ ["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4"]
 ];
 
-const levelDescriptions = ["💧 Potty Story","🍎 Field Story", "Phone Story"];
+const levelDescriptions = ["💧 Potty Story","🍎 Field Story", "Phone Story", "Item story"];
 
 /* Quiz questions grouped by level number */
 const quizByLevel = {
@@ -43,6 +44,16 @@ const quizByLevel = {
     { question:"Doctor em chestunaru ee scene lo?", options:["injection vestuanru", "ointment rastunaru", "matladutunaru", "silent ga unaru"], answer:"injection vestuanru", video:"/videos/level3/video4.mp4" },
     { question:"Balu em chptunadu?", options:["Phone battery charge chesukovali kabatti chudanu", "sorry, Phone akuva chudanu","Phone chustanu"], answer:"sorry, Phone akuva chudanu", video:"/videos/level3/video5.mp4" },
     { question:"ee story moral enti?", options:["Phone chudali","Doctor dagariki vellakudadhu","Phone akuva sepu chudakudadhu","Akuva games adukovali phone lo"], answer:"Phone akuva sepu chudakudadhu", video:"/videos/level3/video7.mp4" }
+  ],
+  4: [
+    { question:"ee scene lo evaru unaru?", options:["Gopal and mam","Gopal and nanna","Gopal and shalom","Gopal, shalom and amma"], answer:"Gopal and mam", video:"/videos/level4/video1.mp4" },
+    { question:"Mam gopal ki em chptu undhi?", options:["Aaduko ani chptundhi","Silent ga undu ani chptu undhi","Phone chudu ani chptundhi","Diary raayu ani chptundhi"], answer:"Diary raayu ani chptundhi", video:"/videos/level4/video1.mp4" },
+    { question:"Compass box lo em unnayi?", options:["Pens unayi","Em levu","Pencils unayi","Eraser undhi"], answer:"Em levu", video:"/videos/level4/video2.mp4" },
+    { question:"Pencil box lo pencil, sharpner evaru tisaru?", options:["Mam tisaru","Amma tisindhi","Avaru tiya ledhu","Gopal and thammu  tisaru"], answer:"Gopal and thammu  tisaru", video:"/videos/level4/video3.mp4" },
+    { question:"Mam enduku punishment icharu?", options:["Gopal allari chesadu kabtti","Gopal pencils anni padesadu kabatti","Gopal silent ga unadu kabatti","Gopal crying chesadu kabatti"], answer:"Gopal pencils anni padesadu kabatti", video:"/videos/level4/video4.mp4" },
+    { question:"ee scene lo mam ala unaru?", options:["Mam happy ga unnaru","Mam sad ga unaru","Mam kopam ga unaru","Mam silent ga unaru"], answer:"Mam kopam ga unaru", video:"/videos/level4/video4.mp4" },
+    { question:"Gopal avariki sorry ani chptu unadu?", options:["Amma ki","Mam ki","thammu ki","Amma ki"], answer:"Mam ki", video:"/videos/level4/video5.mp4" },
+    { question:"ee story moral enti?", options:["Mana items anni padeyali","Diary rayali roju","Phone lo games adukovali","Mana Items maname jagrataga chusu kovali"], answer:"Mana Items maname jagrataga chusu kovali", video:"/videos/level4/video6.mp4" }
   ]
 };
 
