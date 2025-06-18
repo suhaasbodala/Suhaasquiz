@@ -3,15 +3,20 @@ import confetti from "canvas-confetti";
 import "./CompareGame.css";
 
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-const play = (a) => { a.currentTime = 0; a.play().catch(() => {}); };
-const twin = (a, b) => { play(a); play(b); };
+const play = (a) => {
+  a.currentTime = 0;
+  a.play().catch(() => {});
+};
+const twin = (a, b) => {
+  play(a);
+  play(b);
+};
 
 const sfxRight = new Audio("/sounds/success-1-6297.mp3");
 const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
 const voiceRight = new Audio("/sounds/very-good.mp3");
 const voiceWrong = new Audio("/sounds/try-again.mp3");
 const tapSound = new Audio("/sounds/tap.mp3");
-
 
 export default function CompareGame() {
   const [leftNum, setLeftNum] = useState(1);
@@ -24,6 +29,7 @@ export default function CompareGame() {
   const [pickedSym, setPickedSym] = useState("");
   const [symSlot, setSymSlot] = useState("");
   const [msg, setMsg] = useState("");
+  const [itemType, setItemType] = useState("apple");
 
   const freshRound = () => {
     const n1 = rand(1, 9);
@@ -32,7 +38,7 @@ export default function CompareGame() {
     setRightNum(n2);
     const apples = Array.from({ length: 20 }, (_, k) => ({
       id: `a-${Date.now()}-${k}`,
-      src: "/images/apple.jpg",
+      src: `/images/${itemType}.png`,
     }));
     setSupply(apples);
     setLeft([]);
@@ -44,18 +50,17 @@ export default function CompareGame() {
     setMsg("");
   };
 
-  useEffect(freshRound, []);
+  useEffect(freshRound, [itemType]);
 
   const togglePick = (id) => {
-  play(tapSound); // <--- TAP SOUND ADDED HERE
-  const element = document.getElementById(id);
-  if (element) {
-    element.classList.add("tapped");
-    setTimeout(() => element.classList.remove("tapped"), 200);
-  }
-  setPickedApple((prev) => (prev === id ? "" : id));
-};
-
+    play(tapSound);
+    const element = document.getElementById(id);
+    if (element) {
+      element.classList.add("tapped");
+      setTimeout(() => element.classList.remove("tapped"), 200);
+    }
+    setPickedApple((prev) => (prev === id ? "" : id));
+  };
 
   const dropInto = (side) => {
     if (!pickedApple) return;
@@ -81,7 +86,6 @@ export default function CompareGame() {
       );
     }, 0);
   };
-  
 
   const placeSymbol = () => {
     if (!pickedSym || symSlot) return;
@@ -105,11 +109,22 @@ export default function CompareGame() {
       setTimeout(() => setMsg(""), 3000);
     }
   };
-  
 
   return (
     <div className="cmp-container animated-bg">
-      <h2 className="cmp-title">🍎 Count&nbsp;&amp;&nbsp;Compare</h2>
+      {/* ITEM SELECTOR */}
+      <div className="item-selector">
+        <select value={itemType} onChange={(e) => setItemType(e.target.value)}>
+          <option value="apple">🍎 Apple</option>
+          <option value="biscuit">🍪 Biscuit</option>
+          <option value="chocolate">🍫 Chocolate</option>
+          <option value="pen">🖊️ Pen</option>
+          <option value="block">🧱 Block</option>
+        </select>
+      </div>
+
+      <h2 className="cmp-title">🍎 Count & Compare</h2>
+
       <div className="num-row">
         <span className="big-num">{leftNum}</span>
         <div
@@ -128,11 +143,7 @@ export default function CompareGame() {
               alt={symSlot}
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
-          ) : pickedSym ? (
-            "?"
-          ) : (
-            ""
-          )}
+          ) : pickedSym ? "?" : ""}
         </div>
         <span className="big-num">{rightNum}</span>
       </div>

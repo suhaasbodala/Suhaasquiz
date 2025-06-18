@@ -14,27 +14,27 @@ const StartScreen = () => {
 
       <div className="button-group">
         <button className="start-btn photo" onClick={() => navigate("/photo")}>
-  🖼️ Photo Story Mode
-</button>
+          🖼️ Photo Story Mode
+        </button>
 
-
-        <button
-          className="start-btn video"
-          onClick={() => {
-            console.log("Video Mode Clicked");
-            navigate("/video");  // ✅ Navigates to VideoGame
-          }}
-        >
+        <button className="start-btn video" onClick={() => navigate("/video")}>
           🎬 Video Story Mode
         </button>
-        <button
-          className="start-btn compare"
-          onClick={() => {
-            console.log("Comapre Mode Clicked");
-            navigate("/compare");  // ✅ Navigates to ComapreGame
-          }}
-        >
+
+        <button className="start-btn compare" onClick={() => navigate("/compare")}>
           🍎 Compare Numbers
+        </button>
+
+        <button className="start-btn ascending" onClick={() => navigate("/ascending")}>
+          🔢 Ascending Order
+        </button>
+
+        <button className="start-btn dayquiz" onClick={() => navigate("/quiz/day")}>
+          🗓️ Day Quiz
+        </button>
+
+        <button className="start-btn clockquiz" onClick={() => navigate("/quiz/clock")} >
+          ⏰ Clock Quiz 
         </button>
       </div>
 

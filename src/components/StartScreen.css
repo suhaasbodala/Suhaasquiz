@@ -98,12 +98,21 @@
 .start-btn.compare {
   background: #66bb6a;
 }
+.start-btn.ascending {
+  background: #da2cb1;
+}
 .start-boy {
   position: absolute;
   bottom: 15px;
   right: 20px;
   width: 100px;
   animation: floatBoy 3s ease-in-out infinite;
+}
+.start-btn.dayquiz {
+  background: #d3a50e;
+}
+.start-btn.clockquiz {
+  background: #17b4bc;
 }
 
 @keyframes floatBoy {
