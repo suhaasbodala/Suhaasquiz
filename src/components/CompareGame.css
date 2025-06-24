@@ -64,61 +64,28 @@
   gap: 50px;
   margin: 40px 0;
 }
-.bucket {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  justify-content: center;
-  margin-top: 30px;
-  padding: 6px 12px;
-  border: 3px solid #3b9ac9;
-  border-radius: 10px;
-  background: #fff;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 equal columns */
-  gap: 8px;
-  width: 450px;
-  min-height: 180px;
-  margin: 0 auto;
-  position: relative;
-  cursor: pointer;
-  padding: 8px;
-}
 
 .bucket {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   flex-wrap: wrap;
-  align-content: flex-start;
   justify-content: center;
+  align-items: flex-start;
   gap: 8px;
-  border: 3px solid #3b9ac9;
+  width: 200px;
+  height: 200px;
   background: #fff;
-  width: 200px;       /* Set a square width */
-  height: 200px;      /* Same as width to make it square */
+  border: 3px solid #3b9ac9;
+  border-radius: 12px;
+  padding: 8px;
   position: relative;
   cursor: pointer;
-  padding: 8px;
 }
-.bucket:hover {
-  border-color: #1e88e5;
-  box-shadow: 0 4px 12px rgba(63, 37, 37, 0.1);
-}
+
 
 /* ---------- apple image ---------- */
 .apple {
   width: 40px;
   height: 40px;
-  flex: 0 0 auto;
-  user-select: none;
-  cursor: pointer;
-  object-fit: contain;
-  margin: 0;
-  padding: 0;
-  gap: 8px;
 }
 
 .apple.picked-apple {
@@ -221,4 +188,19 @@
   border: 2px solid #888;
   background: #f0f0f0;
   cursor: pointer;
+}
+
+
+.nav-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 30px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #e3f2fd;
+  border: 2px solid #3b9ac9;
+  font-family: "Comic Sans MS", sans-serif;
+  cursor: pointer;
+  transition: background 0.3s;
 }

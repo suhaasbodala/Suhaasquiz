@@ -30,7 +30,19 @@
   align-items: flex-start;
   gap: 40px;
 }
-
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 30px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #e3f2fd;
+  border: 2px solid #3b9ac9;
+  font-family: "Comic Sans MS", sans-serif;
+  cursor: pointer;
+  transition: background 0.3s;
+}
 /* supply tray (vertical on left) */
 .supply-vertical {
   border: 3px solid #999;

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./VideoGame.css";
-//import { QueryStatus } from "@reduxjs/toolkit/query";
-
+import { useNavigate } from "react-router-dom";
 /* -------------  GAME DATA ------------- */
 const levels = [
   /* Level 1  */ ["vid1.mp4","vid2.mp4","vid3.mp4","vid4.mp4","vid5.mp4","vid6.mp4","vid7.mp4","vid8.mp4","vid9.mp4"],
@@ -76,6 +75,7 @@ const [targets,          setTargets]   = useState([]);
 const [selectedId,       setSelectedId]= useState(null);
 const [message,          setMessage]   = useState("");
 const [showLevelComplete,setDone]      = useState(false);
+const navigate = useNavigate(); // for navigation if needed
 
 /* NEW ► flag that shows “Very good…” popup */
 //const [correctPop,       setCorrectPop]= useState(false);   //  ← add this line
@@ -189,6 +189,7 @@ const playPair = (a, b) => {
 
   return (
     <div className="photo-container animated-bg">
+      <button className="back-btn" onClick={()=>navigate("/")}>🔙</button>
       {/* top bar */}
       <div className="top-bar">
         <h2 className="story-title">{levelDescriptions[level-1]}</h2>

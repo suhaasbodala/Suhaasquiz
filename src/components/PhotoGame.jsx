@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./PhotoGame.css";
-
+import {useNavigate} from "react-router-dom";
 const levels = [
   ["IMG-20250520-WA0002.jpg", "IMG-20250520-WA0003.jpg", "IMG-20250520-WA0001.jpg", "IMG-20250520-WA0005.jpg"],
   ["photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg"],
@@ -37,6 +37,7 @@ const PhotoGame = () => {
   const [targets, setTargets] = useState([]);
   const [message, setMessage] = useState("");
   const [showLevelComplete, setShowLevelComplete] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const levelData = levels[level - 1];
@@ -122,6 +123,7 @@ const PhotoGame = () => {
 
   return (
     <div className="photo-container animated-bg">
+      <button className="back-btn" onClick={() => navigate("/")}>🔙</button>
       <h2 className="story-title">{levelDescriptions[level - 1]}</h2>
 
       <select

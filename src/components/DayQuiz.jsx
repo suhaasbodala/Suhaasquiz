@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import confetti from "canvas-confetti";
 import "./DayQuiz.css";
+import { speak } from "../utils/speak";
+import {useNavigate} from "react-router-dom";
 
-// Sounds
 const sfxRight = new Audio("/sounds/success-1-6297.mp3");
 const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
-const voiceRight = new Audio("/sounds/very-good.mp3");
-const voiceWrong = new Audio("/sounds/try-again.mp3");
+const voiceRightSuhaas = new Audio("/sounds/very-good.mp3");
+const voiceWrongSuhaas = new Audio("/sounds/try-again.mp3");
 
-// Questions
 const dayQuestions = [
   {
     question: " MONDAY  TARAWATHA  EM DAY VASTADI?",
@@ -46,7 +46,7 @@ const dayQuestions = [
     answer: "Friday",
   },
   {
-    question: " IVALA THURSDAY. REPU EM DAY?", 
+    question: " IVALA THURSDAY. REPU EM DAY?",
     options: ["Friday", "Saturday", "Sunday", "Monday"],
     answer: "Friday",
   },
@@ -57,38 +57,54 @@ const dayQuestions = [
   }
 ];
 
-export default function DayQuiz() {
+export default function DayQuiz({ playerName = "Suhaas" }) {
   const [quizIndex, setQuizIndex] = useState(0);
   const [selectedOpt, setSelectedOpt] = useState("");
   const [feedback, setFeedback] = useState("");
-
+  const [showVideo, setShowVideo] = useState(false);
+  const navigate = useNavigate();
   const question = dayQuestions[quizIndex];
 
   const handleAnswer = (opt) => {
     if (selectedOpt) return;
-
     setSelectedOpt(opt);
 
     if (opt === question.answer) {
       sfxRight.play();
-      voiceRight.play();
-      setFeedback("🎉 Very good Suhaas!");
+
+      if (playerName.toLowerCase() === "suhaas") {
+        voiceRightSuhaas.currentTime = 0;
+        voiceRightSuhaas.play();
+      } else {
+        speak(`Very good ${playerName}`);
+      }
+
+      setShowVideo(true);
+      setFeedback(`🎉 Very good ${playerName}!`);
 
       setTimeout(() => {
         confetti({ particleCount: 100, spread: 70 });
         setSelectedOpt("");
         setFeedback("");
+        setShowVideo(false);
 
         if (quizIndex + 1 < dayQuestions.length) {
           setQuizIndex(quizIndex + 1);
         } else {
           setFeedback("🎊 Quiz Completed!");
         }
-      }, 2000);
+      }, 4000);
     } else {
       sfxWrong.play();
-      voiceWrong.play();
-      setFeedback("❌ Malli try cheyu Suhaas!");
+
+      if (playerName.toLowerCase() === "suhaas") {
+        voiceWrongSuhaas.currentTime = 0;
+        voiceWrongSuhaas.play();
+      } else {
+        speak(`Try again ${playerName}`);
+      }
+
+      setFeedback(`❌ Malli try cheyu ${playerName}!`);
       setTimeout(() => {
         setSelectedOpt("");
         setFeedback("");
@@ -100,6 +116,7 @@ export default function DayQuiz() {
     <div className="quiz-container">
       <div className="quiz-box">
         <div className="quiz-content">
+          <button className="back-btn" onClick={() => navigate("/")}>🔙</button>
           <h2 className="quiz-question">{question.question}</h2>
 
           <div className="quiz-options">
@@ -124,6 +141,19 @@ export default function DayQuiz() {
           {feedback && <p className="quiz-feedback">{feedback}</p>}
         </div>
       </div>
+
+      {showVideo && (
+        <video
+          autoPlay
+          muted
+          loop
+          className="voice-character-right"
+          style={{ width: "200px", borderRadius: "20px" }}
+        >
+          <source src="/videos/character-speak.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      )}
     </div>
   );
 }

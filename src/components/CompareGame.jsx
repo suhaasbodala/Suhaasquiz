@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import "./CompareGame.css";
+import { useNavigate } from "react-router-dom";
 
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-const play = (a) => {
-  a.currentTime = 0;
-  a.play().catch(() => {});
-};
-const twin = (a, b) => {
-  play(a);
-  play(b);
-};
+const play = (a) => { a.currentTime = 0; a.play().catch(() => {}); };
+const twin = (a, b) => { play(a); play(b); };
 
 const sfxRight = new Audio("/sounds/success-1-6297.mp3");
 const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
@@ -30,6 +25,7 @@ export default function CompareGame() {
   const [symSlot, setSymSlot] = useState("");
   const [msg, setMsg] = useState("");
   const [itemType, setItemType] = useState("apple");
+  const navigate = useNavigate();
 
   const freshRound = () => {
     const n1 = rand(1, 9);
@@ -112,9 +108,11 @@ export default function CompareGame() {
 
   return (
     <div className="cmp-container animated-bg">
-      {/* ITEM SELECTOR */}
       <div className="item-selector">
-        <select value={itemType} onChange={(e) => setItemType(e.target.value)}>
+        <select
+          value={itemType}
+          onChange={(e) => setItemType(e.target.value)}
+        >
           <option value="apple">🍎 Apple</option>
           <option value="biscuit">🍪 Biscuit</option>
           <option value="chocolate">🍫 Chocolate</option>
@@ -123,14 +121,15 @@ export default function CompareGame() {
         </select>
       </div>
 
+      <div className="nav-buttons">
+        <button className="nav-btn" onClick={() => navigate("/")}>🔙</button>
+      </div>
+
       <h2 className="cmp-title">🍎 Count & Compare</h2>
 
       <div className="num-row">
         <span className="big-num">{leftNum}</span>
-        <div
-          className={`sym-slot ${symSlot ? "filled" : ""}`}
-          onClick={placeSymbol}
-        >
+        <div className={`sym-slot ${symSlot ? "filled" : ""}`} onClick={placeSymbol}>
           {symSlot ? (
             <img
               src={`/images/${
@@ -150,18 +149,13 @@ export default function CompareGame() {
 
       <div className="bucket-row">
         <div className="bucket" onClick={() => dropInto("L")}>
-          <span className="apple-counter">
-            {left.length} / {leftNum}
-          </span>
+          <span className="apple-counter">{left.length} / {leftNum}</span>
           {left.map((a) => (
             <img key={a.id} src={a.src} alt="" className="apple" />
           ))}
         </div>
-
         <div className="bucket" onClick={() => dropInto("R")}>
-          <span className="apple-counter">
-            {right.length} / {rightNum}
-          </span>
+          <span className="apple-counter">{right.length} / {rightNum}</span>
           {right.map((a) => (
             <img key={a.id} src={a.src} alt="" className="apple" />
           ))}

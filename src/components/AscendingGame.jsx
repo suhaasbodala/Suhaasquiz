@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import confetti from "canvas-confetti";
 import "./AscendingGame.css";
-
+import { useNavigate } from "react-router-dom";
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const play = (a) => {
   a.currentTime = 0;
@@ -26,6 +26,7 @@ export default function CompareOrderGame() {
   const [orderSlots, setOrderSlots] = useState(["", "", ""]);
   const [pickedNum, setPickedNum] = useState("");
   const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
 
   const freshRound = () => {
     let nums = [];
@@ -141,6 +142,8 @@ export default function CompareOrderGame() {
 
   return (
     <div className="order-container animated-bg">
+      <button className="back-btn" onClick={() => navigate("/")}>🔙</button>
+
       <h2 className="order-title">🍪 Arrange in Ascending Order!</h2>
 
       <div className="main-area">

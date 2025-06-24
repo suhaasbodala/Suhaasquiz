@@ -1,0 +1,190 @@
+.quiz-container {
+  font-family: "Comic Sans MS", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #fffbe7, #e0f7fa);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.top-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.top-controls select {
+  font-size: 16px;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.start-btn {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #0288d1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pause-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.timer {
+  font-size: 18px;
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.quiz-box {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.option-btn {
+  padding: 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background: #e0f7fa;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.option-btn:hover {
+  background: #b2ebf2;
+}
+
+.correct {
+  background-color: #c8e6c9 !important;
+}
+
+.wrong {
+  background-color: #ffcdd2 !important;
+}
+
+.feedback-msg {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 16px;
+  color: #333;
+}
+
+.result {
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .quiz-container {
+    padding: 10px;
+  }
+
+  .top-controls {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .quiz-box {
+    padding: 20px;
+    width: 100%;
+  }
+
+  .start-btn,
+  .top-controls select,
+  .pause-btn {
+    width: 90%;
+    max-width: 300px;
+  }
+}
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 30px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #e3f2fd;
+  border: 2px solid #3b9ac9;
+  font-family: "Comic Sans MS", sans-serif;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.back-btn:hover {
+  color: #288f2f;
+transition: color 0.3s ease;
+}
+.pdf-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pdf-btn {
+  padding: 6px 12px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pdf-controls select {
+  font-size: 14px;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
