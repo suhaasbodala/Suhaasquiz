@@ -1,8 +1,10 @@
+// AscendingGame.jsx
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import confetti from "canvas-confetti";
+import Navbar from "./Navbar";
 import "./AscendingGame.css";
-import { useNavigate } from "react-router-dom";
+
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const play = (a) => {
   a.currentTime = 0;
@@ -26,7 +28,6 @@ export default function CompareOrderGame() {
   const [orderSlots, setOrderSlots] = useState(["", "", ""]);
   const [pickedNum, setPickedNum] = useState("");
   const [msg, setMsg] = useState("");
-  const navigate = useNavigate();
 
   const freshRound = () => {
     let nums = [];
@@ -142,8 +143,7 @@ export default function CompareOrderGame() {
 
   return (
     <div className="order-container animated-bg">
-      <button className="back-btn" onClick={() => navigate("/")}>🔙</button>
-
+      <Navbar />
       <h2 className="order-title">🍪 Arrange in Ascending Order!</h2>
 
       <div className="main-area">
@@ -163,35 +163,21 @@ export default function CompareOrderGame() {
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="numRow" direction="horizontal">
               {(provided) => (
-                <div
-                  className="num-row"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
+                <div className="num-row" {...provided.droppableProps} ref={provided.innerRef}>
                   {numbers.map((n, i) => (
                     <Draggable key={n} draggableId={n.toString()} index={i}>
                       {(provided, snapshot) => (
                         <div
-                          className={`num-block ${
-                            snapshot.isDragging ? "dragging" : ""
-                          }`}
+                          className={`num-block ${snapshot.isDragging ? "dragging" : ""}`}
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
                           <span className="big-num">{n}</span>
                           <div className="bucket-wrapper">
-                            <div
-                              className="bucket"
-                              onClick={() => dropIntoBucket(i)}
-                            >
+                            <div className="bucket" onClick={() => dropIntoBucket(i)}>
                               {buckets[i].map((b) => (
-                                <img
-                                  key={b.id}
-                                  src={b.src}
-                                  alt=""
-                                  className="biscuit-stack"
-                                />
+                                <img key={b.id} src={b.src} alt="" className="biscuit-stack" />
                               ))}
                             </div>
                             <div className="bucket-count">
@@ -236,18 +222,9 @@ export default function CompareOrderGame() {
             ✅ Check Answer
           </button>
 
-          {msg && (
-            <p
-              className={`order-msg ${
-                msg.includes("🚫") || msg.includes("❌") ? "error" : ""
-              }`}
-            >
-              {msg}
-            </p>
-          )}
+          {msg && <p className={`order-msg ${msg.includes("🚫") || msg.includes("❌") ? "error" : ""}`}>{msg}</p>}
         </div>
       </div>
     </div>
   );
 }
-

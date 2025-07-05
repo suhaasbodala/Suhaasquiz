@@ -1,177 +1,201 @@
-import React, { useState, useEffect } from "react";
-import questions from "../data/questions";
-import "./QuizGame.css";
-import confetti from "canvas-confetti";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import generateQuizPDF from "../utils/generateQuizPDF";
+import "./QuizGame.css";
 
-export default function QuizGame() {
-  const [selectedTime, setSelectedTime] = useState("");
-  const [timeLeft, setTimeLeft] = useState(null);
-  const [timerActive, setTimerActive] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [quizIndex, setQuizIdx] = useState(0);
-  const [selectedOpt, setSelectedOpt] = useState(null);
-  const [quizDone, setQuizDone] = useState(false);
-  const [score, setScore] = useState(0);
-  const [feedbackMsg, setFeedbackMsg] = useState("");
-  const [numPdfQuestions, setNumPdfQuestions] = useState(6);
+const play = (a) => {
+  a.currentTime = 0;
+  a.play().catch(() => {});
+};
+const twin = (a, b) => {
+  play(a);
+  play(b);
+};
+
+const sfxRight = new Audio("/sounds/success-1-6297.mp3");
+const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
+const voiceRight = new Audio("/sounds/very-good.mp3");
+const voiceWrong = new Audio("/sounds/try-again.mp3");
+const tapSound = new Audio("/sounds/tap.mp3");
+
+const originalQuizData = [
+  {
+    image: "/images/pic1.jpg",
+    questions: [
+      {
+        question: "Babu em chestunadu?",
+        options: ["Padukunadu", "Thintunadu", "TV chustunadu", "Aadukuntadu"],
+        answer: "Padukunadu"
+      },
+      {
+        question: "Evaru unnaru?",
+        options: ["Amma", "Nanna", "Babu", "Akka"],
+        answer: "Babu"
+      },
+      {
+        question: "Babu ekkada padukunadu?",
+        options: ["Bed paina", "Bed kinda", "Bed pakkana", "Bed lopala"],
+        answer: "Bed paina"
+      },
+      {
+        question: "Babu pakana em undhi?",
+        options: ["Pillow", "Blanket", "Teddy bear", "Book"],
+        answer: "Teddy bear"
+      },
+      {
+        question: "Table paina em undhi?",
+        options: ["Mobile", "Lamp", "Book", "Pen"],
+        answer: "Lamp"
+      }
+    ]
+  },
+  {
+    image: "/images/pic2.jpg",
+    questions: [
+      {
+        question: "Students entha unnaru?",
+        options: ["3", "4", "5", "6"],
+        answer: "6"
+      },
+      {
+        question: "Eppudu jarigindhi?",
+        options: ["Morning", "Afternoon", "Evening", "Night"],
+        answer: "Morning"
+      },
+      {
+        question: "Students yela unnaru?",
+        options: ["Happy", "Sad", "Angry", "Confused"],
+        answer: "Happy"
+      },
+      {
+        question: "Students yela kalisi unnaru?",
+        options: ["Sitting", "Standing", "Running", "Jumping"],
+        answer: "Sitting"
+      },
+      {
+        question: "Ekkada jarigindhi?",
+        options: ["Classroom", "Playground", "Library", "Canteen"],
+        answer: "Classroom"
+      },
+      {
+        question: "Students yela kalisi chustunnaru?",
+        options: ["Reading", "Writing", "Talking", "Playing"],
+        answer: "Talking"
+      },
+      {
+        question: "Students yela dress pettukunnaru?",
+        options: ["Uniform", "Casual", "Traditional", "Sportswear"],
+        answer: "Uniform"
+      }
+    ]
+  }
+];
+
+const QuizGame = () => {
   const navigate = useNavigate();
+  const [imageIndex, setImageIndex] = useState(0);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [feedback, setFeedback] = useState("");
+  const [showStar, setShowStar] = useState(false);
+  const [quizFinished, setQuizFinished] = useState(false);
+  const [answerHistory, setAnswerHistory] = useState([]);
 
-  const currentQuestion = questions[quizIndex];
-  const successSound = new Audio("/sounds/success-1-6297.mp3");
-  const failSound = new Audio("/sounds/fail-2-277575.mp3");
-  const quizCorrectSound = new Audio("/sounds/very-good.mp3");
-  const quizWrongSound = new Audio("/sounds/try-again.mp3");
+  const currentSet = originalQuizData[imageIndex];
+  const currentQuestion = currentSet.questions[questionIndex];
 
-  const playPair = (a, b) => {
-    a.currentTime = 0;
-    b.currentTime = 0;
-    a.play().catch(() => {});
-    b.play().catch(() => {});
-  };
+  const currentGlobalIndex = originalQuizData
+    .slice(0, imageIndex)
+    .reduce((sum, q) => sum + q.questions.length, 0) + questionIndex;
 
-  const startTimer = () => {
-    if (selectedTime) {
-      setTimeLeft(Number(selectedTime));
-      setTimerActive(true);
-    }
-  };
+  const handleAnswer = (option) => {
+    play(tapSound);
+    const newHistory = [...answerHistory];
 
-  useEffect(() => {
-    if (!timerActive || timeLeft === null || quizDone || isPaused) return;
+    if (option === currentQuestion.answer) {
+      setFeedback("✅ Correct!");
+      twin(sfxRight, voiceRight);
+      setShowStar(true);
 
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          setQuizDone(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [timerActive, timeLeft, quizDone, isPaused]);
-
-  const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s < 10 ? "0" + s : s}`;
-  };
-
-  const handleAnswer = (opt) => {
-    setSelectedOpt(opt);
-    if (opt === currentQuestion.correctAnswer) {
-      setScore(score + 1);
-      playPair(successSound, quizCorrectSound);
-      setFeedbackMsg("🎉 Very good Suhaas!");
+      newHistory[currentGlobalIndex] = newHistory[currentGlobalIndex] === "wrong" ? "wrong" : "right";
+      setAnswerHistory(newHistory);
 
       setTimeout(() => {
-        setSelectedOpt(null);
-        setFeedbackMsg("");
-        if (quizIndex + 1 === questions.length) {
-          confetti({ particleCount: 100, spread: 70 });
-          setQuizDone(true);
+        setShowStar(false);
+        setFeedback("");
+        if (questionIndex < currentSet.questions.length - 1) {
+          setQuestionIndex(questionIndex + 1);
+        } else if (imageIndex < originalQuizData.length - 1) {
+          setImageIndex(imageIndex + 1);
+          setQuestionIndex(0);
         } else {
-          setQuizIdx((i) => i + 1);
+          setQuizFinished(true);
         }
-      }, 2000);
+      }, 1200);
     } else {
-      playPair(failSound, quizWrongSound);
-      setFeedbackMsg("❌ Malli try cheyu Suhaas!");
-      setTimeout(() => {
-        setSelectedOpt(null);
-        setFeedbackMsg("");
-      }, 4000);
+      setFeedback("❌ Wrong, try again!");
+      twin(sfxWrong, voiceWrong);
+      newHistory[currentGlobalIndex] = "wrong";
+      setAnswerHistory(newHistory);
     }
   };
+
+  const restartQuiz = () => {
+    setImageIndex(0);
+    setQuestionIndex(0);
+    setQuizFinished(false);
+    setFeedback("");
+    setAnswerHistory([]);
+  };
+
+  const goToStart = () => {
+    navigate("/");
+  };
+
+  if (quizFinished) {
+    return (
+      <div className="quiz-container final-screen">
+        <h2>🎉 Shabash Suhaas! You completed the quiz!</h2>
+        <button className="restart-btn" onClick={restartQuiz}>🔁 Play Again</button>
+        <button className="restart-btn" onClick={goToStart}>🏠 Back to Start</button>
+      </div>
+    );
+  }
 
   return (
     <div className="quiz-container">
-      <button className="back-btn" onClick={() => navigate("/")}>🔙</button>
+      <button className="back-button-top-left" onClick={goToStart}>🏠</button>
 
-      <div className="top-bar">
-        <h1 className="quiz-title">Quiz Game</h1>
+      <div className="progress-bar">
+        {currentSet.questions.map((_, idx) => {
+          const globalIndex = originalQuizData
+            .slice(0, imageIndex)
+            .reduce((sum, q) => sum + q.questions.length, 0) + idx;
+          const status = answerHistory[globalIndex];
+          return (
+            <span key={idx} className={`dot ${status || "pending"}`}>
+              {status === "right" ? "🟢" : status === "wrong" ? "🔴" : "⚪"}
+            </span>
+          );
+        })}
+      </div>
 
-        <div className="top-controls">
-          <select
-            value={selectedTime}
-            onChange={(e) => setSelectedTime(e.target.value)}
-          >
-            <option value="">-- Optional Timer --</option>
-            {[...Array(59)].map((_, i) => {
-              const minutes = i + 1;
-              return (
-                <option key={minutes} value={minutes * 60}>
-                  {minutes} minute{minutes > 1 ? "s" : ""}
-                </option>
-              );
-            })}
-          </select>
-
-          <button className="start-btn" onClick={startTimer}>Start Quiz</button>
-
-          {timerActive && timeLeft !== null && (
-            <>
-              <p className="timer">Time Left: {formatTime(timeLeft)}</p>
-              <button className="pause-btn" onClick={() => setIsPaused(!isPaused)}>
-                {isPaused ? "Resume" : "Pause"}
+      <div className="quiz-content">
+        <img src={currentSet.image} alt="Quiz" className="quiz-image" />
+        <div className="question-box">
+          <h2>{currentQuestion.question}</h2>
+          <div className="options">
+            {currentQuestion.options.map((opt, idx) => (
+              <button key={idx} onClick={() => handleAnswer(opt)}>
+                {opt}
               </button>
-            </>
-          )}
-
-          {/* PDF Controls */}
-          <input
-            type="number"
-            min="1"
-            max={questions.length}
-            value={numPdfQuestions}
-            onChange={(e) => setNumPdfQuestions(Number(e.target.value))}
-            placeholder="No. of Qs"
-            style={{ padding: "6px", width: "80px" }}
-          />
-          <button
-            className="start-btn"
-            onClick={() => generateQuizPDF(questions, numPdfQuestions)}
-          >
-            📄 Generate PDF
-          </button>
+            ))}
+          </div>
+          <p className="feedback">{feedback}</p>
         </div>
       </div>
 
-      <div className="main-content">
-        {quizDone ? (
-          <div className="result">
-            <h2>Quiz Completed 🎉</h2>
-            <p>Your Score: {score} / {questions.length}</p>
-          </div>
-        ) : (
-          <div className="quiz-box">
-            <h3>{currentQuestion.question}</h3>
-            <div className="options">
-              {currentQuestion.options.map((opt, index) => (
-                <button
-                  key={index}
-                  className={`option-btn ${
-                    selectedOpt === opt
-                      ? opt === currentQuestion.correctAnswer
-                        ? "correct"
-                        : "wrong"
-                      : ""
-                  }`}
-                  onClick={() => handleAnswer(opt)}
-                  disabled={selectedOpt !== null}
-                >
-                  {opt}
-                </button>
-              ))}
-            </div>
-            {feedbackMsg && <p className="feedback-msg">{feedbackMsg}</p>}
-          </div>
-        )}
-      </div>
+      {showStar && <div className="star-animation">🌟</div>}
     </div>
   );
-}
+};
+
+export default QuizGame;

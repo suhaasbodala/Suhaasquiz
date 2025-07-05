@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import "./CompareGame.css";
-import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const play = (a) => { a.currentTime = 0; a.play().catch(() => {}); };
@@ -25,7 +25,6 @@ export default function CompareGame() {
   const [symSlot, setSymSlot] = useState("");
   const [msg, setMsg] = useState("");
   const [itemType, setItemType] = useState("apple");
-  const navigate = useNavigate();
 
   const freshRound = () => {
     const n1 = rand(1, 9);
@@ -107,11 +106,17 @@ export default function CompareGame() {
   };
 
   return (
-    <div className="cmp-container animated-bg">
-      <div className="item-selector">
+    <>
+      <Navbar />
+
+      {/* ✅ Item selection bar directly below Navbar */}
+      <div className="item-dropdown-bar">
+        <label htmlFor="item-select"></label>
         <select
+          id="item-select"
           value={itemType}
           onChange={(e) => setItemType(e.target.value)}
+          className="item-type-dropdown"
         >
           <option value="apple">🍎 Apple</option>
           <option value="biscuit">🍪 Biscuit</option>
@@ -121,81 +126,91 @@ export default function CompareGame() {
         </select>
       </div>
 
-      <div className="nav-buttons">
-        <button className="nav-btn" onClick={() => navigate("/")}>🔙</button>
-      </div>
+      <div className="cmp-container animated-bg">
+        <h2 className="cmp-title">🍎 Count & Compare</h2>
 
-      <h2 className="cmp-title">🍎 Count & Compare</h2>
-
-      <div className="num-row">
-        <span className="big-num">{leftNum}</span>
-        <div className={`sym-slot ${symSlot ? "filled" : ""}`} onClick={placeSymbol}>
-          {symSlot ? (
-            <img
-              src={`/images/${
-                symSlot === "<"
-                  ? "less"
-                  : symSlot === ">"
-                  ? "greater"
-                  : "equal"
-              }.png`}
-              alt={symSlot}
-              style={{ width: "100%", height: "100%", objectFit: "contain" }}
-            />
-          ) : pickedSym ? "?" : ""}
-        </div>
-        <span className="big-num">{rightNum}</span>
-      </div>
-
-      <div className="bucket-row">
-        <div className="bucket" onClick={() => dropInto("L")}>
-          <span className="apple-counter">{left.length} / {leftNum}</span>
-          {left.map((a) => (
-            <img key={a.id} src={a.src} alt="" className="apple" />
-          ))}
-        </div>
-        <div className="bucket" onClick={() => dropInto("R")}>
-          <span className="apple-counter">{right.length} / {rightNum}</span>
-          {right.map((a) => (
-            <img key={a.id} src={a.src} alt="" className="apple" />
-          ))}
-        </div>
-      </div>
-
-      <div className="supply">
-        {supply.map((a) => (
-          <img
-            key={a.id}
-            id={a.id}
-            src={a.src}
-            alt=""
-            className={`apple ${pickedApple === a.id ? "picked-apple" : ""}`}
-            onClick={() => togglePick(a.id)}
-          />
-        ))}
-      </div>
-
-      {trayOn && !symSlot && (
-        <div className="sym-row">
-          {["<", "=", ">"].map((sym) => (
-            <div
-              key={sym}
-              className={`sym-box ${pickedSym === sym ? "picked" : ""}`}
-              onClick={() => setPickedSym(sym)}
-            >
+        <div className="num-row">
+          <span className="big-num">{leftNum}</span>
+          <div
+            className={`sym-slot ${symSlot ? "filled" : ""}`}
+            onClick={placeSymbol}
+          >
+            {symSlot ? (
               <img
                 src={`/images/${
-                  sym === "<" ? "less" : sym === ">" ? "greater" : "equal"
+                  symSlot === "<"
+                    ? "less"
+                    : symSlot === ">"
+                    ? "greater"
+                    : "equal"
                 }.png`}
-                alt={sym}
+                alt={symSlot}
                 style={{ width: "100%", height: "100%", objectFit: "contain" }}
               />
-            </div>
+            ) : pickedSym ? "?" : ""}
+          </div>
+          <span className="big-num">{rightNum}</span>
+        </div>
+
+        <div className="bucket-row">
+          <div className="bucket" onClick={() => dropInto("L")}>
+            <span className="apple-counter">
+              {left.length} / {leftNum}
+            </span>
+            {left.map((a) => (
+              <img key={a.id} src={a.src} alt="" className="apple" />
+            ))}
+          </div>
+
+          <div className="bucket" onClick={() => dropInto("R")}>
+            <span className="apple-counter">
+              {right.length} / {rightNum}
+            </span>
+            {right.map((a) => (
+              <img key={a.id} src={a.src} alt="" className="apple" />
+            ))}
+          </div>
+        </div>
+
+        <div className="supply">
+          {supply.map((a) => (
+            <img
+              key={a.id}
+              id={a.id}
+              src={a.src}
+              alt=""
+              className={`apple ${pickedApple === a.id ? "picked-apple" : ""}`}
+              onClick={() => togglePick(a.id)}
+            />
           ))}
         </div>
-      )}
 
-      {msg && <p className="cmp-msg">{msg}</p>}
-    </div>
+        {trayOn && !symSlot && (
+          <div className="sym-row">
+            {["<", "=", ">"].map((sym) => (
+              <div
+                key={sym}
+                className={`sym-box ${pickedSym === sym ? "picked" : ""}`}
+                onClick={() => setPickedSym(sym)}
+              >
+                <img
+                  src={`/images/${
+                    sym === "<" ? "less" : sym === ">" ? "greater" : "equal"
+                  }.png`}
+                  alt={sym}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {msg && <p className="cmp-msg">{msg}</p>}
+      </div>
+    </>
   );
 }

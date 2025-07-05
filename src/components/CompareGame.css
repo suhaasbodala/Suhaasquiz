@@ -1,8 +1,9 @@
 .cmp-container {
-  padding: 20px;
+  padding: 00px;
   min-height: 100vh;
   font-family: "Comic Sans MS", sans-serif;
   text-align: center;
+  margin: 0px;
 }
 
 .animated-bg {
@@ -189,18 +190,22 @@
   background: #f0f0f0;
   cursor: pointer;
 }
-
-
-.nav-btn {
+.item-dropdown-bar {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 30px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background: #e3f2fd;
-  border: 2px solid #3b9ac9;
-  font-family: "Comic Sans MS", sans-serif;
+  top: 70px;              
+  right: 20px;
+  background: none;
+  border: none;
+  padding: 20px;
+  margin: 0;
+  z-index: 50;
+}
+
+.item-type-dropdown {
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 2px solid #888;
+  background: #f0f0f0;
   cursor: pointer;
-  transition: background 0.3s;
 }

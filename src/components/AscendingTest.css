@@ -1,12 +1,10 @@
 /* === Ascending Order Game With Navbar === */
 
-/* Ensure no gap between navbar and main content */
-.order-container {
+/* Remove outer container padding/margin and ensure full-screen layout */
+body, html {
   padding: 0;
-  min-height: 100vh;
-  font-family: "Comic Sans MS", sans-serif;
-  text-align: center;
   margin: 0;
+  height: 100%;
 }
 
 .animated-bg {
@@ -23,7 +21,8 @@
 
 .order-title {
   font-size: 28px;
-  margin-bottom: 14px;
+  margin: 20px 0;
+  text-align: center;
 }
 
 .main-area {
@@ -31,6 +30,8 @@
   justify-content: center;
   align-items: flex-start;
   gap: 40px;
+  padding: 0 20px;
+  flex-wrap: wrap;
 }
 
 .supply-vertical {
@@ -64,10 +65,9 @@
 
 .numbers-area {
   flex: 1;
-}
-
-.num-block.dragging {
-  border-color: #2196f3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .num-row {
@@ -75,6 +75,7 @@
   justify-content: center;
   gap: 40px;
   margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
 .num-block {
@@ -84,6 +85,13 @@
   gap: 10px;
   border: 2px dashed transparent;
   transition: border-color 0.2s;
+}
+
+.num-block.dragging {
+  border-color: #2196f3;
+  background-color: #f0f8ff;
+  transform: rotate(2deg) scale(1.05);
+  z-index: 10;
 }
 
 .big-num {
@@ -154,6 +162,7 @@
   justify-content: center;
   gap: 16px;
   margin-bottom: 18px;
+  flex-wrap: wrap;
 }
 
 .num-btn {
@@ -177,18 +186,6 @@
   background: #bbd9ff;
 }
 
-.num-block {
-  border: 2px dashed transparent;
-  transition: border-color 0.2s, transform 0.2s;
-}
-
-.num-block.dragging {
-  border-color: #2196f3;
-  background-color: #f0f8ff;
-  transform: rotate(2deg) scale(1.05);
-  z-index: 10;
-}
-
 .check-btn {
   margin-top: 10px;
   padding: 12px 30px;
@@ -204,6 +201,23 @@
 
 .check-btn:hover {
   background: #45a049;
+}
+
+.submit-btn {
+  margin-top: 16px;
+  padding: 12px 30px;
+  font-size: 28px;
+  border: none;
+  border-radius: 8px;
+  background: #2196f3;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background: #1976d2;
 }
 
 .order-msg {
@@ -222,4 +236,16 @@
     flex-direction: column;
     align-items: center;
   }
+}
+.end-test-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #f44336 !important;
+  width: 120px;
+  height: 40px;
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  z-index: 1000;
 }
