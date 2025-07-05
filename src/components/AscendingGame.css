@@ -1,225 +1,50 @@
-/* === Ascending Order Game With Navbar === */
-
-/* Ensure no gap between navbar and main content */
-.order-container {
-  padding: 0;
-  min-height: 100vh;
-  font-family: "Comic Sans MS", sans-serif;
-  text-align: center;
-  margin: 0;
-}
-
-.animated-bg {
-  background: linear-gradient(135deg, #ffe4ec, #d0f0fd);
-  background-size: 400% 400%;
-  animation: bgMove 12s ease infinite;
-}
-
-@keyframes bgMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.order-title {
-  font-size: 28px;
-  margin-bottom: 14px;
-}
-
 .main-area {
   display: flex;
-  justify-content: center;
   align-items: flex-start;
-  gap: 40px;
-}
-
-.supply-vertical {
-  border: 3px solid #999;
-  border-radius: 14px;
-  padding: 8px 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  height: 500px;
-  overflow-y: auto;
-}
-
-.biscuit {
-  width: 40px;
-  height: 40px;
-}
-
-.biscuit-stack {
-  width: 40px;
-  height: 40px;
-}
-
-.biscuit.picked-biscuit {
-  border: 3px solid #2196f3;
-  border-radius: 50%;
-  box-sizing: border-box;
-  transform: scale(1.1);
-}
-
-.numbers-area {
-  flex: 1;
-}
-
-.num-block.dragging {
-  border-color: #2196f3;
-}
-
-.num-row {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-bottom: 24px;
-}
-
-.num-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  border: 2px dashed transparent;
-  transition: border-color 0.2s;
-}
-
-.big-num {
-  font-size: 64px;
-  font-weight: bold;
-  color: #333;
-}
-
-.bucket {
-  width: 60px;
-  min-height: 150px;
-  border: 4px dashed #7ec8e3;
-  border-radius: 16px;
-  padding: 8px 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-}
-
-.bucket-count {
-  position: absolute;
-  bottom: 4px;
-  right: 6px;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.3);
-  font-weight: bold;
-  pointer-events: none;
-}
-
-.bucket-wrapper {
-  position: relative;
-}
-
-.order-row {
-  display: flex;
   justify-content: center;
   gap: 20px;
-  margin: 30px 0;
 }
 
-.order-slot {
-  width: 60px;
-  height: 60px;
-  border: 4px dashed #bbb;
-  border-radius: 12px;
-  font-size: 36px;
-  font-weight: bold;
-  line-height: 56px;
-  cursor: pointer;
-  user-select: none;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.order-slot:hover {
-  border-color: #888;
-}
-
-.order-slot.filled {
-  border-style: solid;
-  background: #fffbe6;
-  color: #111;
-}
-
-.num-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 18px;
-}
-
-.num-btn {
-  width: 60px;
-  height: 60px;
-  font-size: 28px;
-  font-weight: bold;
-  border: 3px solid #888;
-  border-radius: 50%;
-  cursor: pointer;
-  background: #e0f0ff;
-  transition: 0.2s;
-}
-
-.num-btn:hover {
-  background: #c7e1ff;
-}
-
-.num-btn.picked {
-  border-color: #2196f3;
-  background: #bbd9ff;
-}
-
-.num-block {
-  border: 2px dashed transparent;
-  transition: border-color 0.2s, transform 0.2s;
-}
-
-.num-block.dragging {
-  border-color: #2196f3;
-  background-color: #f0f8ff;
-  transform: rotate(2deg) scale(1.05);
-  z-index: 10;
-}
-
-.check-btn {
-  margin-top: 10px;
-  padding: 12px 30px;
-  font-size: 18px;
-  border: none;
-  border-radius: 8px;
-  background: #4caf50;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: background 0.2s;
-}
-
-.check-btn:hover {
-  background: #45a049;
-}
-
-.order-msg {
-  font-size: 22px;
-  font-weight: 600;
-  margin-top: 12px;
-  color: #2e7d32;
-}
-
-.order-msg.error {
-  color: #e53935;
-}
-
-@media (max-width: 600px) {
+/* Reverse column layout on mobile so supply goes to bottom */
+@media (max-width: 768px) {
   .main-area {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .supply-vertical {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+
+  .supply-vertical img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .numbers-area {
+    width: 100%;
+    display: flex;
     flex-direction: column;
+    align-items: center;
+  }
+
+  .num-row,
+  .order-row,
+  .num-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+@media (max-width: 768px) {
+  .main-area {
+    flex-direction: column-reverse; /* <== This reverses the layout */
     align-items: center;
   }
 }

@@ -15,9 +15,7 @@ export default function StartScreen({ playerName, onReset }) {
 
   return (
     <div className="start-container">
-      <button className="name-btn" onClick={onReset}>
-       Reset
-      </button>
+      <button className="name-btn" onClick={onReset}>Reset</button>
 
       {/* Show top-right Back to Menu button only in story view */}
       {showStories && (
@@ -25,7 +23,7 @@ export default function StartScreen({ playerName, onReset }) {
           className="back-btn-topright"
           onClick={() => setShowStories(false)}
         >
-          🔙 
+          🔙
         </button>
       )}
 
@@ -33,47 +31,31 @@ export default function StartScreen({ playerName, onReset }) {
       <p className="start-subtitle">Pick a fun game to begin your journey 🚀</p>
 
       <div className="button-group">
-        {/* STORY MODE block */}
+        {/* Main Menu */}
         {!showStories ? (
           <>
-            <button
-              className="start-btn story"
-              onClick={() => setShowStories(true)}
-            >
+            <button className="start-btn story" onClick={() => setShowStories(true)}>
               📖 Story Mode
             </button>
-            <button
-              className="start-btn compare"
-              onClick={() => navigate("/compare")}
-            >
+            <button className="start-btn compare" onClick={() => navigate("/compare")}>
               🍎 Compare Numbers
             </button>
-            <button
-              className="start-btn ascending"
-              onClick={() => navigate("/ascending")}
-            >
+            <button className="start-btn ascending" onClick={() => navigate("/ascending")}>
               🔢 Ascending Order
             </button>
-            <button
-              className="start-btn dayquiz"
-              onClick={() => navigate("/quiz/day")}
-            >
+            <button className="start-btn dayquiz" onClick={() => navigate("/quiz/day")}>
               🗓️ Day Quiz
             </button>
-            <button
-              className="start-btn clockquiz"
-              onClick={() => navigate("/quiz/clock")}
-            >
+            <button className="start-btn clockquiz" onClick={() => navigate("/quiz/clock")}>
               ⏰ Clock Quiz
             </button>
-            <button
-              className="start-btn quiz"
-              onClick={() => navigate("/quiz/game")}
-            >
-              Quiz Game
+            {/* ✅ FIXED QUIZ GAME ROUTE */}
+            <button className="start-btn quiz" onClick={() => navigate("/quiz")}>
+              🧠 Quiz Game
             </button>
           </>
         ) : (
+          // Story list view
           storyList.map((story) => (
             <button
               key={story.id}
@@ -85,8 +67,6 @@ export default function StartScreen({ playerName, onReset }) {
           ))
         )}
       </div>
-
-     
     </div>
   );
 }

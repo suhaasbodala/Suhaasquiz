@@ -1,4 +1,3 @@
-// AscendingGame.jsx
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import confetti from "canvas-confetti";
@@ -20,7 +19,7 @@ const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
 const voiceRight = new Audio("/sounds/very-good.mp3");
 const voiceWrong = new Audio("/sounds/try-again.mp3");
 
-export default function CompareOrderGame() {
+export default function AscendingGame() {
   const [numbers, setNumbers] = useState([]);
   const [buckets, setBuckets] = useState([[], [], []]);
   const [supply, setSupply] = useState([]);
@@ -147,6 +146,7 @@ export default function CompareOrderGame() {
       <h2 className="order-title">🍪 Arrange in Ascending Order!</h2>
 
       <div className="main-area">
+        {/* Biscuit Supply */}
         <div className="supply-vertical">
           {supply.map((b) => (
             <img
@@ -159,6 +159,7 @@ export default function CompareOrderGame() {
           ))}
         </div>
 
+        {/* Game Area */}
         <div className="numbers-area">
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="numRow" direction="horizontal">
@@ -194,6 +195,7 @@ export default function CompareOrderGame() {
             </Droppable>
           </DragDropContext>
 
+          {/* Answer Area */}
           <div className="order-row">
             {orderSlots.map((val, idx) => (
               <div
@@ -206,6 +208,7 @@ export default function CompareOrderGame() {
             ))}
           </div>
 
+          {/* Number Buttons */}
           <div className="num-buttons">
             {numbers.map((n) => (
               <button
@@ -222,7 +225,11 @@ export default function CompareOrderGame() {
             ✅ Check Answer
           </button>
 
-          {msg && <p className={`order-msg ${msg.includes("🚫") || msg.includes("❌") ? "error" : ""}`}>{msg}</p>}
+          {msg && (
+            <p className={`order-msg ${msg.includes("🚫") || msg.includes("❌") ? "error" : ""}`}>
+              {msg}
+            </p>
+          )}
         </div>
       </div>
     </div>

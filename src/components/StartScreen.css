@@ -1,187 +1,111 @@
 .start-container {
   text-align: center;
-  font-family: "Comic Sans MS", cursive;
-  height: 100vh;
-  background: linear-gradient(135deg, #fce4ec, #d0f0fd);
-  background-size: 400% 400%;
-  animation: backgroundMove 20s linear infinite;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
+  padding: 20px;
 }
-
-@keyframes backgroundMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 1000px 1000px; }
-}
-
-.floating-clouds::before,
-.floating-clouds::after {
-  content: "";
-  position: absolute;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  animation: float 25s linear infinite;
-}
-
-.floating-clouds::before {
-  width: 100px;
-  height: 100px;
-  top: 20%;
-  left: -150px;
-}
-
-.floating-clouds::after {
-  width: 120px;
-  height: 120px;
-  bottom: 30%;
-  right: -150px;
-  animation-delay: 10s;
-}
-
-@keyframes float {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(160vw); }
-}
-
-.start-title {
-  font-size: 32px;
-  color: #222;
-  animation: bounceIn 1s ease-in-out;
-}
-
-@keyframes bounceIn {
-  0% { transform: scale(0.7); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.start-subtitle {
-  font-size: 18px;
-  color: #555;
-  margin-bottom: 30px;
-}
-
-.button-group {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px 30px;
-  justify-items: center;
-  width: 90%;
-  max-width: 600px;
-  margin-bottom: 30px;
-}
-
-.start-btn {
-  width: 120px;
-  height: 120px;
-  font-size: 15px;
-  border: none;
-  border-radius: 50%; /* Circle/rounded-square */
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.start-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-}
-
-/* Colors */
-.start-btn.story     { background: #8e24aa; }
-.start-btn.photo     { background: #b20d28; }
-.start-btn.video     { background: #42a5f5; }
-.start-btn.compare   { background: #66bb6a; }
-.start-btn.ascending { background: #da2cb1; }
-.start-btn.dayquiz   { background: #d3a50e; }
-.start-btn.clockquiz { background: #17b4bc; }
-.start-btn.quiz      { background: #0e9c57; }
 
 .name-btn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 30px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background: #e3f2fd;
-  border: 2px solid #3b9ac9;
-  font-family: "Comic Sans MS", sans-serif;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border: 2px solid #4a90e2;
+  border-radius: 10px;
+  background: white;
   cursor: pointer;
-  transition: background 0.3s;
-}
-
-.name-btn:hover {
-  transform: scale(1.1);
-}
-
-.start-boy {
-  position: absolute;
-  bottom: 15px;
-  right: 20px;
-  width: 100px;
-  animation: floatBoy 3s ease-in-out infinite;
-}
-
-@keyframes floatBoy {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-/* Responsive */
-@media (max-width: 500px) {
-  .button-group {
-    grid-template-columns: 1fr;
-  }
-}
-.back-btn-top {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: #e3f2fd;
-  color: #333;
-  border: 2px solid #3b9ac9;
-  border-radius: 8px;
-  font-size: 18px;
-  padding: 6px 14px;
-  font-family: "Comic Sans MS", cursive;
-  cursor: pointer;
-  z-index: 10;
-  opacity: 0;
-  animation: fadeIn 0.5s forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
 }
 
 .back-btn-topright {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: #fff8dc;
-  border: 2px solid #ffc107;
-  font-size: 26px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-family: "Comic Sans MS", cursive;
+  top: 15px;
+  right: 15px;
+  font-size: 18px;
+  padding: 8px 12px;
+  border: none;
+  background: #eee;
+  border-radius: 10px;
   cursor: pointer;
-  z-index: 10;
-  transition: background 0.3s ease;
 }
 
-.back-btn-topright:hover {
-  background: #ffe082;
+.start-title {
+  font-size: 28px;
+  margin: 20px 0 10px;
+  font-weight: bold;
+}
+
+.start-subtitle {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* 🎯 Even 3-column layout that auto-wraps */
+.button-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  justify-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 🌈 Button style */
+.start-btn {
+  width: 200px;
+  height: 180px;
+  border-radius: 30%;
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  transition: transform 0.2s;
+}
+
+.start-btn:hover {
   transform: scale(1.05);
+}
+
+/* 🎨 Colors */
+.start-btn.story     { background: #9b59b6; }
+.start-btn.compare   { background: #27ae60; }
+.start-btn.ascending { background: #e91e63; }
+.start-btn.dayquiz   { background: #f39c12; }
+.start-btn.clockquiz { background: #00bcd4; }
+.start-btn.quiz      { background: #2ecc71; }
+
+/* 📱 Responsive: stack into 2 columns or 1 */
+@media (max-width: 768px) {
+  .button-group {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .button-group {
+    grid-template-columns: 1fr;
+  }
+
+  .start-btn {
+    width: 100px;
+    height: 100px;
+    font-size: 14px;
+  }
+
+  .start-title {
+    font-size: 22px;
+  }
+
+  .start-subtitle {
+    font-size: 14px;
+  }
+
+  .name-btn {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
 }

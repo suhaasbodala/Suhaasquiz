@@ -9,11 +9,13 @@ import AscendingGame from "./components/AscendingGame";
 import DayQuiz from "./components/DayQuiz";
 import ClockQuiz from "./components/ClockQuiz";
 import QuizGame from "./components/QuizGame";
+import QuizTopicScreen from "./components/QuizTopicScreen"; // ✅ New
 import StoryMode from "./components/StoryMode";
-import AscendingTest from "./components/AscendingTest"; // ✅ Add StoryMode
+import AscendingTest from "./components/AscendingTest";
 import Result from "./components/Result";
 import AscendingResult from "./components/AscendingResult";
 import CompareTest from "./components/CompareTest";
+
 export default function App() {
   const [playerName, setPlayerName] = useState("");
 
@@ -48,15 +50,19 @@ export default function App() {
       <Route path="/photo" element={<PhotoGame playerName={playerName} />} />
       <Route path="/video" element={<VideoGame playerName={playerName} />} />
       <Route path="/compare" element={<CompareGame playerName={playerName} />} />
-       <Route path="/compare-test" element={<CompareTest />} />
+      <Route path="/compare-test" element={<CompareTest />} />
       <Route path="/ascending" element={<AscendingGame playerName={playerName} />} />
       <Route path="/quiz/day" element={<DayQuiz playerName={playerName} />} />
       <Route path="/quiz/clock" element={<ClockQuiz playerName={playerName} />} />
-      <Route path="/quiz/game" element={<QuizGame playerName={playerName} />} />
-      <Route path="/ascending-test" element={<AscendingTest />} />
+
+      {/* ✅ New Dynamic Quiz Routes */}
+      <Route path="/quiz" element={<QuizTopicScreen />} />
+      <Route path="/quiz/:topic" element={<QuizGame playerName={playerName} />} />
+
       <Route path="/ascending-test" element={<AscendingTest />} />
       <Route path="/result" element={<Result />} />
-        <Route path="/ascending-result" element={<AscendingResult />} />
+      <Route path="/ascending-result" element={<AscendingResult />} />
+
       {/* ✅ Dynamic Story Mode Route */}
       <Route
         path="/story/:storyId/:mode"
