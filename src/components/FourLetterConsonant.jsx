@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./PhonicsPage.css";
 
 const wordSets = {
@@ -21,6 +22,7 @@ const wordSets = {
 const FourLetterConsonant = () => {
   const [selectedSet, setSelectedSet] = useState("con_l_vow_c");
   const [rate, setRate] = useState(1);
+  const navigate = useNavigate();
 
   const speakWord = (word) => {
     const utterance = new SpeechSynthesisUtterance(word);
@@ -31,6 +33,24 @@ const FourLetterConsonant = () => {
 
   return (
     <div>
+      {/* Back Button */}
+      <button
+        onClick={() => navigate(-1)}
+        style={{
+          position: "absolute",
+          top: "10px",
+          left: "10px",
+          padding: "8px 12px",
+          borderRadius: "8px",
+          border: "none",
+          backgroundColor: "#ccc",
+          cursor: "pointer",
+          zIndex: 10
+        }}
+      >
+        ⬅ Back
+      </button>
+
       <div className="navbar">
         <span className="hamburger" onClick={() => document.getElementById("sidebar").classList.toggle("show")}>&#9776;</span>
         <div className="nav-center">4-Letter Consonant Blends</div>

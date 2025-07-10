@@ -27,14 +27,9 @@ export default function StartScreen({ playerName, onReset }) {
         className: "quiz"
       },
       {
-        label: "🔤 3-Letter Blending",
-        action: () => navigate("/blending/3letter"),
-        className: "blending"
-      },
-      {
-        label: "🔤 4-Letter Blending",
-        action: () => navigate("/blending/4letter"),
-        className: "blend"
+        label: "📚 Story Quiz",
+        action: () => navigate("/storyquiz"),
+        className: "storyquiz"
       },
     ],
     Maths: [
@@ -62,13 +57,12 @@ export default function StartScreen({ playerName, onReset }) {
       },
     ],
     Music: [
-  {
-    label: "🎵 Music Player",
-    action: () => navigate("/music"),
-    className: "music"
-  },
-],
-
+      {
+        label: "🎵 Music Player",
+        action: () => navigate("/music"),
+        className: "music"
+      },
+    ],
   };
 
   return (
@@ -102,7 +96,7 @@ export default function StartScreen({ playerName, onReset }) {
           </>
         )}
 
-        {/* ENGLISH -> STORY + PHONICS */}
+        {/* ENGLISH STORY + PHONICS */}
         {selectedSubject === "English" && !showEnglishOptions && (
           <>
             <button className="start-btn story" onClick={() => navigate("/story/1/photo")}>📖 Story Mode</button>
@@ -110,7 +104,7 @@ export default function StartScreen({ playerName, onReset }) {
           </>
         )}
 
-        {/* PHONICS OPTIONS */}
+        {/* PHONICS SUB-OPTIONS */}
         {selectedSubject === "English" && showEnglishOptions && (
           <div className="phonics-group">
             <button className="start-btn blending" onClick={() => navigate("/blending/3letter")}>
@@ -122,7 +116,7 @@ export default function StartScreen({ playerName, onReset }) {
             <button className="start-btn blends" onClick={() => navigate("/blending/4letter/vowels")}>
               🔤 4-Letter Vowel Blends
             </button>
-            </div>
+          </div>
         )}
 
         {/* TELUGU STORY LIST */}
@@ -140,7 +134,7 @@ export default function StartScreen({ playerName, onReset }) {
           </>
         )}
 
-        {/* OTHER SUBJECT GAMES */}
+        {/* SUBJECT GAME OPTIONS */}
         {selectedSubject &&
           selectedSubject !== "StoryList" &&
           selectedSubject !== "English" &&

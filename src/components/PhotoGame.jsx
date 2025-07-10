@@ -12,6 +12,12 @@ const levels = [
   ],
   ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg"]
 ];
+const youtubeLinks = [
+  "https://youtu.be/Qzi1-J_shSc1", // Level 1
+  "https://youtu.be/Qzi1-J_shSc", // Level 2
+  "https://youtu.be/Qzi1-J_shSc", // Level 3
+  "https://youtu.be/Qzi1-J_shSc"  // Level 4
+];
 
 const successSound = new Audio("/sounds/success-1-6297.mp3");
 const failSound = new Audio("/sounds/fail-2-277575.mp3");
@@ -125,6 +131,14 @@ const PhotoGame = () => {
     <div className="photo-container animated-bg">
       <button className="back-btn" onClick={() => navigate("/")}>🔙</button>
       <h2 className="story-title">{levelDescriptions[level - 1]}</h2>
+      <a
+  href={youtubeLinks[level - 1]}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="youtube-link"
+>
+  ▶️ Watch Story
+</a>
 
       <select
         className="level-select"

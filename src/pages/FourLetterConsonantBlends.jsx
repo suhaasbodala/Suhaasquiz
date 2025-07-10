@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../components/PhonicsPage.css";
-
+import { useNavigate } from "react-router-dom";
 const wordSets = {
       con_l_vow_c: ["clap", "clog", "club", "clam", "clip", "clad", "clop", "clot", "clue", "clay", "clew", "clag", "clan", "claw", "clef", "clop", "clog", "clum", "clim", "clib", "clen", "cled", "clit", "clun", "clab", "clep", "clom", "clux", "claz", "claf", "clup", "clow", "clid", "clor", "clat", "clex", "cled", "clag", "clix", "clav"],
       con_vow_con_s: ["bats", "cuts", "dips", "gaps", "hops", "lips", "maps", "naps", "pits", "rips", "tops", "vets", "zips", "wets", "jots", "kegs", "mops", "nuts", "wigs", "yaks", "hats", "hips", "cups", "mats", "taps", "tips", "yaps", "pats", "kips", "zaps", "laps", "sips", "wags", "buns", "bins", "rugs", "bugs", "nips", "cogs", "logs"],
@@ -42,9 +42,11 @@ export default function FourLetterConsonantBlends() {
     utter.rate = rate;
     speechSynthesis.speak(utter);
   };
+  const navigate = useNavigate();
 
   return (
     <div>
+
       <div className="navbar">
         <div className="nav-left">
           <span
@@ -53,6 +55,22 @@ export default function FourLetterConsonantBlends() {
           >
             &#9776;
           </span>
+          <button
+  onClick={() => navigate("/")}
+  style={{
+    position: "fixed", // change from absolute to fixed
+    top: "20px",
+    left: "100px",
+    padding: "8px 12px",
+    borderRadius: "8px",
+    border: "none",
+    backgroundColor: "#f5f0f5",
+    cursor: "pointer",
+    zIndex: 1000 // increase z-index
+  }}
+>
+  Home
+</button>
         </div>
 
         <div className="nav-center">4-Letter Consonant Blends</div>

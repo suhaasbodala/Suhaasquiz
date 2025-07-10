@@ -204,3 +204,19 @@
   outline: 3ps solid #2196f3;
   transform: scale(1.05);
 }
+.youtube-link {
+  display: inline-block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #ff0000;
+  color: white;
+  font-weight: bold;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+.youtube-link:hover {
+  background-color: #cc0000;
+}

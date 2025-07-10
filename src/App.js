@@ -9,6 +9,7 @@ import NameInput from "./components/NameInput";
 import StoryMode from "./components/StoryMode";
 import PhotoGame from "./components/PhotoGame";
 import VideoGame from "./components/VideoGame";
+import StoryQuiz from "./components/StoryQuiz";
 
 // Quiz Flow
 import QuizTopicScreen from "./components/QuizTopicScreen";
@@ -85,6 +86,7 @@ export default function App() {
         <Route path="/story/:storyId/:mode" element={<StoryMode playerName={playerName} />} />
         <Route path="/video" element={<VideoGame playerName={playerName} />} />
         <Route path="/photo" element={<PhotoGame playerName={playerName} />} />
+        <Route path="/storyquiz" element={<StoryQuiz />} />
 
         {/* 🔢 Number Games */}
         <Route path="/compare" element={<CompareGame playerName={playerName} />} />

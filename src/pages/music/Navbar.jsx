@@ -16,9 +16,12 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
+      <div className="navbar-left">
+        <Link to="/">🏠</Link>
+        </div>
       <div className="navbar-left">Music App</div>
       <div className="navbar-right">
-        <Link to="/">Home</Link>
+        <Link to="/music">Home</Link>
         <Link to="/music/all-audios">All Audios</Link>
 
         {/* Search bar */}
