@@ -36,17 +36,18 @@
   margin-bottom: 20px;
 }
 
-/* 🎯 Even 3-column layout that auto-wraps */
+/* 🎯 Responsive Grid */
 .button-group {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
   justify-items: center;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
+  margin-top: 20px;
 }
 
-/* 🌈 Button style */
+/* 🌈 General Button Style */
 .start-btn {
   width: 200px;
   height: 180px;
@@ -69,15 +70,18 @@
   transform: scale(1.05);
 }
 
-/* 🎨 Colors */
+/* 🧠 Specific Game Colors */
 .start-btn.story     { background: #9b59b6; }
 .start-btn.compare   { background: #27ae60; }
 .start-btn.ascending { background: #e91e63; }
 .start-btn.dayquiz   { background: #f39c12; }
 .start-btn.clockquiz { background: #00bcd4; }
 .start-btn.quiz      { background: #2ecc71; }
+.start-btn.blending  { background: #703598; }
+.start-btn.blend     { background: #683030; }
+.start-btn.blends     { background: #098684; }
 
-/* 📱 Responsive: stack into 2 columns or 1 */
+/* 📱 Mobile Adjustments */
 @media (max-width: 768px) {
   .button-group {
     grid-template-columns: repeat(2, 1fr);
@@ -108,4 +112,30 @@
     font-size: 16px;
     padding: 8px 16px;
   }
+}
+/* 🎓 Subject Buttons */
+.start-btn.telugu {
+  background: #8e44ad;  /* purple */
+}
+
+.start-btn.english {
+  background: #2980b9;  /* blue */
+}
+
+.start-btn.maths {
+  background: #16a085;  /* teal */
+}
+
+.start-btn.uoi {
+  background: #d35400;  /* orange */
+}
+
+.start-btn.music {
+  background: #c0392b;  /* red */
+}
+.phonics-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
 }

@@ -1,33 +1,41 @@
 // src/components/QuizTopicScreen.jsx
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./QuizTopicScreen.css";
 
-const topics = [
-  { id: "howmany", label: "🔢 How Many?" },
-  { id: "prepositions", label: "📍 Prepositions" },
-  { id: "adjectives", label: "🎨 Adjectives" },
-  { id: "misc", label: "🧠 Miscellaneous" }
-];
+// Define topics by subject
+const allTopics = {
+  english: [
+    { id: "howmany", label: "🔢 How Many?" },
+    { id: "prepositions", label: "📍 Prepositions" },
+    { id: "adjectives", label: "🎨 Adjectives" },
+    { id: "misc", label: "🧠 Miscellaneous" }
+  ],
+  telugu: [
+     { id: "howmany", label: "🔢 How Many?" },
+    { id: "prepositions", label: "📍 Prepositions" },
+    { id: "adjectives", label: "🎨 Adjectives" },
+    { id: "misc", label: "🧠 Miscellaneous" }
+  ]
+};
 
 const QuizTopicScreen = () => {
   const navigate = useNavigate();
+  const { subject } = useParams();
+
+  const topics = allTopics[subject?.toLowerCase()] || [];
 
   return (
     <div className="topic-screen">
-      {/* Back to home screen */}
       <button className="back-button-top-left" onClick={() => navigate("/")}>🏠</button>
+      <h1 className="animated-title">🎯 {subject?.toUpperCase()} Quiz Topics</h1>
 
-      {/* Title with animation */}
-      <h1 className="animated-title">🎯 Choose a Topic</h1>
-
-      {/* Dynamic grid of topic buttons */}
       <div className="topic-grid">
         {topics.map((topic) => (
           <button
             key={topic.id}
             className="topic-btn"
-            onClick={() => navigate(`/quiz/${topic.id}`)}
+            onClick={() => navigate(`/quiz/${subject}/${topic.id}`)}
           >
             {topic.label}
           </button>

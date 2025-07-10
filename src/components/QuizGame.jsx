@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./QuizGame.css";
 
-// Audio helpers
 const play = (a) => {
   a.currentTime = 0;
   a.play().catch(() => {});
@@ -18,17 +17,28 @@ const voiceRight = new Audio("/sounds/very-good.mp3");
 const voiceWrong = new Audio("/sounds/try-again.mp3");
 const tapSound = new Audio("/sounds/tap.mp3");
 
-// All quiz data grouped by topic
+const speakText = (text) => {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "te-IN";
+  utterance.pitch = 1.5;
+  utterance.rate = 0.2;
+  utterance.volume = 1;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+};
+
+// 🧠 Quiz data
 const quizData = {
   howmany: [
   {
     image: "/images/Howmany/pic1.jpg",
     questions: [
-      { question: "IKKADA ENNI ITEMS UNNAYI?", options: ["2", "3", "4", "9"], answer: "9" },
+      { question: "ikkada enni items unaayi ?", options: ["2", "3", "4", "9"], answer: "9" },
       { question: "IKKADA EMI UNNAYI?", options: ["Persons", "Items", "Animals", "Birds"], answer: "Items" },
       { question: "IKKADA ENNI RED BALLS UNNAYI?", options: ["2", "3", "4", "5"], answer: "2" },
       { question: "IKKADA ENNI CARS UNNAYI?", options: ["2", "3", "4", "5"], answer: "5" },
-      { question: "IKKADA ENNI ROBOTS UNNAYI?", options: ["2", "3", "4", "5"], answer: "2" }
+      { question: "IKKADA ENNI ROBOTS UNNAYI?", options: ["2", "3", "4", "5"], answer: "2" },
+      
     ]
   },
   {
@@ -126,20 +136,20 @@ const quizData = {
     {
       image: "/images/adjectives/pic1.png",
       questions: [
-        { question: "APPLE EE COLOUR LO UNDI", options: ["Green", "Blue", "Red", "Yellow"], answer: "Red" }
+        { question: "APPLE EMI COLOUR LO UNDI", options: ["Green", "Blue", "Red", "Yellow"], answer: "Red" }
       ],
     },
     { 
     image: "/images/adjectives/pic2.png",
       questions: [
-        { question: "Dog ee colour lo undhi?", options: ["Green", "Blue", "Black", "Yellow"], answer: "Black" }
+        { question: "Dog EMI colour lo undhi?", options: ["Green", "Blue", "Black", "Yellow"], answer: "Black" }
       ]
     },
     {
       image: "/images/adjectives/pic3.png",
       questions: [
         { question: "BOX ______ BALL UNDI.", options: ["Lopala", "paina", "Kinda"], answer: "Lopala" },
-        { question: "BALL EE COLOUR LO UNDI?", options: ["Green", "Blue", "Black", "Yellow"], answer: "Yellow" }
+        { question: "BALL EMI COLOUR LO UNDI?", options: ["Green", "Blue", "Black", "Yellow"], answer: "Yellow" }
       ]
     },
     
@@ -177,7 +187,7 @@ const quizData = {
       image: "/images/misc/pic3.png",
       questions: [
         { question: "MONKEY _________GA UNDI. ", options: ["Big", "Small"], answer: "Small" },
-        { question: "GIRAFFE_________GA UNDI. ", options: ["Big", "Small"], answer: "Big" }
+        { question: "GIRAFFE___GA UNDI. ", options: ["Big", "Small"], answer: "Big" }
       ]
     },
     {
@@ -231,17 +241,20 @@ const quizData = {
 };
 
 const QuizGame = ({ playerName }) => {
-  const { topic } = useParams();
+  const { subject, topic } = useParams();
   const navigate = useNavigate();
 
   const originalQuizData = quizData[topic] || [];
-
   const [imageIndex, setImageIndex] = useState(0);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [showStar, setShowStar] = useState(false);
   const [quizFinished, setQuizFinished] = useState(false);
   const [answerHistory, setAnswerHistory] = useState([]);
+  const [isSpeakerOn, setIsSpeakerOn] = useState(true);
+
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isCorrect, setIsCorrect] = useState(null);
 
   const currentSet = originalQuizData[imageIndex];
   const currentQuestion = currentSet?.questions[questionIndex];
@@ -252,18 +265,26 @@ const QuizGame = ({ playerName }) => {
 
   const handleAnswer = (option) => {
     play(tapSound);
+    setSelectedOption(option);
+    const correct = option.toLowerCase() === currentQuestion.answer.toLowerCase();
+    setIsCorrect(correct);
+
     const newHistory = [...answerHistory];
 
-    if (option === currentQuestion.answer) {
+    if (correct) {
       setFeedback("✅ Correct!");
       twin(sfxRight, voiceRight);
       setShowStar(true);
-      newHistory[currentGlobalIndex] = newHistory[currentGlobalIndex] === "wrong" ? "wrong" : "right";
+      newHistory[currentGlobalIndex] =
+        newHistory[currentGlobalIndex] === "wrong" ? "wrong" : "right";
       setAnswerHistory(newHistory);
 
       setTimeout(() => {
         setShowStar(false);
         setFeedback("");
+        setSelectedOption(null);
+        setIsCorrect(null);
+
         if (questionIndex < currentSet.questions.length - 1) {
           setQuestionIndex(questionIndex + 1);
         } else if (imageIndex < originalQuizData.length - 1) {
@@ -287,13 +308,20 @@ const QuizGame = ({ playerName }) => {
     setQuizFinished(false);
     setFeedback("");
     setAnswerHistory([]);
+    setSelectedOption(null);
+    setIsCorrect(null);
   };
 
   const goBack = () => {
-    navigate("/quiz");
+    navigate(`/quiz/${subject}`);
   };
 
-  // 🔐 Invalid topic or no question
+  useEffect(() => {
+    if (currentQuestion && isSpeakerOn) {
+      speakText(currentQuestion.question);
+    }
+  }, [currentQuestion, isSpeakerOn]);
+
   if (!currentQuestion) {
     return (
       <div className="quiz-container">
@@ -303,7 +331,6 @@ const QuizGame = ({ playerName }) => {
     );
   }
 
-  // 🎉 Final screen
   if (quizFinished) {
     return (
       <div className="quiz-container final-screen">
@@ -314,7 +341,6 @@ const QuizGame = ({ playerName }) => {
     );
   }
 
-  // 🧠 Main Quiz Screen
   return (
     <div className="quiz-container">
       <button className="back-button-top-left" onClick={goBack}>🏠</button>
@@ -336,14 +362,40 @@ const QuizGame = ({ playerName }) => {
       <div className="quiz-content">
         <img src={currentSet.image} alt="Quiz" className="quiz-image" />
         <div className="question-box">
-          <h2>{currentQuestion.question}</h2>
+          <h2>
+            {currentQuestion.question}
+            <button className="speaker-btn" onClick={() => speakText(currentQuestion.question)}>🔊</button>
+          </h2>
+
+          <button
+            className="speaker-toggle-btn"
+            onClick={() => setIsSpeakerOn(!isSpeakerOn)}
+          >
+            {isSpeakerOn ? "🔊 Speaker On" : "🔇 Speaker Off"}
+          </button>
+
           <div className="options">
-            {currentQuestion.options.map((opt, idx) => (
-              <button key={idx} onClick={() => handleAnswer(opt)}>
-                {opt}
-              </button>
-            ))}
+            {currentQuestion.options.map((opt, idx) => {
+              const isSelected = selectedOption === opt;
+              const buttonClass = isSelected
+                ? isCorrect
+                  ? "option-btn correct"
+                  : "option-btn wrong"
+                : "option-btn";
+
+              return (
+                <button
+                  key={idx}
+                  className={buttonClass}
+                  onClick={() => handleAnswer(opt)}
+                  disabled={isCorrect === true}
+                >
+                  {opt}
+                </button>
+              );
+            })}
           </div>
+
           <p className="feedback">{feedback}</p>
         </div>
       </div>

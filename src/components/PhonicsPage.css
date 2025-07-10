@@ -1,0 +1,116 @@
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-bottom: 3px solid #eee;
+}
+
+.nav-left, .nav-center, .nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-center {
+  flex-grow: 1;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* Hamburger */
+.hamburger {
+  font-size: 24px;
+  cursor: pointer;
+  background-color: #ffb694;
+  padding: 6px 10px;
+  border-radius: 10px;
+  color: #333;
+  font-weight: bold;
+}
+
+
+
+.nav-right select {
+  margin-left: 8px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: none;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -200px;
+  width: 200px;
+  height: 100%;
+  background: #eee;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 1000;
+}
+
+.sidebar.show {
+  left: 0;
+}
+
+.sidebar button {
+  display: block;
+  padding: 12px;
+  width: 100%;
+  background: #4dd0e1;
+  border: none;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar button:hover {
+  background: #26c6da;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 900;
+  display: none;
+}
+
+.sidebar.show ~ .overlay {
+  display: block;
+}
+
+/* Word Grid */
+.word-grid {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.word-box {
+  background: white;
+  border: 2px solid #009688;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+
+.word-box:hover {
+  background: #b2dfdb;
+}
