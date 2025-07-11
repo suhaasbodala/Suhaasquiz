@@ -1,0 +1,165 @@
+/* Overall layout */
+.quiz-container {
+  background-color: #000; /* Black background */
+  color: white;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  min-height: 100vh;
+  padding: 40px;
+  box-sizing: border-box;
+}
+.target {
+    text-align: center;
+    font-size: 24px;
+    color: #1acc07; /* Green for target text */
+    margin-bottom: 20px;
+}
+/* Score display */
+.top-bar {
+  font-size: 24px;
+  margin-bottom: 30px;
+  display: flex;
+  color: #1acc07;
+}
+
+/* Layout for blocks and options */
+.quiz-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Left side: block visuals */
+.visual-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Tens area: column of 10 green squares */
+.grid-tens {
+  display: flex;
+  gap: 10px;
+}
+
+.grid-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Ones area: individual squares */
+.ones-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-left: 20px;
+}
+
+/* Individual block */
+.grid-block {
+  width: 20px;
+  height: 20px;
+  background-color: #90ee90; /* Light green */
+  border: 1px solid #333;
+  border-radius: 3px;
+}
+
+/* Options: right side */
+.options-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.option-btn {
+  font-size: 22px;
+  font-weight: bold;
+  background-color: #002147;
+  color: #1acc07;
+  border: 3px solid rgb(64, 64, 47);
+  border-radius: 10px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  width: 120px;
+  text-align: center;
+}
+
+.option-btn:hover {
+  background-color: #004080;
+}
+
+/* Feedback colors */
+.option-btn.correct {
+  background-color: green;
+  color: white;
+  border-color: white;
+}
+
+.option-btn.wrong {
+  background-color: red;
+  color: white;
+  border-color: white;
+}
+/* Tens blocks - purple */
+.ten-block {
+  background-color: #9b59b6; /* Purple */
+}
+.block-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.block-section h3 {
+  font-size: 20px;
+  color: #070707;
+  margin-bottom: 10px;
+}
+.card {
+  background-color: #eeeaea;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #444;
+  box-shadow: 0 0 10px #777272;
+}
+.level-select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #0077cc;
+  background-color: #f0f8ff;
+  color: #333;
+  font-weight: bold;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.level-select:focus {
+  outline: none;
+  border-color: #005fa3;
+}
+.quiz-content.side-by-side {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 40px;
+  padding: 20px;
+}
+
+.question-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.options-box.side {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

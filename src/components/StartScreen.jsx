@@ -19,55 +19,62 @@ export default function StartScreen({ playerName, onReset }) {
       {
         label: "📖 Story Mode",
         action: () => setSelectedSubject("StoryList"),
-        className: "story"
+        className: "story",
       },
       {
         label: "🧠 Quiz Game",
         action: () => navigate("/quiz/telugu"),
-        className: "quiz"
+        className: "quiz",
       },
       {
         label: "📚 Story Quiz",
         action: () => navigate("/storyquiz"),
-        className: "storyquiz"
+        className: "storyquiz",
       },
     ],
     Maths: [
       {
         label: "🍎 Compare Numbers",
         action: () => navigate("/compare"),
-        className: "compare"
+        className: "compare",
       },
       {
         label: "🔢 Ascending Order",
         action: () => navigate("/ascending"),
-        className: "ascending"
+        className: "ascending",
       },
       {
         label: "⏰ Clock Quiz",
         action: () => navigate("/quiz/clock"),
-        className: "clockquiz"
+        className: "clockquiz",
+      },
+      {
+        label: "🎯 Level 1 Bundle Game",
+        action: () => navigate("/TensOnesGame"),
+        className: "bundlegame",
       },
     ],
     UOI: [
       {
         label: "🗓️ Day Quiz",
         action: () => navigate("/quiz/day"),
-        className: "dayquiz"
+        className: "dayquiz",
       },
     ],
     Music: [
       {
         label: "🎵 Music Player",
         action: () => navigate("/music"),
-        className: "music"
+        className: "music",
       },
     ],
   };
 
   return (
     <div className="start-container">
-      <button className="name-btn" onClick={onReset}>Reset</button>
+      <button className="name-btn" onClick={onReset}>
+        Reset
+      </button>
 
       {(selectedSubject || selectedSubject === "StoryList") && (
         <button
@@ -88,32 +95,76 @@ export default function StartScreen({ playerName, onReset }) {
         {/* SUBJECT SELECTION */}
         {!selectedSubject && (
           <>
-            <button className="start-btn telugu" onClick={() => setSelectedSubject("Telugu")}>📘 Telugu</button>
-            <button className="start-btn english" onClick={() => setSelectedSubject("English")}>📗 English</button>
-            <button className="start-btn maths" onClick={() => setSelectedSubject("Maths")}>🧮 Maths</button>
-            <button className="start-btn uoi" onClick={() => setSelectedSubject("UOI")}>🌍 UOI</button>
-            <button className="start-btn music" onClick={() => setSelectedSubject("Music")}>🎵 Music</button>
+            <button
+              className="start-btn telugu"
+              onClick={() => setSelectedSubject("Telugu")}
+            >
+              📘 Telugu
+            </button>
+            <button
+              className="start-btn english"
+              onClick={() => setSelectedSubject("English")}
+            >
+              📗 English
+            </button>
+            <button
+              className="start-btn maths"
+              onClick={() => setSelectedSubject("Maths")}
+            >
+              🧮 Maths
+            </button>
+            <button
+              className="start-btn uoi"
+              onClick={() => setSelectedSubject("UOI")}
+            >
+              🌍 UOI
+            </button>
+            <button
+              className="start-btn music"
+              onClick={() => setSelectedSubject("Music")}
+            >
+              🎵 Music
+            </button>
           </>
         )}
 
         {/* ENGLISH STORY + PHONICS */}
         {selectedSubject === "English" && !showEnglishOptions && (
           <>
-            <button className="start-btn story" onClick={() => navigate("/story/1/photo")}>📖 Story Mode</button>
-            <button className="start-btn quiz" onClick={() => setShowEnglishOptions(true)}>🔤 Phonics Game</button>
+            <button
+              className="start-btn story"
+              onClick={() => navigate("/story/1/photo")}
+            >
+              📖 Story Mode
+            </button>
+            <button
+              className="start-btn quiz"
+              onClick={() => setShowEnglishOptions(true)}
+            >
+              🔤 Phonics Game
+            </button>
           </>
         )}
 
         {/* PHONICS SUB-OPTIONS */}
         {selectedSubject === "English" && showEnglishOptions && (
           <div className="phonics-group">
-            <button className="start-btn blending" onClick={() => navigate("/blending/3letter")}>
+            <button
+              className="start-btn blending"
+              onClick={() => navigate("/blending/3letter")}
+            >
               🔤 3-Letter Blending
             </button>
-            <button className="start-btn blend" onClick={() => navigate("/blending/4letter")}>
+            <button
+              className="start-btn blend"
+              onClick={() => navigate("/blending/4letter")}
+            >
               🔤 4-Letter Consonant Blends
             </button>
-            <button className="start-btn blends" onClick={() => navigate("/blending/4letter/vowels")}>
+            <button
+              className="start-btn blends"
+              onClick={() => navigate("/blending/4letter/vowels")}
+            >
               🔤 4-Letter Vowel Blends
             </button>
           </div>
