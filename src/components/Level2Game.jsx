@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import "./TensOnesGame.css";
+import React, { useState, useEffect } from "react";
+import "./Level2Game.css";
 import TensOnesGame from "./TensOnesGame";
+import confetti from "canvas-confetti"; // ✅ Confetti
 
 const sfxRight = new Audio("/sounds/success-1-6297.mp3");
 const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
@@ -10,44 +11,59 @@ const tapSound = new Audio("/sounds/tap.mp3");
 
 function Level2Game() {
   const [level, setLevel] = useState("level2");
-  const generateNumber = () => Math.floor(Math.random() * 90) + 10;
+  const generateNumber = () => Math.floor(Math.random() * 41) + 10;
 
   const [target, setTarget] = useState(generateNumber());
-  const [tensCount, setTensCount] = useState(0);
-  const [onesCount, setOnesCount] = useState(0);
-  const [selected, setSelected] = useState(null);
+  const [tensBlocks, setTensBlocks] = useState(0);
+  const [bundledTens, setBundledTens] = useState(0);
+  const [onesBlocks, setOnesBlocks] = useState(0);
+  const [pickedIndex, setPickedIndex] = useState(null);
+  const [usedIndexes, setUsedIndexes] = useState([]);
   const [result, setResult] = useState(null);
   const [score, setScore] = useState(0);
 
-  const handleAddTen = () => {
+  const totalTens = Math.floor(target / 10);
+  const totalOnes = target % 10;
+
+  const placeInTens = () => {
+    if (pickedIndex === null || bundledTens >= totalTens) return;
     tapSound.play();
-    setTensCount(prev => prev + 1);
+    setTensBlocks((prev) => {
+      const newCount = prev + 1;
+      if (newCount === 10) {
+        setBundledTens((bt) => bt + 1);
+        return 0;
+      }
+      return newCount;
+    });
+    setUsedIndexes((prev) => [...prev, pickedIndex]);
+    setPickedIndex(null);
   };
 
-  const handleAddOne = () => {
+  const placeInOnes = () => {
+    if (pickedIndex === null || bundledTens < totalTens) return;
     tapSound.play();
-    setOnesCount(prev => prev + 1);
-  };
-
-  const handleReset = () => {
-    setTensCount(0);
-    setOnesCount(0);
-    setSelected(null);
-    setResult(null);
+    setOnesBlocks((prev) => prev + 1);
+    setUsedIndexes((prev) => [...prev, pickedIndex]);
+    setPickedIndex(null);
   };
 
   const handleSubmit = () => {
-    const total = tensCount * 10 + onesCount;
-    setSelected(total);
-
-    if (total === target) {
+    const built = bundledTens * 10 + onesBlocks;
+    if (built === target) {
       sfxRight.play();
       voiceRight.play();
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); // ✅ Confetti
       setResult("correct");
-      setScore(prev => prev + 1);
+      setScore((prev) => prev + 1);
       setTimeout(() => {
         setTarget(generateNumber());
-        handleReset();
+        setTensBlocks(0);
+        setBundledTens(0);
+        setOnesBlocks(0);
+        setPickedIndex(null);
+        setUsedIndexes([]);
+        setResult(null);
       }, 2000);
     } else {
       sfxWrong.play();
@@ -74,54 +90,67 @@ function Level2Game() {
         </label>
       </div>
 
-      <h2 className="target">Build the number: {target}</h2>
+      <h2 className="target-number">Build the number: {target}</h2>
 
-      <div className="quiz-content">
-        <div className="visual-box">
-          <div className="block-section card">
-            <h3>Tens Blocks</h3>
+      <div className="supply-box">
+        <div className="supply-grid">
+          {[...Array(100)].map((_, i) => (
+            <div
+              key={i}
+              className={`supply-block ${pickedIndex === i ? "picked" : ""} ${
+                usedIndexes.includes(i) ? "used" : ""
+              }`}
+              onClick={() => {
+                if (!usedIndexes.includes(i)) {
+                  tapSound.play();
+                  setPickedIndex(i);
+                }
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="quiz-content side-by-side">
+        <div className="question-blocks">
+          <div className="block-section card" onClick={placeInTens}>
+            <h3>Tens Box ({bundledTens})</h3>
             <div className="grid-tens">
-              {[...Array(tensCount)].map((_, ti) => (
-                <div key={ti} className="grid-strip">
-                  {[...Array(10)].map((_, ui) => (
-                    <div key={ui} className="grid-block ten-block" />
+              {[...Array(bundledTens)].map((_, i) => (
+                <div key={i} className="grid-strip">
+                  {[...Array(10)].map((_, j) => (
+                    <div key={j} className="grid-block ten-block" />
                   ))}
                 </div>
               ))}
-            </div>
-            <button className="option-btn" onClick={handleAddTen}>
-              ➕ Add Ten
-            </button>
-          </div>
-
-          <div className="block-section card">
-            <h3>Ones Blocks</h3>
-            <div className="ones-display">
-              {[...Array(onesCount)].map((_, oi) => (
-                <div key={oi} className="one-with-label">
-                  <div className="grid-block" />
-                </div>
+              {[...Array(tensBlocks)].map((_, i) => (
+                <div key={i} className="grid-block" />
               ))}
             </div>
-            <button className="option-btn" onClick={handleAddOne}>
-              ➕ Add One
-            </button>
+          </div>
+
+          <div className="block-section card" onClick={placeInOnes}>
+            <h3>Ones Box ({onesBlocks})</h3>
+            <div className="ones-display">
+              {[...Array(onesBlocks)].map((_, i) => (
+                <div key={i} className="grid-block" />
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="options-box">
-          <button className="submit-btn" onClick={handleSubmit}>
-            ✅ Submit
-          </button>
-          <button className="reset-btn" onClick={handleReset}>
-            🔄 Reset
-          </button>
-
+        {/* ✅ Submit Button Centered */}
+        <div className="submit-section">
+          <div className="submit-wrapper">
+            <button className="submit-btn" onClick={handleSubmit}>
+              ✅ Submit
+            </button>
+          </div>
           {result === "correct" && (
-            <p className="result-message">🎉 Correct!</p>
+            <p className="result-message">🎉 Very Good Suhaas!</p>
           )}
           {result === "wrong" && (
-            <p className="result-message">❌ Try again!</p>
+            <p className="wrong-message">❌ Malli try cheyu suhaas!</p>
           )}
         </div>
       </div>

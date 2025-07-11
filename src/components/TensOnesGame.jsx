@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 import "./TensOnesGame.css";
 import Level2Game from "./Level2Game";
 
@@ -16,6 +17,7 @@ function TensOnesGame() {
   const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState(0);
+  const [result, setResult] = useState(null);
 
   const tens = Math.floor(target / 10);
   const ones = target % 10;
@@ -43,16 +45,21 @@ function TensOnesGame() {
     if (num === target) {
       sfxRight.play();
       voiceRight.play();
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.4 } });
+      setResult("correct");
       setScore((prev) => prev + 1);
       setTimeout(() => {
         setTarget(generateNumber());
         setSelected(null);
+        setResult(null);
       }, 1500);
     } else {
       sfxWrong.play();
       voiceWrong.play();
+      setResult("wrong");
       setTimeout(() => {
         setSelected(null);
+        setResult(null);
       }, 1500);
     }
   };
@@ -61,7 +68,7 @@ function TensOnesGame() {
 
   return (
     <div className="quiz-container">
-      <div className="top-bar">
+      <div className="top-bar center-top">
         <h2 className="score">✓ {score}</h2>
         <label className="level-toggle">
           <select
@@ -94,15 +101,13 @@ function TensOnesGame() {
             <h3>Ones Blocks</h3>
             <div className="ones-display">
               {[...Array(ones)].map((_, oi) => (
-                <div key={oi} className="one-with-label">
-                  <div className="grid-block" />
-                </div>
+                <div key={oi} className="grid-block" />
               ))}
             </div>
           </div>
         </div>
 
-        <div className="options-box">
+        <div className="options-box center-options">
           {options.map((opt, idx) => (
             <button
               key={idx}
@@ -116,6 +121,14 @@ function TensOnesGame() {
             </button>
           ))}
         </div>
+
+        {/* ✅ Feedback message */}
+        {result === "correct" && (
+          <p className="result-message">🎉 Very Good Suhaas!</p>
+        )}
+        {result === "wrong" && (
+          <p className="wrong-message">❌ Malli try cheyu Suhaas!</p>
+        )}
       </div>
     </div>
   );
