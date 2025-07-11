@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Level2Game.css";
 import TensOnesGame from "./TensOnesGame";
-import confetti from "canvas-confetti"; // ✅ Confetti
+import confetti from "canvas-confetti";
+import { useNavigate } from "react-router-dom";
 
 const sfxRight = new Audio("/sounds/success-1-6297.mp3");
 const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
@@ -11,8 +12,9 @@ const tapSound = new Audio("/sounds/tap.mp3");
 
 function Level2Game() {
   const [level, setLevel] = useState("level2");
-  const generateNumber = () => Math.floor(Math.random() * 41) + 10;
+  const [blockMode, setBlockMode] = useState("color");
 
+  const generateNumber = () => Math.floor(Math.random() * 41) + 10;
   const [target, setTarget] = useState(generateNumber());
   const [tensBlocks, setTensBlocks] = useState(0);
   const [bundledTens, setBundledTens] = useState(0);
@@ -24,6 +26,7 @@ function Level2Game() {
 
   const totalTens = Math.floor(target / 10);
   const totalOnes = target % 10;
+  const navigate = useNavigate();
 
   const placeInTens = () => {
     if (pickedIndex === null || bundledTens >= totalTens) return;
@@ -53,7 +56,7 @@ function Level2Game() {
     if (built === target) {
       sfxRight.play();
       voiceRight.play();
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); // ✅ Confetti
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       setResult("correct");
       setScore((prev) => prev + 1);
       setTimeout(() => {
@@ -76,8 +79,16 @@ function Level2Game() {
 
   return (
     <div className="quiz-container">
+      <button
+  onClick={() => navigate(-1)}
+  className="back-btn"
+>
+  🔙 
+</button>
+
       <div className="top-bar">
         <h2 className="score">✓ {score}</h2>
+
         <label className="level-toggle">
           <select
             className="level-select"
@@ -88,28 +99,22 @@ function Level2Game() {
             <option value="level2">Level 2: Build the Number</option>
           </select>
         </label>
+
+        <div className="mode-toggle">
+          <label htmlFor="blockMode"></label>
+          <select
+            id="blockMode"
+            value={blockMode}
+            onChange={(e) => setBlockMode(e.target.value)}
+            className="block-mode-select"
+          >
+            <option value="color">🟦 Color Blocks</option>
+            <option value="image">🍫 Chocolate Blocks</option>
+          </select>
+        </div>
       </div>
 
       <h2 className="target-number">Build the number: {target}</h2>
-
-      <div className="supply-box">
-        <div className="supply-grid">
-          {[...Array(100)].map((_, i) => (
-            <div
-              key={i}
-              className={`supply-block ${pickedIndex === i ? "picked" : ""} ${
-                usedIndexes.includes(i) ? "used" : ""
-              }`}
-              onClick={() => {
-                if (!usedIndexes.includes(i)) {
-                  tapSound.play();
-                  setPickedIndex(i);
-                }
-              }}
-            />
-          ))}
-        </div>
-      </div>
 
       <div className="quiz-content side-by-side">
         <div className="question-blocks">
@@ -117,14 +122,32 @@ function Level2Game() {
             <h3>Tens Box ({bundledTens})</h3>
             <div className="grid-tens">
               {[...Array(bundledTens)].map((_, i) => (
-                <div key={i} className="grid-strip">
-                  {[...Array(10)].map((_, j) => (
-                    <div key={j} className="grid-block ten-block" />
-                  ))}
+                <div key={i} className="bundle-box">
+                  <div className="grid-strip">
+                    {[...Array(10)].map((_, j) => (
+                      <div key={j} className="grid-block ten-block">
+                        {blockMode === "image" && (
+                          <img
+                            src="/images/choco.png"
+                            alt="choco"
+                            className="block-image"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
               {[...Array(tensBlocks)].map((_, i) => (
-                <div key={i} className="grid-block" />
+                <div key={i} className="grid-block">
+                  {blockMode === "image" && (
+                    <img
+                      src="/images/choco.png"
+                      alt="choco"
+                      className="block-image"
+                    />
+                  )}
+                </div>
               ))}
             </div>
           </div>
@@ -133,26 +156,61 @@ function Level2Game() {
             <h3>Ones Box ({onesBlocks})</h3>
             <div className="ones-display">
               {[...Array(onesBlocks)].map((_, i) => (
-                <div key={i} className="grid-block" />
+                <div key={i} className="grid-block">
+                  {blockMode === "image" && (
+                    <img
+                      src="/images/choco.png"
+                      alt="choco"
+                      className="block-image"
+                    />
+                  )}
+                </div>
               ))}
             </div>
           </div>
         </div>
+      </div>
 
-        {/* ✅ Submit Button Centered */}
-        <div className="submit-section">
-          <div className="submit-wrapper">
-            <button className="submit-btn" onClick={handleSubmit}>
-              ✅ Submit
-            </button>
-          </div>
-          {result === "correct" && (
-            <p className="result-message">🎉 Very Good Suhaas!</p>
-          )}
-          {result === "wrong" && (
-            <p className="wrong-message">❌ Malli try cheyu suhaas!</p>
-          )}
+      <div className="supply-box">
+        <div className="supply-grid">
+          {[...Array(100)]
+            .map((_, i) => i)
+            .filter((i) => !usedIndexes.includes(i))
+            .map((i) => (
+              <div
+                key={i}
+                className={`supply-block ${
+                  pickedIndex === i ? "picked" : ""
+                }`}
+                onClick={() => {
+                  tapSound.play();
+                  setPickedIndex(i);
+                }}
+              >
+                {blockMode === "image" && (
+                  <img
+                    src="/images/choco.png"
+                    alt="choco"
+                    className="block-image"
+                  />
+                )}
+              </div>
+            ))}
         </div>
+      </div>
+
+      <div className="submit-section">
+        <div className="submit-wrapper">
+          <button className="submit-btn" onClick={handleSubmit}>
+            ✅ Submit
+          </button>
+        </div>
+        {result === "correct" && (
+          <p className="result-message">🎉 Very Good Suhaas!</p>
+        )}
+        {result === "wrong" && (
+          <p className="wrong-message">❌ Malli try cheyu suhaas!</p>
+        )}
       </div>
     </div>
   );

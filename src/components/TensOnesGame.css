@@ -83,6 +83,22 @@
   flex-direction: column;
   gap: 4px;
 }
+.back-btn {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #f5f0f5;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.2s ease-in-out;
+}
+.back-btn:hover {
+  background-color: #e0e0e0;
+}
 
 .ones-display {
   display: flex;

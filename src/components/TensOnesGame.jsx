@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./TensOnesGame.css";
 import Level2Game from "./Level2Game";
+import { useNavigate } from "react-router-dom";
+
 
 const sfxRight = new Audio("/sounds/success-1-6297.mp3");
 const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
 const voiceRight = new Audio("/sounds/very-good.mp3");
 const voiceWrong = new Audio("/sounds/try-again.mp3");
 const tapSound = new Audio("/sounds/tap.mp3");
+
 
 function TensOnesGame() {
   const [level, setLevel] = useState("level1");
@@ -21,7 +24,7 @@ function TensOnesGame() {
 
   const tens = Math.floor(target / 10);
   const ones = target % 10;
-
+  const navigate = useNavigate();
   useEffect(() => {
     generateOptions(target);
   }, [target]);
@@ -29,7 +32,7 @@ function TensOnesGame() {
   const generateOptions = (correct) => {
     const wrong1 = correct + (Math.random() > 0.5 ? -10 : 10);
     const wrong2 = correct + (Math.random() > 0.5 ? -1 : 1);
-    const optList = [correct, wrong1, wrong2]
+    const optList = [correct, wrong1, wrong2, wrong1 + 10]
       .filter((val, idx, self) => val >= 10 && val <= 99 && self.indexOf(val) === idx)
       .sort(() => Math.random() - 0.5);
     while (optList.length < 3) {
@@ -68,6 +71,13 @@ function TensOnesGame() {
 
   return (
     <div className="quiz-container">
+      <button
+  onClick={() => navigate(-1)}
+  className="back-btn"
+>
+  🔙 
+</button>
+
       <div className="top-bar center-top">
         <h2 className="score">✓ {score}</h2>
         <label className="level-toggle">
