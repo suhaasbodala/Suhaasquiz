@@ -7,6 +7,10 @@ const storyList = [
   { id: 2, name: "🍎 Field Story" },
   { id: 3, name: "📱 Phone Story" },
   { id: 4, name: "🧩 Items Story" },
+  { id: 5, name: "Food Story" },
+  { id: 6, name: "Shuttle Story" },
+  { id: 7, name: "Mowgli and Kaki"},
+  { id: 8, name: "Hostel Story"}
 ];
 
 export default function StartScreen({ playerName, onReset }) {
