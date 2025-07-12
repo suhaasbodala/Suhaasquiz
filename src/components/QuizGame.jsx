@@ -19,13 +19,19 @@ const tapSound = new Audio("/sounds/tap.mp3");
 
 const speakText = (text) => {
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "te-IN";
-  utterance.pitch = 1.5;
-  utterance.rate = 0.2;
+
+  // Detect if the text contains Telugu Unicode characters
+  const isTelugu = /[\u0C00-\u0C7F]/.test(text);
+
+  utterance.lang = isTelugu ? "te-IN" : "en-IN"; // Telugu or English
+  utterance.pitch = 1.2;
+  utterance.rate = 0.9;
   utterance.volume = 1;
+
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 };
+
 
 // 🧠 Quiz data
 const quizData = {
@@ -33,40 +39,40 @@ const quizData = {
   {
     image: "/images/Howmany/pic1.jpg",
     questions: [
-      { question: "ikkada enni items unaayi ?", options: ["2", "3", "4", "9"], answer: "9" },
-      { question: "IKKADA EMI UNNAYI?", options: ["Persons", "Items", "Animals", "Birds"], answer: "Items" },
-      { question: "IKKADA ENNI RED BALLS UNNAYI?", options: ["2", "3", "4", "5"], answer: "2" },
-      { question: "IKKADA ENNI CARS UNNAYI?", options: ["2", "3", "4", "5"], answer: "5" },
-      { question: "IKKADA ENNI ROBOTS UNNAYI?", options: ["2", "3", "4", "5"], answer: "2" },
+      { question: "ikkada enni items unnayi ?", options: ["2", "3", "4", "9"], answer: "9" },
+      { question: "Ikkada emi unnayi?", options: ["Persons", "Items", "Animals", "Birds"], answer: "Items" },
+      { question: "Ikkada enni red balls unnayi?", options: ["2", "3", "4", "5"], answer: "2" },
+      { question: "Ikkada enni cars unnai?", options: ["2", "3", "4", "5"], answer: "5" },
+      { question: "Ikkada enni robots unnai?", options: ["2", "3", "4", "5"], answer: "2" },
       
     ]
   },
   {
     image: "/images/Howmany/pic2.jpg",
     questions: [
-      { question: "IKKADA ENNI ANIMALS UNNAYI?", options: ["2", "3", "8", "5"], answer: "8" },
-      { question: "IKKADA EMI UNNAYI?", options: ["Animals", "Birds", "Items", "Persons"], answer: "Animals" },
-      { question: "IKKADA ENNI MONKEYS UNNAYI?", options: ["2", "3", "4", "5"], answer: "2" },
-      { question: "IKKADA ENNI ELEPHANTS UNNAYI?", options: ["2", "3", "4", "5"], answer: "4" },
-      { question: "IKKADA ENNI GIRAFFES UNNAYI?", options: ["2", "3", "4", "5"], answer: "2" },
-      { question: "IKKADA ENNI SMAKES UNNAYI?", options: ["2", "3", "1", "5"], answer: "1" }
+      { question: "Ikkada enni animals unnayi?", options: ["2", "3", "8", "5"], answer: "8" },
+      { question: "Ikkada emi unnayi?", options: ["Animals", "Birds", "Items", "Persons"], answer: "Animals" },
+      { question: "Ikkada enni monkeys unnayi?", options: ["2", "3", "4", "5"], answer: "2" },
+      { question: "Ikkada enni elephants unnayi?", options: ["2", "3", "4", "5"], answer: "4" },
+      { question: "Ikkada enni giraffees unnayi?", options: ["2", "3", "4", "5"], answer: "2" },
+      { question: "Ikkada enni snakes unnayi?", options: ["2", "3", "1", "5"], answer: "1" }
     ]
   },
   {
-    image: "/images/Howmany/pic3.jpg",
+    image: "/images/Howmany/pic3.png",
     questions: [
-      { question: "IKKADA EVARU UNNARU?", options: ["Persons", "Items", "Animals", "Birds"], answer: "persons" },
-      { question: "IKKADA ENTHA MANDHI GIRLS UNNARU?", options: ["2", "3", "4", "5"], answer: "2" },
-      { question: "IKKADA ENTHA MANDHI BOYS UNNARU?", options: ["2", "3", "4", "5"], answer: "3" }
+      { question: "Ikkada evaru unnaru?", options: ["Persons", "Items", "Animals", "Birds"], answer: "persons" },
+      { question: "Ikkada enni girls unnaru?", options: ["2", "3", "4", "5"], answer: "2" },
+      { question: "Ikkada enni boys unnaru?", options: ["2", "3", "4", "5"], answer: "3" }
     ]
   },
   {
-    image: "/images/Howmany/pic4.jpg",
+    image: "/images/Howmany/pic4.png",
     questions: [
-      { question: "IKKADA ENTHA MANDHI PERSONS UNNARU?", options: ["2", "3", "4", "5"], answer: "2" },
-      { question: "IKKADA ENNI ANIMALS UNNAYI?", options: ["0", "2", "1", "4"], answer: "1" },
-      { question: "IKKADA ENNI ITEMS UNNAYI?", options: ["2", "3", "4", "5"], answer: "4" },
-      { question: "IKKADA ENNI GREEN CARS UNNAYI?", options: ["2", "1", "4", "5"], answer: "1" }
+      { question: "Ikkada enni persons unnaru?", options: ["2", "3", "4", "5"], answer: "2" },
+      { question: "Ikkada enni animals unnayi?", options: ["0", "2", "1", "4"], answer: "1" },
+      { question: "Ikkada enni items unnayi?", options: ["2", "3", "4", "5"], answer: "4" },
+      { question: "Ikkada enni green cars unnayi?", options: ["2", "1", "4", "5"], answer: "1" }
     ]
   }
 ],
@@ -136,35 +142,35 @@ const quizData = {
     {
       image: "/images/adjectives/pic1.png",
       questions: [
-        { question: "APPLE EMI COLOUR LO UNDI", options: ["Green", "Blue", "Red", "Yellow"], answer: "Red" }
+        { question: "Apple em colour lo undi", options: ["Green", "Blue", "Red", "Yellow"], answer: "Red" }
       ],
     },
     { 
     image: "/images/adjectives/pic2.png",
       questions: [
-        { question: "Dog EMI colour lo undhi?", options: ["Green", "Blue", "Black", "Yellow"], answer: "Black" }
+        { question: "Dog em colour lo undi?", options: ["Green", "Blue", "Black", "Yellow"], answer: "Black" }
       ]
     },
     {
       image: "/images/adjectives/pic3.png",
       questions: [
-        { question: "BOX ______ BALL UNDI.", options: ["Lopala", "paina", "Kinda"], answer: "Lopala" },
-        { question: "BALL EMI COLOUR LO UNDI?", options: ["Green", "Blue", "Black", "Yellow"], answer: "Yellow" }
+        { question: "BOX ______ ball undi.", options: ["Lopala", "paina", "Kinda"], answer: "Lopala" },
+        { question: "Ball em colour lo undi?", options: ["Green", "Blue", "Black", "Yellow"], answer: "Yellow" }
       ]
     },
     
     {
       image: "/images/adjectives/pic5.png",
       questions: [
-        { question: "ELEPHANT _________GA UNDI.", options: ["Big", "Small"], answer: "Big" },
-        { question: "CAT _________GA UNDI.", options: ["Big", "Small"], answer: "Small" }
+        { question: "Elephant _________ga undi.", options: ["Big", "Small"], answer: "Big" },
+        { question: "CAT _________ga undi.", options: ["Big", "Small"], answer: "Small" }
       ]
     },
     {
       image: "/images/adjectives/pic6.png",
       questions: [
-        { question: "BAG _________GA UNDI.", options: ["Big", "Small"], answer: "Big" },
-        { question: "BOTTLE _________GA UNDI.", options: ["Big", "Small"], answer: "Small" }
+        { question: "BAG _________ga undi.", options: ["Big", "Small"], answer: "Big" },
+        { question: "BOTTLE _________ga undi.", options: ["Big", "Small"], answer: "Small" }
       ] 
     }
   ],
@@ -180,14 +186,14 @@ const quizData = {
     {
       image: "/images/misc/pic2.png",
       questions: [
-        { question: "LAPTOP TABLE __________UNDI. ", options: ["Lopala", "paina", "Kinda"], answer: "paina" }
+        { question: "Laptop table __________undi. ", options: ["Lopala", "paina", "Kinda"], answer: "paina" }
       ]
     },
     {
       image: "/images/misc/pic3.png",
       questions: [
-        { question: "MONKEY _________GA UNDI. ", options: ["Big", "Small"], answer: "Small" },
-        { question: "GIRAFFE___GA UNDI. ", options: ["Big", "Small"], answer: "Big" }
+        { question: "Monkey _________ga undi. ", options: ["Big", "Small"], answer: "Small" },
+        { question: "Girafee___gs undi. ", options: ["Big", "Small"], answer: "Big" }
       ]
     },
     {
@@ -207,14 +213,14 @@ const quizData = {
     {
       image: "/images/misc/pic6.png",
       questions: [
-        { question: "IDI EPPUDU? ", options: ["Day", "Night"], answer: "Night" },
-        { question: " IKKADA EVARU UNNARU?", options: ["Person", "Animal"], answer: "Person" }
+        { question: "Idi eppudu? ", options: ["Day", "Night"], answer: "Night" },
+        { question: "Ikkada evaru unnaru?", options: ["Person", "Animal"], answer: "Person" }
       ]
     },
     {
       image: "/images/misc/pic7.png",
       questions: [
-        { question: "DOG SOFA ________ UNDI. ", options: ["Lopala", "Paina", "Kinda"], answer: "Paina"},
+        { question: "DOG SOFA ________ undi. ", options: ["Lopala", "Paina", "Kinda"], answer: "Paina"},
         { question: "Ikkada emi unnai", options: ["Person", "Items", "Animal"], answer: "Animal" }
       ]
     },
@@ -227,7 +233,7 @@ const quizData = {
     {
       image: "/images/misc/pic9.png",
       questions: [
-        { question: "IDI EPPUDU?", options: ["Day", "Night"], answer: "Day" }
+        { question: "Idi eppudu?", options: ["Day", "Night"], answer: "Day" }
       ]
     },
     {
@@ -252,7 +258,6 @@ const QuizGame = ({ playerName }) => {
   const [quizFinished, setQuizFinished] = useState(false);
   const [answerHistory, setAnswerHistory] = useState([]);
   const [isSpeakerOn, setIsSpeakerOn] = useState(true);
-
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
 
@@ -316,11 +321,19 @@ const QuizGame = ({ playerName }) => {
     navigate(`/quiz/${subject}`);
   };
 
+  // 🔊 Auto speak on load
   useEffect(() => {
     if (currentQuestion && isSpeakerOn) {
       speakText(currentQuestion.question);
     }
   }, [currentQuestion, isSpeakerOn]);
+
+  // 🔇 Cancel speech when toggled off
+  useEffect(() => {
+    if (!isSpeakerOn) {
+      window.speechSynthesis.cancel();
+    }
+  }, [isSpeakerOn]);
 
   if (!currentQuestion) {
     return (
@@ -361,12 +374,14 @@ const QuizGame = ({ playerName }) => {
 
       <div className="quiz-content">
         <img src={currentSet.image} alt="Quiz" className="quiz-image" />
+
         <div className="question-box">
           <h2>
             {currentQuestion.question}
-            <button className="speaker-btn" onClick={() => speakText(currentQuestion.question)}>🔊</button>
+            
           </h2>
 
+          {/* ✅ Toggle Speaker On/Off */}
           <button
             className="speaker-toggle-btn"
             onClick={() => setIsSpeakerOn(!isSpeakerOn)}
@@ -396,7 +411,13 @@ const QuizGame = ({ playerName }) => {
             })}
           </div>
 
-          <p className="feedback">{feedback}</p>
+          <p
+            className={`feedback ${
+              feedback.includes("Correct") ? "correct" : feedback.includes("Wrong") ? "wrong" : ""
+            }`}
+          >
+            {feedback}
+          </p>
         </div>
       </div>
 

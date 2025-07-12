@@ -4,15 +4,17 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh; /* changed from height to min-height */
   background: linear-gradient(to bottom right, #f0f9ff, #cfe0f9);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 80px;
+  padding: 80px 20px 40px;
   z-index: 1000;
-  overflow: auto;
+  overflow-y: auto; /* make sure vertical scroll is enabled */
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* Level title */

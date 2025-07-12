@@ -7,14 +7,14 @@ const levels = [
   ["vid1.mp4","vid2.mp4","vid3.mp4","vid4.mp4","vid5.mp4","vid6.mp4","vid7.mp4","vid8.mp4","vid9.mp4"],
   ["scene1.mp4","scene2.mp4","scene3.mp4","scene4.mp4","scene5.mp4","scene6.mp4","scene7.mp4"],
   ["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video6.mp4","video5.mp4","video7.mp4"],
-  ["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4"]
+  ["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4"],
 ];
 
 const youtubeLinks = [
   "https://youtu.be/Qzi1-J_shSc1",
   "https://youtu.be/Qzi1-J_shSc",
   "https://youtu.be/Qzi1-J_shSc",
-  "https://youtu.be/Qzi1-J_shSc"
+  "https://youtu.be/Qzi1-J_shSc",
 ];
 
 const levelDescriptions = ["💧 Potty Story", "🍎 Field Story", "Phone Story", "Item Story"];

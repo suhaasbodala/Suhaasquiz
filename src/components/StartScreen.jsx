@@ -53,6 +53,12 @@ export default function StartScreen({ playerName, onReset }) {
         action: () => navigate("/TensOnesGame"),
         className: "bundlegame",
       },
+      {
+  label: "🎯 Level 0 Bundle Game",
+  action: () => navigate("/Level1Game"),
+  className: "bundlegame",
+}
+
     ],
     UOI: [
       {
@@ -83,9 +89,7 @@ export default function StartScreen({ playerName, onReset }) {
             setSelectedSubject(null);
             setShowEnglishOptions(false);
           }}
-        >
-          🔙
-        </button>
+        >🔙</button>
       )}
 
       <h1 className="start-title">🌟 Welcome {playerName || "Suhaas"}! 🌟</h1>

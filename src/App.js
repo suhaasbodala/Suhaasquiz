@@ -25,7 +25,8 @@ import AscendingTest from "./components/AscendingTest";
 import Result from "./components/Result";
 import AscendingResult from "./components/AscendingResult";
 import TensOnesGame from "./components/TensOnesGame";
-
+import Level1Game from "./components/Level1Game";
+import Level2 from "./components/Level2"; // ✅ Import Level2 component
 
 // Blending Games
 import ThreeLetterGame from "./components/ThreeLetterWords";
@@ -98,7 +99,8 @@ export default function App() {
         <Route path="/result" element={<Result />} />
         <Route path="/ascending-result" element={<AscendingResult />} />
         <Route path="/TensOnesGame" element={<TensOnesGame />} />
-
+        <Route path="/Level1Game" element={<Level1Game />} />
+        <Route path="/Level2" element={<Level2 />} /> {/* ✅ Added Level2 route */}
 
         {/* 🔤 Phonics Blending */}
         <Route path="/blending/3letter" element={<ThreeLetterGame />} />
