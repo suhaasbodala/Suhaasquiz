@@ -28,20 +28,34 @@ const twin = (a, b) => {
 
 const quizData = {
   skeletal: {
-    video: "/videos/skeletal-intro.mp4",
+    video: "/videos/Skeletal/Sketetal_System.mp4",
     level1: [
   {
-    question: "🦴 Which part protects your brain?",
-    video: "/videos/skull-question.mp4",
-    options: ["Ribs", "Skull", "Spine", "Legs"],
-    answer: "Skull",
+    question: "1. Endoskeleton Ekkada Untundhi? ",
+    video: "/videos/Skeletal/Sketetal_System.mp4",
+    options: ["Body Meeda", "Body Lopala", "Air lo", "None"],
+    answer: "Body Lopala",
   },
   {
-    question: "🦴 Which bone is in your chest?",
-    video: "/videos/ribs-question.mp4",
-    options: ["Ribs", "Skull", "Jaw", "Spine"],
-    answer: "Ribs",
+    question: "2. Exoskeleton Ekkada Untundhi? ",
+    video: "/videos/Skeletal/Sketetal_System.mp4",
+    options: ["Body Meeda", "Body Lopala", "Air lo", "None"],
+    answer: "Body Meeda",
+  },
+  {
+    question: "3. Endoskeleton Evariki Untundhi? ",
+    video: "/videos/Skeletal/Sketetal_System.mp4",
+    options: ["Persons", "Butterfly", "Snail", "Crab"],
+    answer: "Persons",
+  },
+  {
+    question: "4. Exoskeleton Evariki Untundhi? ",
+    video: "/videos/Skeletal/Sketetal_System.mp4",
+    options: ["Persons", "Dogs", "Snail", "Cat"],
+    answer: "Snail",
   }
+  
+
 ],
 
     level2: [
