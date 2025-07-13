@@ -54,17 +54,26 @@ export default function StartScreen({ playerName, onReset }) {
         className: "bundlegame",
       },
       {
-  label: "🎯 Level 0 Bundle Game",
-  action: () => navigate("/Level1Game"),
-  className: "bundlegame",
-}
-
+        label: "🎯 Level 0 Bundle Game",
+        action: () => navigate("/Level1Game"),
+        className: "bundlegame",
+      },
     ],
     UOI: [
       {
-        label: "🗓️ Day Quiz",
-        action: () => navigate("/quiz/day"),
-        className: "dayquiz",
+        label: "🦴 Skeletal System",
+        action: () => navigate("/uoi/skeletal"),
+        className: "uoi-system",
+      },
+      {
+        label: "💨 Respiratory System",
+        action: () => navigate("/uoi/respiratory"),
+        className: "uoi-system1",
+      },
+      {
+        label: "🧠 Nervous System",
+        action: () => navigate("/uoi/nervous"),
+        className: "uoi-system2",
       },
     ],
     Music: [
@@ -74,107 +83,66 @@ export default function StartScreen({ playerName, onReset }) {
         className: "music",
       },
     ],
+    Games: [
+      {
+        label: "♟️ Chess Game",
+        action: () => navigate("/pages/chess"),
+        className: "chessgame",
+      },
+      {
+        label: "🎮 Level 2 Game",
+        action: () => navigate("/Level2"),
+        className: "level2game",
+      },
+    ],
   };
 
   return (
     <div className="start-container">
-      <button className="name-btn" onClick={onReset}>
-        Reset
-      </button>
+      <button className="name-btn" onClick={onReset}>Reset</button>
 
-      {(selectedSubject || selectedSubject === "StoryList") && (
+      {selectedSubject && (
         <button
           className="back-btn-topright"
           onClick={() => {
             setSelectedSubject(null);
             setShowEnglishOptions(false);
           }}
-        >🔙</button>
+        >
+          🔙
+        </button>
       )}
 
       <h1 className="start-title">🌟 Welcome {playerName || "Suhaas"}! 🌟</h1>
       <p className="start-subtitle">Pick a subject to begin your journey 🚀</p>
 
       <div className="button-group">
-        {/* SUBJECT SELECTION */}
         {!selectedSubject && (
           <>
-            <button
-              className="start-btn telugu"
-              onClick={() => setSelectedSubject("Telugu")}
-            >
-              📘 Telugu
-            </button>
-            <button
-              className="start-btn english"
-              onClick={() => setSelectedSubject("English")}
-            >
-              📗 English
-            </button>
-            <button
-              className="start-btn maths"
-              onClick={() => setSelectedSubject("Maths")}
-            >
-              🧮 Maths
-            </button>
-            <button
-              className="start-btn uoi"
-              onClick={() => setSelectedSubject("UOI")}
-            >
-              🌍 UOI
-            </button>
-            <button
-              className="start-btn music"
-              onClick={() => setSelectedSubject("Music")}
-            >
-              🎵 Music
-            </button>
+            <button className="start-btn telugu" onClick={() => setSelectedSubject("Telugu")}>📘 Telugu</button>
+            <button className="start-btn english" onClick={() => setSelectedSubject("English")}>📗 English</button>
+            <button className="start-btn maths" onClick={() => setSelectedSubject("Maths")}>🧮 Maths</button>
+            <button className="start-btn uoi" onClick={() => setSelectedSubject("UOI")}>🌍 UOI</button>
+            <button className="start-btn music" onClick={() => setSelectedSubject("Music")}>🎵 Music</button>
+            <button className="start-btn game" onClick={() => setSelectedSubject("Games")}>🎮 Games</button>
           </>
         )}
 
-        {/* ENGLISH STORY + PHONICS */}
         {selectedSubject === "English" && !showEnglishOptions && (
           <>
-            <button
-              className="start-btn story"
-              onClick={() => navigate("/story/1/photo")}
-            >
-              📖 Story Mode
-            </button>
-            <button
-              className="start-btn quiz"
-              onClick={() => setShowEnglishOptions(true)}
-            >
-              🔤 Phonics Game
-            </button>
+            <button className="start-btn story" onClick={() => navigate("/story/1/photo")}>📖 Story Mode</button>
+            <button className="start-btn quiz" onClick={() => setShowEnglishOptions(true)}>🔤 Phonics Game</button>
           </>
         )}
 
-        {/* PHONICS SUB-OPTIONS */}
         {selectedSubject === "English" && showEnglishOptions && (
           <div className="phonics-group">
-            <button
-              className="start-btn blending"
-              onClick={() => navigate("/blending/3letter")}
-            >
-              🔤 3-Letter Blending
-            </button>
-            <button
-              className="start-btn blend"
-              onClick={() => navigate("/blending/4letter")}
-            >
-              🔤 4-Letter Consonant Blends
-            </button>
-            <button
-              className="start-btn blends"
-              onClick={() => navigate("/blending/4letter/vowels")}
-            >
-              🔤 4-Letter Vowel Blends
-            </button>
+            <button className="start-btn blending" onClick={() => navigate("/blending/3letter")}>🔤 3-Letter Blending</button>
+            <button className="start-btn blend" onClick={() => navigate("/blending/4letter")}>🔤 4-Letter Consonant Blends</button>
+            <button className="start-btn blends" onClick={() => navigate("/blending/4letter/vowels")}>🔤 4-Letter Vowel Blends</button>
           </div>
         )}
 
-        {/* TELUGU STORY LIST */}
         {selectedSubject === "StoryList" && (
           <>
             {storyList.map((story) => (
@@ -189,7 +157,6 @@ export default function StartScreen({ playerName, onReset }) {
           </>
         )}
 
-        {/* SUBJECT GAME OPTIONS */}
         {selectedSubject &&
           selectedSubject !== "StoryList" &&
           selectedSubject !== "English" &&

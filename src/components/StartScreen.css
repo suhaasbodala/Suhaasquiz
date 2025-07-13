@@ -69,7 +69,9 @@
 .start-btn:hover {
   transform: scale(1.05);
 }
-
+.start-btn.game {
+  background: #4a90e2; /* blue */
+}
 /* 🧠 Specific Game Colors */
 .start-btn.story     { background: #9b59b6; }
 .start-btn.compare   { background: #27ae60; }
@@ -144,4 +146,28 @@
 }
 .bundlegame {
   background-color: #8e44ad;
+}
+.chessgame {
+  background-color: #2980b9;
+}
+.level2game {
+  background-color: #27ae60;
+}
+.uoi-system {
+  background-color: #d35400;
+}
+.uoi-system1 {
+  background-color: #572d84; /* orange */
+}
+.uoi-system2 {
+  background-color: #147c4b; /* light orange */
+}
+.start-btn1 {
+  background-color: #f39c12; /* yellow */
+}
+.start-btn2 {
+  background-color: #e67e22; /* orange */
+}
+.start-btn3 {
+  background-color: #e74c3c; /* red */
 }

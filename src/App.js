@@ -26,7 +26,7 @@ import Result from "./components/Result";
 import AscendingResult from "./components/AscendingResult";
 import TensOnesGame from "./components/TensOnesGame";
 import Level1Game from "./components/Level1Game";
-import Level2 from "./components/Level2"; // ✅ Import Level2 component
+import Level2 from "./components/Level2";
 
 // Blending Games
 import ThreeLetterGame from "./components/ThreeLetterWords";
@@ -42,6 +42,12 @@ import AudioDetailPage from "./pages/music/AudioDetailPage";
 
 // Navbar (for music only)
 import Navbar from "./pages/music/Navbar";
+
+// Games
+import ChessGame from "./pages/chess/ChessGame";
+
+// ✅ UOI: Unified System Page
+import UOISystemPage from "./components/UOI/UOISystemPage";
 
 export default function App() {
   const [playerName, setPlayerName] = useState("");
@@ -62,36 +68,41 @@ export default function App() {
     setPlayerName("");
   };
 
-  // ✅ Show navbar only for music pages
-  const showNavbarForMusic = location.pathname.startsWith("/music") ||
-                             location.pathname.startsWith("/search") ||
-                             location.pathname.startsWith("/audio");
+  const showNavbarForMusic =
+    location.pathname.startsWith("/music") ||
+    location.pathname.startsWith("/search") ||
+    location.pathname.startsWith("/audio");
 
   return (
     <>
       {showNavbarForMusic && <Navbar />}
 
       <Routes>
-        {/* 🎯 Entry Point: Name or Start Screen */}
         {!playerName ? (
-          <Route path="/" element={<NameInput onNameSubmit={handleNameSubmit} />} />
+          <Route
+            path="/"
+            element={<NameInput onNameSubmit={handleNameSubmit} />}
+          />
         ) : (
-          <Route path="/" element={<StartScreen playerName={playerName} onReset={resetName} />} />
+          <Route
+            path="/"
+            element={<StartScreen playerName={playerName} onReset={resetName} />}
+          />
         )}
 
-        {/* 🧠 Quiz Routes */}
+        {/* Quiz Routes */}
         <Route path="/quiz/:subject" element={<QuizTopicScreen />} />
         <Route path="/quiz/:subject/:topic" element={<QuizGame playerName={playerName} />} />
         <Route path="/quiz/day" element={<DayQuiz playerName={playerName} />} />
         <Route path="/quiz/clock" element={<ClockQuiz playerName={playerName} />} />
 
-        {/* 📖 Story & 🎥 Video Games */}
+        {/* Story & Video Modes */}
         <Route path="/story/:storyId/:mode" element={<StoryMode playerName={playerName} />} />
         <Route path="/video" element={<VideoGame playerName={playerName} />} />
         <Route path="/photo" element={<PhotoGame playerName={playerName} />} />
         <Route path="/storyquiz" element={<StoryQuiz />} />
 
-        {/* 🔢 Number Games */}
+        {/* Number Games */}
         <Route path="/compare" element={<CompareGame playerName={playerName} />} />
         <Route path="/compare-test" element={<CompareTest />} />
         <Route path="/ascending" element={<AscendingGame playerName={playerName} />} />
@@ -100,19 +111,25 @@ export default function App() {
         <Route path="/ascending-result" element={<AscendingResult />} />
         <Route path="/TensOnesGame" element={<TensOnesGame />} />
         <Route path="/Level1Game" element={<Level1Game />} />
-        <Route path="/Level2" element={<Level2 />} /> {/* ✅ Added Level2 route */}
+        <Route path="/Level2" element={<Level2 />} />
 
-        {/* 🔤 Phonics Blending */}
+        {/* Phonics */}
         <Route path="/blending/3letter" element={<ThreeLetterGame />} />
         <Route path="/blending/4letter" element={<FourLetterConsonantBlends />} />
         <Route path="/blending/4letter/vowels" element={<FourLetterVowelBlends />} />
         <Route path="/blending/4letter/menu" element={<FourLetterMenu />} />
 
-        {/* 🎵 Music App */}
+        {/* Music */}
         <Route path="/music" element={<CategoryPage />} />
         <Route path="/music/all-audios" element={<AllAudiosPage />} />
         <Route path="/search" element={<SearchResultsPage />} />
         <Route path="/audio/:category/:name" element={<AudioDetailPage />} />
+
+        {/* Chess Game */}
+        <Route path="/pages/chess" element={<ChessGame />} />
+
+        {/* ✅ UOI System Unified Page */}
+        <Route path="/uoi/:system" element={<UOISystemPage />} />
       </Routes>
     </>
   );
