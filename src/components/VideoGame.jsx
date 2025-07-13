@@ -8,16 +8,33 @@ const levels = [
   ["scene1.mp4","scene2.mp4","scene3.mp4","scene4.mp4","scene5.mp4","scene6.mp4","scene7.mp4"],
   ["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video6.mp4","video5.mp4","video7.mp4"],
   ["video1.mp4","video2.mp4","video3.mp4","video4.mp4","video5.mp4","video6.mp4"],
+  ["vid1.mp4","vid2.mp4","vid3.mp4","vid4.mp4","vid5.mp4","vid6.mp4","vid7.mp4","vid8.mp4","vid9.mp4","vid10.mp4","vid11.mp4","vid12.mp4","vid13.mp4","vid14.mp4"],
+  ["vid1.mp4","vid2.mp4","vid3.mp4","vid4.mp4","vid5.mp4","vid6.mp4","vid7.mp4","vid8.mp4","vid9.mp4","vid10.mp4","vid11.mp4","vid12.mp4","vid13.mp4","vid14.mp4",
+    "vid15.mp4","vid16.mp4","vid17.mp4","vid18.mp4","vid19.mp4","vid20.mp4","vid21.mp4","vid22.mp4",
+    "vid23.mp4","vid24.mp4","vid25.mp4","vid26.mp4","vid27.mp4","vid28.mp4","vid29.mp4"
+  ],
+  [
+    "vid1.mp4","vid2.mp4","vid3.mp4","vid4.mp4","vid5.mp4","vid6.mp4","vid7.mp4","vid8.mp4","vid9.mp4","vid10.mp4","vid11.mp4"
+  ],
+  [
+    "vid1.mp4","vid2.mp4","vid3.mp4","vid4.mp4","vid5.mp4","vid6.mp4","vid7.mp4","vid8.mp4",
+    "vid9.mp4","vid10.mp4","vid11.mp4","vid12.mp4","vid13.mp4"
+  ]   
 ];
 
 const youtubeLinks = [
-  "https://youtu.be/Qzi1-J_shSc1",
-  "https://youtu.be/Qzi1-J_shSc",
-  "https://youtu.be/Qzi1-J_shSc",
-  "https://youtu.be/Qzi1-J_shSc",
+  "https://youtu.be/Qzi1-J_shSc1", //level1
+  "https://youtu.be/Qzi1-J_shSc",  //level2
+  "https://youtu.be/Qzi1-J_shSc",  //level3
+  "https://youtu.be/Qzi1-J_shSc",  //level4
+  "https://youtu.be/vzQTA6-zdCs",  //level5
+  "https://youtu.be/lNDjd8CKEuc",   //level6
+  "https://youtu.be/jq1zo6d8i6s",   //level7
+  "https://youtu.be/DOZnPWOG1Iw"    //level8
+
 ];
 
-const levelDescriptions = ["💧 Potty Story", "🍎 Field Story", "Phone Story", "Item Story"];
+const levelDescriptions = ["💧 Potty Story", "🍎 Field Story", "Phone Story", "Item Story","Food Story","Shuttle Story","Mowgli and Kaki","Hostel Story"];
 
 const successSound = new Audio("/sounds/success-1-6297.mp3");
 const failSound = new Audio("/sounds/fail-2-277575.mp3");

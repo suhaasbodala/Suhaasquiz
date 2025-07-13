@@ -10,13 +10,33 @@ const levels = [
     "scene4.jpg", "scene5.jpg", "scene6.jpg",
     "scene7.jpg", "scene8.jpg", "scene9.jpg"
   ],
-  ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg"]
+  ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg", "pic5.jpg"],
+  ["pic1.png","pic2.png","pic3.png","pic4.png","pic5.png","pic6.png","pic7.png",
+    "pic8.png","pic9.png","pic10.png","pic11.png","pic12.png","pic13.png","pic14.png"
+  ],
+  [
+    "pic1.png","pic2.png","pic3.png","pic4.png","pic5.png","pic6.png","pic7.png",
+    "pic8.png","pic9.png","pic10.png","pic11.png","pic12.png","pic13.png","pic14.png",
+    "pic15.png","pic16.png","pic17.png","pic18.png"
+  ],
+  [
+    "pic1.png","pic2.png","pic3.png","pic4.png","pic5.png","pic6.png","pic7.png",
+    "pic8.png","pic9.png","pic10.png"
+  ],
+  [
+   "pic1.png","pic2.png","pic3.png","pic4.png","pic5.png","pic6.png","pic7.png",
+    "pic8.png","pic9.png","pic10.png","pic11.png","pic12.png","pic13.png" 
+  ]
 ];
 const youtubeLinks = [
   "https://youtu.be/Qzi1-J_shSc1", // Level 1
   "https://youtu.be/Qzi1-J_shSc", // Level 2
   "https://youtu.be/Qzi1-J_shSc", // Level 3
-  "https://youtu.be/Qzi1-J_shSc"  // Level 4
+  "https://youtu.be/Qzi1-J_shSc", // Level 4
+  "https://youtu.be/vzQTA6-zdCs",  //level 5
+  "https://youtu.be/lNDjd8CKEuc",   //level 6
+  "https://youtu.be/Qzi1-J_shSc",  //level 7
+  "https://youtu.be/DOZnPWOG1Iw"   //level 8
 ];
 
 const successSound = new Audio("/sounds/success-1-6297.mp3");
@@ -28,7 +48,11 @@ const levelDescriptions = [
   "✂️ Cutting Story!",
   "🏖️ Beach Story!",
   "🚽 Potty Story!",
-  "🧩 Items Story!"
+  "🧩 Items Story!",
+  "Food Story",
+  "Shuttle Story",
+  "Mowgli and Kaki",
+  "Hostel Story"
 ];
 
 const PhotoGame = () => {
