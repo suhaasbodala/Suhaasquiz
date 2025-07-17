@@ -19,7 +19,7 @@ export default function CompareTest() {
   const retryQuestion = location?.state?.retryQuestion;
 
   const finishTest = useCallback(() => {
-    navigate("/result", { state: { answers } });
+    navigate("/result/compare", { state: { answers } });
   }, [navigate, answers]);
 
   const startTest = () => {

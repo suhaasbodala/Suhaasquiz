@@ -138,3 +138,31 @@
   font-weight: bold;
   color: #2e7d32;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  font-size: 16px;
+  border: 2px solid #0077cc;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: white;
+  color: #0077cc;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #d3f0ff;
+}
+
+.pagination .active-page {
+  background-color: #0077cc;
+  color: white;
+  font-weight: bold;
+}
