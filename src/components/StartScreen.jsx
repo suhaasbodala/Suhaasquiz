@@ -70,8 +70,8 @@ export default function StartScreen({ playerName, onReset }) {
         className: "uoi-system",
       },
       {
-        label: "💨 Respiratory System",
-        action: () => navigate("/uoi/respiratory"),
+        label: "Teeth",
+        action: () => navigate("/uoi/teeth"),
         className: "uoi-system1",
       },
       {
