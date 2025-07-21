@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Level2Game.css";
 import TensOnesGame from "./TensOnesGame";
+import Level3Game from "./Level3Game";
 import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
 
@@ -76,7 +77,7 @@ function Level2Game() {
   };
 
   if (level === "level1") return <TensOnesGame />;
-
+  if (level === "level3") return <Level3Game />;
   return (
     <div className="quiz-container">
       <button
@@ -97,6 +98,7 @@ function Level2Game() {
           >
             <option value="level1">Level 1: Choose the Number</option>
             <option value="level2">Level 2: Build the Number</option>
+            <option value="level3">Level 3: Bundles and Singles</option>
           </select>
         </label>
 

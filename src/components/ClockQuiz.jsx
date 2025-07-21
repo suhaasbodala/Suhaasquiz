@@ -1,3 +1,5 @@
+// ClockQuiz.jsx (Full with Result Analysis & Progress Bar)
+
 import React, { useState, useEffect, useRef } from "react";
 import Clock from "react-clock";
 import "react-clock/dist/Clock.css";
@@ -5,34 +7,27 @@ import "./ClockQuiz.css";
 import { useNavigate } from "react-router-dom";
 import { generateClockWorksheet } from "../utils/generateClockWorksheet";
 
-// Static sound effects
 const sfxRight = new Audio("/sounds/success-1-6297.mp3");
 const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
-
-// Cartoon-style static voices (ONLY for Suhaas)
 const voiceRightSuhaas = new Audio("/sounds/very-good.mp3");
 const voiceWrongSuhaas = new Audio("/sounds/try-again.mp3");
 
-// Dynamic voice for other names
 const speak = (text) => {
   const synth = window.speechSynthesis;
   const voices = synth.getVoices();
-
   if (!voices.length) {
     synth.onvoiceschanged = () => speak(text);
     return;
   }
-
   const voice =
     voices.find((v) => v.lang === "en-IN") ||
     voices.find((v) => v.name.toLowerCase().includes("female")) ||
     voices[0];
-
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.voice = voice;
   utterance.lang = "en-IN";
-  utterance.pitch = 0.8;  // childlike pitch
-  utterance.rate = 0.45;  // playful speed
+  utterance.pitch = 0.8;
+  utterance.rate = 0.45;
   utterance.volume = 1;
   synth.cancel();
   synth.speak(utterance);
@@ -48,9 +43,7 @@ const formatTime = (date) => {
 
 const generateRandomTime = (level) => {
   const hour = Math.floor(Math.random() * 12) + 1;
-  const minute = level === 1
-    ? Math.floor(Math.random() * 12) * 5
-    : Math.floor(Math.random() * 60);
+  let minute = level === 1 ? Math.floor(Math.random() * 12) * 5 : Math.floor(Math.random() * 60);
   return new Date(2023, 1, 1, hour, minute);
 };
 
@@ -73,10 +66,9 @@ const generateQuestion = (level) => {
 
 export default function ClockQuiz({ playerName = "Suhaas" }) {
   const navigate = useNavigate();
-  const [level] = useState(1);
-  const [selectedMinutes, setSelectedMinutes] = useState(5);
+  const [level, setLevel] = useState(1);
+  const [selectedMinutes, setSelectedMinutes] = useState(2);
   const [started, setStarted] = useState(false);
-
   const [question, setQuestion] = useState(generateQuestion(level));
   const [selected, setSelected] = useState("");
   const [msg, setMsg] = useState("");
@@ -84,9 +76,8 @@ export default function ClockQuiz({ playerName = "Suhaas" }) {
   const [total, setTotal] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
-
   const timerRef = useRef(null);
-  const minuteOptions = Array.from({ length: 59 }, (_, i) => i + 1);
+  const minuteOptions = [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
 
   useEffect(() => {
     if (started && timeLeft > 0) {
@@ -98,14 +89,11 @@ export default function ClockQuiz({ playerName = "Suhaas" }) {
   }, [started]);
 
   useEffect(() => {
-    if (timeLeft === 0 && started) {
-      clearInterval(timerRef.current);
-    }
+    if (timeLeft === 0 && started) clearInterval(timerRef.current);
   }, [timeLeft]);
 
   const startQuiz = () => {
-    const seconds = selectedMinutes * 60;
-    setTimeLeft(seconds);
+    setTimeLeft(selectedMinutes * 60);
     setStarted(true);
     setQuestion(generateQuestion(level));
   };
@@ -117,12 +105,7 @@ export default function ClockQuiz({ playerName = "Suhaas" }) {
 
     if (opt === question.answer) {
       sfxRight.play();
-      if (isSuhaas) {
-        voiceRightSuhaas.currentTime = 0;
-        voiceRightSuhaas.play();
-      } else {
-        speak(`Very good ${playerName}`);
-      }
+      isSuhaas ? voiceRightSuhaas.play() : speak(`Very good ${playerName}`);
       setCorrect((c) => c + 1);
       setMsg(`✅ Very good ${playerName}!`);
       setTimeout(() => {
@@ -132,12 +115,7 @@ export default function ClockQuiz({ playerName = "Suhaas" }) {
       }, 2000);
     } else {
       sfxWrong.play();
-      if (isSuhaas) {
-        voiceWrongSuhaas.currentTime = 0;
-        voiceWrongSuhaas.play();
-      } else {
-        speak(`Malli try cheeyyu ${playerName}`);
-      }
+      isSuhaas ? voiceWrongSuhaas.play() : speak(`Malli try cheeyyu ${playerName}`);
       setWrong((w) => w + 1);
       setMsg(`❌ Malli try cheyu ${playerName}!`);
       setTimeout(() => {
@@ -202,44 +180,50 @@ export default function ClockQuiz({ playerName = "Suhaas" }) {
     <div className="clock-container">
       <button className="back-btn" onClick={() => navigate("/")}>🔙</button>
       <button className="pdf-btn" onClick={handlePDF}>📝 PDF</button>
-      <h2 className="title">🕒 TIME ENTHA AVUTUNDHI {playerName.toUpperCase()}?</h2>
+      <h2 className="title">
+        🕒 TIME ENTHA AVUTUNDHI {playerName.toUpperCase()}? <br />
+        <span style={{ fontSize: "18px" }}>
+          ({level === 1 ? "Level 1: Minutes in 5s" : "Level 2: Any Minute"})
+        </span>
+      </h2>
 
       {!started ? (
-        <div style={{
-          marginBottom: "20px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "12px"
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <span role="img" aria-label="alarm">⏰</span>
-            <label style={{ fontSize: "18px" }}>Select Timer:</label>
-            <select
-              value={selectedMinutes}
-              onChange={(e) => setSelectedMinutes(Number(e.target.value))}
-              className="timer-select"
-            >
+        <div className="setup-section">
+          <div>
+            <label>⏰ Select Timer:</label>
+            <select value={selectedMinutes} onChange={(e) => setSelectedMinutes(Number(e.target.value))}>
               {minuteOptions.map((min) => (
-                <option key={min} value={min}>
-                  {min} Minute{min > 1 ? "s" : ""}
-                </option>
+                <option key={min} value={min}>{min} Minute{min > 1 ? "s" : ""}</option>
               ))}
+            </select>
+          </div>
+          <div>
+            <label>🎮 Select Level:</label>
+            <select value={level} onChange={(e) => setLevel(Number(e.target.value))}>
+              <option value={1}>Level 1 (minutes in 5s)</option>
+              <option value={2}>Level 2 (any minute)</option>
             </select>
           </div>
           <button className="opt-btn" onClick={startQuiz}>▶️ Start Quiz</button>
         </div>
       ) : (
-        <p className="clock-msg">⏳ Time Left: {formatTimer()}</p>
+        <>
+          <p className="clock-msg">⏳ Time Left: {formatTimer()}</p>
+          <div className="progress-bar-wrapper">
+            <div className="progress-bar">
+              <div
+                className="progress-fill"
+                style={{ width: `${(total / 20) * 100}%` }}
+              ></div>
+            </div>
+            <p style={{ fontSize: "14px" }}>Questions Attempted: {total}</p>
+          </div>
+        </>
       )}
 
       <div className="quiz-layout">
         <div className="clock-box">
-          <Clock
-            value={question.time}
-            renderNumbers={true}
-            size={250}
-          />
+          <Clock value={question.time} renderNumbers={true} size={250} />
         </div>
 
         <div className="option-group">
@@ -247,8 +231,7 @@ export default function ClockQuiz({ playerName = "Suhaas" }) {
             <button
               key={i}
               onClick={() => handleAnswer(opt)}
-              className={`opt-btn ${selected === opt
-                ? (opt === question.answer ? "correct" : "wrong") : ""}`}
+              className={`opt-btn ${selected === opt ? (opt === question.answer ? "correct" : "wrong") : ""}`}
             >
               {opt}
             </button>

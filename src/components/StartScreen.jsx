@@ -62,6 +62,12 @@ export default function StartScreen({ playerName, onReset }) {
         action: () => navigate("/Level1Game"),
         className: "bundlegame",
       },
+      {
+  label: "🧠 Number Sense Quiz",
+  action: () => navigate("/numbersense"),
+  className: "numbersense",
+}
+
     ],
     UOI: [
       {

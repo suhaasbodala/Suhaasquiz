@@ -16,17 +16,22 @@ import QuizTopicScreen from "./components/QuizTopicScreen";
 import QuizGame from "./components/QuizGame";
 import DayQuiz from "./components/DayQuiz";
 import ClockQuiz from "./components/ClockQuiz";
+import NumberSenseQuiz from "./pages/NumberSense/NumberSenseQuiz";
+
+// Result Pages
+import NumberSenseResult from "./pages/NumberSense/NumberSenseResult"; // ✅ Custom result
+import Result from "./components/Result"; // ✅ Shared result
+import AscendingResult from "./components/AscendingResult";
 
 // Number Games
 import CompareGame from "./components/CompareGame";
 import CompareTest from "./components/CompareTest";
 import AscendingGame from "./components/AscendingGame";
 import AscendingTest from "./components/AscendingTest";
-import Result from "./components/Result";
-import AscendingResult from "./components/AscendingResult";
 import TensOnesGame from "./components/TensOnesGame";
 import Level1Game from "./components/Level1Game";
 import Level2 from "./components/Level2";
+import Level3Test from "./components/Level3Test";
 
 // Blending Games
 import ThreeLetterGame from "./components/ThreeLetterWords";
@@ -46,7 +51,7 @@ import Navbar from "./pages/music/Navbar";
 // Games
 import ChessGame from "./pages/chess/ChessGame";
 
-// ✅ UOI: Unified System Page
+// ✅ UOI System Page
 import UOISystemPage from "./components/UOI/UOISystemPage";
 
 export default function App() {
@@ -79,15 +84,9 @@ export default function App() {
 
       <Routes>
         {!playerName ? (
-          <Route
-            path="/"
-            element={<NameInput onNameSubmit={handleNameSubmit} />}
-          />
+          <Route path="/" element={<NameInput onNameSubmit={handleNameSubmit} />} />
         ) : (
-          <Route
-            path="/"
-            element={<StartScreen playerName={playerName} onReset={resetName} />}
-          />
+          <Route path="/" element={<StartScreen playerName={playerName} onReset={resetName} />} />
         )}
 
         {/* Quiz Routes */}
@@ -95,6 +94,13 @@ export default function App() {
         <Route path="/quiz/:subject/:topic" element={<QuizGame playerName={playerName} />} />
         <Route path="/quiz/day" element={<DayQuiz playerName={playerName} />} />
         <Route path="/quiz/clock" element={<ClockQuiz playerName={playerName} />} />
+        <Route path="/numbersense" element={<NumberSenseQuiz />} />
+
+        {/* Results */}
+        <Route path="/result/numbersense" element={<NumberSenseResult />} /> {/* ✅ Number Sense */}
+        <Route path="/result/compare" element={<Result />} /> {/* ✅ Shared Result */}
+        <Route path="/result" element={<Result />} /> {/* ✅ For Level 3 Test */}
+        <Route path="/ascending-result" element={<AscendingResult />} />
 
         {/* Story & Video Modes */}
         <Route path="/story/:storyId/:mode" element={<StoryMode playerName={playerName} />} />
@@ -107,11 +113,10 @@ export default function App() {
         <Route path="/compare-test" element={<CompareTest />} />
         <Route path="/ascending" element={<AscendingGame playerName={playerName} />} />
         <Route path="/ascending-test" element={<AscendingTest />} />
-        <Route path="/result" element={<Result />} />
-        <Route path="/ascending-result" element={<AscendingResult />} />
         <Route path="/TensOnesGame" element={<TensOnesGame />} />
         <Route path="/Level1Game" element={<Level1Game />} />
         <Route path="/Level2" element={<Level2 />} />
+        <Route path="/tensones-test" element={<Level3Test />} />
 
         {/* Phonics */}
         <Route path="/blending/3letter" element={<ThreeLetterGame />} />
