@@ -9,7 +9,7 @@ import NameInput from "./components/NameInput";
 import StoryMode from "./components/StoryMode";
 import PhotoGame from "./components/PhotoGame";
 import VideoGame from "./components/VideoGame";
-import StoryQuiz from "./components/storyQuiz";
+import StoryQuiz from "./components/StoryQuiz";
 
 // Quiz Flow
 import QuizTopicScreen from "./components/QuizTopicScreen";
