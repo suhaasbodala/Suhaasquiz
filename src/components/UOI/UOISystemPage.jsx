@@ -53,38 +53,206 @@ const quizData = {
     video: "/videos/Skeletal/Sketetal_System.mp4",
     options: ["Persons", "Dogs", "Snail", "Cat"],
     answer: "Snail",
-  }
-  
+  },
+  {
+    question: "5. Ikkad ichina animal ki elanti skeleton untadhi? ",
+    video: "/videos/Skeletal/dog.mp4",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Endoskeleton",
+  },
+  {
+    question: "6. Ikkad ichina animal ki elanti skeleton untadhi? ",
+    video: "/videos/Skeletal/snail.mp4",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Exoskeleton",
+  },
+  {
+    question: "7. Ikkad ichina animal ki elanti skeleton untadhi? ",
+    video: "/videos/Skeletal/fish.mp4",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Endoskeleton",
+  } 
 
 ],
 
     level2: [
       {
-        question: "🦴 Identify this bone.",
-        image: "/images/skull.jpg",
-        options: ["Skull", "Spine", "Ribs", "Jaw"],
-        answer: "Skull",
-      },
+    question: "1. Persons ki elanti skeleton untadhi? ",
+    image: "/images/Skeletal/person.png",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Endoskeleton",
+     },
+     {
+    question: "2. Ikkada ichina animal ki elanti skeleton untadhi? ",
+    image: "/images/Skeletal/cockroach.png",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Exoskeleton",
+     },
+     {
+    question: "3. Ikkada ichina animal ki elanti skeleton untadhi? ",
+    image: "/images/Skeletal/horse.png",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Endoskeleton",
+     },
+     {
+    question: "4. Ikkada ichina animal ki elanti skeleton untadhi? ",
+    image: "/images/Skeletal/cat.png",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Endoskeleton",
+     },
+     {
+    question: "5. Ikkada ichina animal ki elanti skeleton untadhi? ",
+    image: "/images/Skeletal/spider.png",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Exoskeleton",
+     },
+     {
+    question: "6. Ikkada ichina animal ki elanti skeleton untadhi? ",
+    image: "/images/Skeletal/loabster.png",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Exoskeleton",
+     },
+      {
+    question: "7. Ikkada ichina animal ki elanti skeleton untadhi? ",
+    image: "/images/Skeletal/cow.png",
+    options: ["Exoskeleton","Endoskeleton"],
+    answer: "Endoskeleton",
+     }
+
     ],
     level3: [
       {
-        question: "The longest bone in the human body is?",
-        options: ["Femur", "Tibia", "Humerus", "Fibula"],
-        answer: "Femur",
+        question: "1. Mana body ni support chesy structure enti?",
+        options: ["Mouth", "Skeleton", "Eyes", "Skin"],
+        answer: "Skeleton",
       },
+      {
+        question: "2. Bones anni kalipithey em  antaru?",
+        options: ["Skeleton", "mouth", "Eyes", "Skin"],
+        answer: "Skeleton",
+      },
+      {
+        question: "3. Vetilo Endoskeleton edi?",
+        options: ["Crab", "Snail", "Goat", "Spider"],
+        answer: "Goat",
+      },
+      {
+        question: "4. Vetilo Endoskeleton edi?",
+        options: ["Crab", "Snail", "Goat", "Spider"],
+        answer: "Goat",
+      },
+      {
+        question: "5. Vetilo Exoskeleton edi?",
+        options: ["Persons", "Snail", "Goat", "dog"],
+        answer: "Snail",
+      },
+      {
+        question: "6. Vetilo Endoskeleton edi?",
+        options: ["Crab", "Snail", "Lion", "Spider"],
+        answer: "Lion",
+      },
+      {
+        question: "7. Vetilo Exoskeleton edi?",
+        options: ["Cat", "Tiger", "Goat", "Spider"],
+        answer: "Spider",
+      },
+      {
+        question: "8. Skeleton Body lopala unte em antaru",
+        options: ["Exoskeleton", "Endoskeleton"],
+        answer: "Endoskeleton",
+      },
+      {
+        question: "9. Skeleton bayataki  unte em antaru",
+        options: ["Exoskeleton", "Endoskeleton"],
+        answer: "Exoskeleton",
+      }     
+
     ],
   },
-  respiratory: {
-    video: "/videos/respiratory-intro.mp4",
+  Teeth: {
+    video: "/videos/teeth/Teethintro.mp4",
     level1: [
       {
-        question: "🫁 Which organ helps you breathe?",
-        options: ["Heart", "Liver", "Lungs", "Kidney"],
-        answer: "Lungs",
+        question: "Ee process ni manam en antamu?",
+        video: "/videos/teeth/teething.mp4",
+        options: ["teething", "growing", "increasing", "decreasing"],
+        answer: "teething",
       },
+      {
+        question: "Teeth clean unadli ante emi cheyali?",
+        video: "/videos/teeth/brushing.mp4",
+        options: ["padukovali", "brush cheyali", "chocolate tinali", "brush cheyoddu"],
+        answer: "brush cheyali",
+      }
+
     ],
-    level2: [],
-    level3: [],
+    level2: [
+      {
+        question: "1. manaki enni types of teeth untayi?",
+        image:"/images/teeth/types.png",
+        options: ["3","2","4","1"],
+        answer: "4",
+
+      },
+      {
+        question: "2. ikkada unna teeth ni em antaru?",
+        image: "/images/teeth/incisor.png",
+        options: ["canines","incisors","pre molars","molars"],
+        answer: "incisors",
+      },
+      {
+        question: "3. ikkada unna teeth ni em antaru?",
+        image: "/images/teeth/canine.png",
+        options: ["canines","incisors","pre molars","molars"],
+        answer: "canines",
+      },
+      {
+        question: "4. ikkada unna teeth ni em antaru?",
+        image: "/images/teeth/molars.png",
+        options: ["canines","incisors","pre molars","molars"],
+        answer: "molars",
+      },
+      {
+        question: "5. ikkada unna teeth ni em antaru?",
+        image: "/images/teeth/premolars.png",
+        options: ["canines","incisors","pre molars","molars"],
+        answer: "pre molars",
+      }
+
+    ],
+    level3: [
+      {
+        question: "1. children ki enni teeth unatayi? ",
+        options: ["32","20","14","34"],
+        answer: "20",
+      },
+      {
+        question: "2.food ni cut cheya daninki emi teeth use chestamu ? ",
+        options: ["canines","incisors","pre molars","molars"],
+        answer: "incisors",
+      },
+      {
+        question: "3. food ni tear cheya daninki emi teeth use chestamu? ",
+        options: ["canines","incisors","pre molars","molars"],
+        answer: "canines",
+      },
+      {
+        question: "4.. food ni push cheya daninki emi teeth use chestamu? ",
+        options: ["canines","incisors","pre molars","molars"],
+        answer: "pre molars",
+      },
+      {
+        question: "5. food ni grind cheya daninki emi teeth use chestamu? ",
+        options: ["canines","incisors","pre molars","molars"],
+        answer: "molars",
+      },
+      {
+        question: "6. manaki enni wisdom teeth unatayi?",
+        options: ["3","2","4","1"],
+        answer: "4",
+      },
+      
+    ],
   },
 };
 
@@ -198,7 +366,7 @@ export default function UOISystemPage() {
               <img
                 src={current.image}
                 alt="visual"
-                style={{ width: "200px", borderRadius: "12px", marginBottom: "10px" }}
+                style={{ width: "600px",height: "200px" ,borderRadius: "0px", marginBottom: "10px" }}
               />
             )}
 
