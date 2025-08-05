@@ -42,38 +42,56 @@
 }
 
 /* Sidebar */
+/* Sidebar base styling */
 .sidebar {
   position: fixed;
   top: 0;
-  left: -200px;
-  width: 200px;
-  height: 100%;
-  background: #eee;
-  transition: 0.3s;
-  padding-top: 60px;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  background-color: #ffffff;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);  /* ⬅ hide completely */
   z-index: 1000;
 }
 
 .sidebar.show {
-  left: 0;
+  transform: translateX(0);  /* ⬅ show sidebar */
 }
 
+
+/* Sidebar buttons */
 .sidebar button {
   display: block;
-  padding: 12px;
   width: 100%;
-  background: #4dd0e1;
-  border: none;
-  margin-bottom: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
+  margin: 6px 0;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease;
 }
 
 .sidebar button:hover {
-  background: #26c6da;
+  background-color: #d9ebff;
 }
+
+/* Optional: style scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
 
 /* Overlay */
 .overlay {
@@ -82,10 +100,18 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 900;
-  display: none;
+  background: rgba(0, 0, 0, 0.4);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 999;
 }
+
+.overlay.show {
+  visibility: visible;
+  opacity: 1;
+}
+
 
 .sidebar.show ~ .overlay {
   display: block;

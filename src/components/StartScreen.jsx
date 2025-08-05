@@ -66,7 +66,13 @@ export default function StartScreen({ playerName, onReset }) {
   label: "🧠 Number Sense Quiz",
   action: () => navigate("/numbersense"),
   className: "numbersense",
+},
+{
+  label: "🔢  Number Quiz",
+  action: () => navigate("/quiz/numbers"),
+  className: "numbersquiz"
 }
+
 
     ],
     UOI: [

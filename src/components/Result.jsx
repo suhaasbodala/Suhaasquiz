@@ -11,8 +11,8 @@ export default function Result() {
   const answers = state.answers || [];
   const type = state.type || "compare";
   const totalTime = state.timeTaken || answers.reduce((acc, curr) => acc + (curr.time || 1), 0);
-
   const correct = answers.filter((a) => a.isCorrect).length;
+
   const formatTime = (s) => {
     const m = String(Math.floor(s / 60)).padStart(2, "0");
     const sec = String(s % 60).padStart(2, "0");
@@ -25,6 +25,26 @@ export default function Result() {
   const totalPages = Math.ceil(answers.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentAnswers = answers.slice(startIndex, startIndex + itemsPerPage);
+
+  // 🔁 Dynamic retry paths and labels
+  const retryPathMap = {
+    level3: "/tensones-test",
+    numbersense: "/quiz/numberquiz",
+    phonics: "/phonics-test",
+    compare: "/compare-test",
+    default: "/"
+  };
+
+  const retryLabelMap = {
+    level3: "Level 3 Test",
+    numbersense: "Number Sense Quiz",
+    phonics: "Phonics Test",
+    compare: "Compare Test",
+    default: "Home"
+  };
+
+  const retryPath = retryPathMap[type] || retryPathMap.default;
+  const retryLabel = retryLabelMap[type] || retryLabelMap.default;
 
   return (
     <>
@@ -55,7 +75,7 @@ export default function Result() {
                   );
                 }
 
-                // For compare test
+                // Default (compare-style)
                 const qTime = a.time || 1;
                 const [left, right] = a.question.split(" ? ");
                 const qText = `${left} ${a.correct} ${right}`;
@@ -108,13 +128,8 @@ export default function Result() {
           </>
         )}
 
-        <button
-          className="retake-btn"
-          onClick={() =>
-            navigate(type === "level3" ? "/tensones-test" : "/compare-test")
-          }
-        >
-          🔄 Retake {type === "level3" ? "Level 3 Test" : "Compare Test"}
+        <button className="retake-btn" onClick={() => navigate(retryPath)}>
+          🔄 Retake {retryLabel}
         </button>
       </div>
     </>

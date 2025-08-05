@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
-const Navbar = () => {
+export default function  Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleTestClick = () => {
+  function handletestClick() {
     if (location.pathname.includes("compare")) {
       navigate("/compare-test");
     } else if (location.pathname.includes("ascending")) {
@@ -23,10 +23,8 @@ const Navbar = () => {
       </div>
       <div className="nav-buttons">
         <button onClick={() => navigate("/")}>Home</button>
-        <button onClick={handleTestClick}>Test</button>
+        <button onClick={handletestClick}>Test</button>
       </div>
     </nav>
   );
 };
-
-export default Navbar;

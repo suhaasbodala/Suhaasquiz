@@ -5,13 +5,13 @@ import Level3Game from "./Level3Game";
 import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
 
-const sfxRight = new Audio("/sounds/success-1-6297.mp3");
+const sRight = new Audio("/sounds/success-1-6297.mp3");
 const sfxWrong = new Audio("/sounds/fail-2-277575.mp3");
 const voiceRight = new Audio("/sounds/very-good.mp3");
 const voiceWrong = new Audio("/sounds/try-again.mp3");
 const tapSound = new Audio("/sounds/tap.mp3");
 
-function Level2Game() {
+export default function Level2Game() {
   const [level, setLevel] = useState("level2");
   const [blockMode, setBlockMode] = useState("color");
 
@@ -55,7 +55,7 @@ function Level2Game() {
   const handleSubmit = () => {
     const built = bundledTens * 10 + onesBlocks;
     if (built === target) {
-      sfxRight.play();
+      sRight.play();
       voiceRight.play();
       confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       setResult("correct");
@@ -217,5 +217,3 @@ function Level2Game() {
     </div>
   );
 }
-
-export default Level2Game;

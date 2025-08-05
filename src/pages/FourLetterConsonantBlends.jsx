@@ -30,7 +30,12 @@ const initialWordSets = {
   "jump", "lamp", "temp", "bump", "dump", "camp", "comp", "ramp", "hump", "limp",
   "damp", "gimp", "wimp", "romp", "simp", "tamp", "yomp", "zump", "nump", "kump",
   "lomp", "fump", "bamp", "vamp", "jomp", "mump", "pimp", "hamp", "bomp", "gump"
-]
+],
+digraph_ch: ["chip", "chat", "chin", "chop", "chug", "chick", "check", "chess", "cham"],
+  digraph_sh: ["ship", "shop", "shed", "shut", "shun", "shag", "sham", "shin"],
+  digraph_th: ["thin", "that", "them", "then", "math", "path", "bath", "with"],
+  digraph_wh: ["when", "whip", "whim", "whiz", "whop", "wham", "whup", "whid"],
+  digraph_ph: ["phone", "photo", "phase", "graph", "phantom", "nephew", "alpha"]
 }; 
 
 const PAGE_SIZE = 42;
@@ -91,6 +96,21 @@ function generateBlendWords(key, count) {
       case "con_vow_m_p":
         word = C1 + V + "m" + "p";
         break;
+      case "digraph_ch":
+    word = "ch" + V + C1;
+    break;
+  case "digraph_sh":
+    word = "sh" + V + C1;
+    break;
+  case "digraph_th":
+    word = "th" + V + C1;
+    break;
+  case "digraph_wh":
+    word = "wh" + V + C1;
+    break;
+  case "digraph_ph":
+    word = "ph" + V + C1;
+    break;
       default:
         word = C1 + V + C2 + "x"; // fallback
     }

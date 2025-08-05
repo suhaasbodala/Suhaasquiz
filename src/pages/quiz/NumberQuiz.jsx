@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
-import { generateLevel1Questions } from "../../utils/generateLevel1Questions";
-import "./NumberSenseQuiz.css";
+import { manualLevel1Questions } from "../../utils/manualLevel1Questions";
+import "./NumberQuiz.css";
 
-const NumberSenseQuiz = () => {
+// Shuffle utility
+const shuffleArray = (array) => {
+  return [...array].sort(() => Math.random() - 0.5);
+};
+
+const NumberQuiz = () => {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
@@ -16,8 +21,8 @@ const NumberSenseQuiz = () => {
   const [timerStarted, setTimerStarted] = useState(false);
 
   useEffect(() => {
-    const qs = generateLevel1Questions(50);
-    setQuestions(qs);
+    const shuffled = shuffleArray(manualLevel1Questions).slice(0, 50);
+    setQuestions(shuffled);
   }, []);
 
   useEffect(() => {
@@ -49,21 +54,20 @@ const NumberSenseQuiz = () => {
     setAnswers((prev) => [...prev, answerObj]);
     setSelected(null);
 
-    if (current + 1 >= questions.length) {
-      setQuestions((prev) => [...prev, ...generateLevel1Questions(10)]);
-    }
-
     setCurrent((prev) => prev + 1);
   };
 
   const endTest = () => {
     setTimerStarted(false);
-    navigate("/result/numbersense", {
-      state: {
-        answers: answers,
-        timeTaken: timeTaken,
-      },
-    });
+    navigate("/result/numberquiz", {
+  state: {
+    answers,
+    timeTaken,
+    type: "numbersense", // 👈 this connects to the retry path
+  },
+});
+
+
   };
 
   const handlePrintQuestions = () => {
@@ -72,7 +76,7 @@ const NumberSenseQuiz = () => {
     doc.setFontSize(18);
     let y = 45;
     const gap = 8;
-    const qs = generateLevel1Questions(printCount);
+    const qs = shuffleArray(manualLevel1Questions).slice(0, printCount);
 
     qs.forEach((q, i) => {
       doc.text(`${i + 1}. ${q.question}`, 20, y);
@@ -97,10 +101,10 @@ const NumberSenseQuiz = () => {
 
   return (
     <div className="quiz-container">
-      <h2>🧠 Number Sense Quiz - Level 1</h2>
+      <h2>🧠 Number Sense Quiz  For Aarush </h2>
       <button className="back-btn" onClick={() => navigate(-1)}>
-  ⬅️ 
-</button>
+        ⬅️
+      </button>
 
       <div className="print-controls">
         <label>
@@ -131,7 +135,9 @@ const NumberSenseQuiz = () => {
                 setTimerStarted(true);
               }}
             >
-              <option value={0} disabled>-- Select --</option>
+              <option value={0} disabled>
+                -- Select --
+              </option>
               {[2, 5, 10, 15, 20, 30, 45, 60].map((min) => (
                 <option key={min} value={min * 60}>
                   {min} Minutes
@@ -187,4 +193,4 @@ const NumberSenseQuiz = () => {
   );
 };
 
-export default NumberSenseQuiz;
+export default NumberQuiz;
