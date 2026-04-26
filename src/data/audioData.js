@@ -24,9 +24,9 @@ hayagriva mupasmahey`
     audio: '/audio/karagre.mp3',
     category: 'slokas',
     text: `Karagre vasathey lakshmi
-Kara madhey saraswathi
-Kara muley Sthitha bhramha
-Prabhathey kara darshanam`
+          Kara madhey saraswathi
+          Kara muley Sthitha bhramha
+          Prabhathey kara darshanam`
   },
   {
     name: 'Sarva Mangala',
@@ -99,7 +99,7 @@ Om karaya namo namaha`
           Megha varnam shubhangam`
   }, {
     name: 'Omtatpurushaya',
-    audio: '/audio/omtatpurushaya.mp3',
+    audio: '/audio/omtatpurushya.mp3',
     category: 'slokas',
     text: `Omtatpurushaya Vidmahe
 Mahadevaya Dheemahi
