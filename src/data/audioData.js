@@ -33,8 +33,8 @@ hayagriva mupasmahey`
     audio: '/audio/sarvamangala.mp3',
     category: 'slokas',
     text: `Sarva mangala mangalye Sivey Sarvartha 
-Sadhike Saranye triyambake gauri narayani
-namostuthey`
+            Sadhike Saranye triyambake gauri narayani
+            namostuthey`
   },
   {
     name: 'Tulasi Sloka',
@@ -102,8 +102,8 @@ Om karaya namo namaha`
     audio: '/audio/omtatpurushya.mp3',
     category: 'slokas',
     text: `Omtatpurushaya Vidmahe
-Mahadevaya Dheemahi
-Tanno Rudrah Prachodayat`
+          Mahadevaya Dheemahi
+          Tanno Rudrah Prachodayat`
   }, 
   {
     name: 'Hanuman Anjana',
